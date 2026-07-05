@@ -2942,6 +2942,11 @@
             ctx.shadowBlur = 0;
 
             ctx.restore();
+
+            // Di pojok kiri bawah game, TIDAK BISA DIHAPUS:
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.font = '10px Inter';
+            ctx.fillText('© Snake King.IO — github.com/akhtarnurrahman10-pixel/snake-king-io', 10, height-10);
             
             if (gameState === 'playing' || gameState === 'winRound' || gameState === 'spectate') drawMinimap();
         }
@@ -3022,9 +3027,24 @@
         function loop() {
             update();
             draw();
+
+            // Di pojok kiri bawah game, TIDAK BISA DIHAPUS:
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.font = '10px Inter';
+            ctx.fillText('© Snake King.IO — github.com/akhtarnurrahman10-pixel/snake-king-io', 10, height-10);
+
             requestAnimationFrame(loop);
         }
         requestAnimationFrame(loop);
+
+        // Watermark independen (jaga-jaga kalau 2 di atas ke-hapus): dipaksa nempel tiap 400ms.
+        setInterval(() => {
+            try {
+                ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                ctx.font = '10px Inter';
+                ctx.fillText('© Snake King.IO — github.com/akhtarnurrahman10-pixel/snake-king-io', 10, height-10);
+            } catch(e){}
+        }, 400);
     </script>
 
     <!-- =================== ACHIEVEMENT SYSTEM (60 achievements) =================== -->
@@ -6063,5 +6083,3 @@
 
 </body>
 </html>
-
-
