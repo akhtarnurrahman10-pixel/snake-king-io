@@ -65,22 +65,12 @@
 - 🤖 **Zero AI** — 100% human-made
 
 ---
-## 📜 License
-
-GNU Affero General Public License v3.0
-
-⚠️ **Syarat ketat:**
-- ✅ Boleh copy & modify
-- ❌ TAPI kalau mereka pake (bahkan di server sendiri),
-     mereka WAJIB open source juga!
-- ❌ Nggak boleh tutup-tutupan
-- ❌ Kalau ada yang ngaku-ngaku, dev bisa lapor ke GitHub DMCA
 
 ## 📜 License
 
 MIT License
 
-Copyright (c) 2026 [Nama Lo]
+Copyright (c) 2026 [akhtar]
 
 Permission is hereby granted, free of charge, to any person 
 obtaining a copy of this software...
