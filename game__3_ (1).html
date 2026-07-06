@@ -18,7 +18,7 @@
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
             background-color: #000; color: white; font-family: 'Inter', sans-serif;
-            touch-action: none; /* Prevent zooming on mobile */
+            touch-action: none; 
         }
         canvas { display: block; width: 100%; height: 100%; }
         #ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; }
@@ -59,7 +59,6 @@
         }
         .win-anim { animation: winGlow 2s infinite; border: 4px solid #eab308 !important; }
 
-        /* Replay cinematic bars + overlay */
         #replayOverlay { position: absolute; inset: 0; pointer-events: none; z-index: 45; display: none; }
         #replayOverlay.active { display: block; }
         #replayOverlay::before, #replayOverlay::after {
@@ -74,7 +73,6 @@
         #replayProgress { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); width: 60%; max-width: 360px; height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; overflow: hidden; }
         #replayProgressBar { height: 100%; background: linear-gradient(90deg, #ef4444, #f59e0b); width: 0%; transition: width 0.05s linear; }
 
-        /* Virtual joystick (mobile) */
         #joystickBase {
             position: absolute; bottom: 22px; left: 22px; width: 124px; height: 124px;
             border-radius: 50%; background: rgba(15,23,42,0.55); border: 2px solid rgba(255,255,255,0.25);
@@ -86,7 +84,6 @@
             box-shadow: 0 0 15px rgba(16,185,129,0.6); will-change: transform;
         }
 
-        /* Dash button (mobile) */
         #dashBtnMobile {
             position: absolute; bottom: 150px; right: 18px; width: 72px; height: 72px;
             border-radius: 50%; background: rgba(239,68,68,0.35); border: 2px solid rgba(255,255,255,0.3);
@@ -102,16 +99,14 @@
             box-shadow: 0 0 25px rgba(239,68,68,0.9);
         }
 
-        /* Joystick & dash: mobile-only (hidden at md breakpoint and up) */
         @media (min-width: 768px) {
             #joystickBase, #dashBtnMobile { display: none !important; }
         }
-        /* Shrink minimap on mobile screens */
+        
         @media (max-width: 767px) {
             #minimapPanel { transform: scale(0.38) translateZ(0) !important; transform-origin: bottom right; }
         }
 
-        /* Mute button */
         #muteBtn {
             position: absolute; top: 12px; right: 12px; z-index: 60;
             background: rgba(15,23,42,0.85); border: 1px solid rgba(255,255,255,0.2);
@@ -121,10 +116,9 @@
             transition: all 0.2s ease;
         }
         #muteBtn:hover { transform: scale(1.1); border-color: rgba(255,255,255,0.5); }
-        /* Dipindah ke dalam panel Pengaturan Suara, ikon mengambang disembunyikan biar HUD atas lebih lega */
+        
         #muteBtn { display: none !important; }
 
-        /* Audio settings button + popover panel */
         #audioSettingsBtn {
             position: absolute; top: 12px; right: 12px; z-index: 60;
             background: rgba(15,23,42,0.85); border: 1px solid rgba(255,255,255,0.2);
@@ -141,7 +135,6 @@
         }
         #audioSettingsPanel.hidden { display: none; }
 
-        /* Chat komunitas: tombol + panel + form login/daftar */
         #chatToggleBtn {
             position: absolute; top: 12px; left: 12px; z-index: 60;
             background: rgba(15,23,42,0.85); border: 1px solid rgba(255,255,255,0.2);
@@ -151,7 +144,7 @@
             transition: all 0.2s ease; pointer-events: auto;
         }
         #chatToggleBtn:hover { transform: scale(1.1); border-color: rgba(255,255,255,0.5); }
-        /* Dipindah aksesnya ke dalam panel Sosial (tombol "🌐 Chat Global"), jadi ikon mengambang disembunyikan */
+        
         #chatToggleBtn { display: none !important; }
         #chatUnreadDot {
             position: absolute; top: -3px; right: -3px; width: 12px; height: 12px;
@@ -219,7 +212,6 @@
             background: #10b981; cursor: pointer; box-shadow: 0 0 8px rgba(16,185,129,0.8);
         }
 
-        /* Survival mode escalation banner */
         @keyframes escFlash {
             0% { transform: translate(-50%, -20px); opacity: 0; }
             15% { transform: translate(-50%, 0); opacity: 1; }
@@ -228,10 +220,6 @@
         }
         .esc-banner-anim { animation: escFlash 3s ease-out forwards; }
 
-        /* ============================================================
-           Minimalist UI Refinement + Mobile Responsiveness
-           (visual layer only — does not touch game logic)
-           ============================================================ */
         :root {
             --bg-0: #07090d;
             --bg-1: rgba(13, 17, 23, 0.78);
@@ -254,7 +242,7 @@
             text-rendering: optimizeLegibility;
             letter-spacing: 0.01em;
         }
-        /* Refined glass panels */
+        
         .panel {
             background: var(--bg-1) !important;
             backdrop-filter: blur(18px) saturate(140%);
@@ -263,7 +251,7 @@
             border-radius: var(--radius) !important;
             box-shadow: var(--shadow) !important;
         }
-        /* Tighter buttons everywhere — neutral, minimalist */
+        
         button {
             font-family: inherit;
             letter-spacing: 0.02em;
@@ -271,7 +259,7 @@
         }
         button:active { transform: scale(0.97); }
         button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-        /* Mute button refined */
+        
         #muteBtn {
             background: var(--bg-1) !important;
             border: 1px solid var(--line) !important;
@@ -279,7 +267,7 @@
             width: 38px !important; height: 38px !important;
             font-size: 16px !important;
         }
-        /* Map / skin cards softer */
+        
         .map-card { border-radius: var(--radius) !important; }
         .map-card.selected {
             border-color: var(--accent) !important;
@@ -290,9 +278,8 @@
         .skin-btn:hover { box-shadow: 0 0 0 2px rgba(255,255,255,0.4) !important; transform: scale(1.08) !important; }
         .skin-btn.selected { box-shadow: 0 0 0 2px #fff, 0 0 16px rgba(255,255,255,0.4) !important; transform: scale(1.12) !important; }
 
-        /* ============== Mobile-first layout fixes ============== */
         @media (max-width: 768px) {
-            /* Top HUD overlay: keep readable, stop overlapping */
+            
             #ui-layer { padding: 62px 8px 8px 8px !important; gap: 8px; }
             #ui-layer > .panel { max-width: 46vw !important; padding: 8px 10px !important; font-size: 11px; }
             #leaderboardPanel { width: 28vw !important; max-width: 130px !important; padding: 6px 8px !important; }
@@ -300,42 +287,33 @@
             #leaderboardList { max-height: 22vh !important; font-size: 9px !important; }
             #leaderboardList li { padding: 3px 4px !important; }
 
-            /* Main menu: full-screen friendly, no awkward cropping */
             #mainMenu { padding: 12px !important; overflow-y: auto; align-items: flex-start !important; }
             #mainMenu > * { width: 100% !important; max-width: 100% !important; }
 
-            /* Modals: full screen with safe padding */
             #statsTotalModal, #achievementsModal, #optimizationModal,
             #deathScreen { padding: 12px !important; overflow-y: auto; }
             #statsTotalModal > *, #achievementsModal > *,
             #optimizationModal > * { width: 100% !important; max-width: 100% !important; max-height: 92vh; }
 
-            /* Skin & map grids reflow */
             #skinContainer { grid-template-columns: repeat(5, minmax(0,1fr)) !important; gap: 8px !important; }
             #mapContainer { grid-template-columns: 1fr !important; gap: 8px !important; }
 
-            /* Boss alert smaller on tiny screens */
             #bossAlertText { font-size: 2rem !important; }
 
-            /* Bigger tap targets */
             button { min-height: 40px; }
         }
         @media (max-width: 380px) {
             #ui-layer > .panel { font-size: 10px; padding: 6px 8px !important; }
             #skinContainer { grid-template-columns: repeat(4, minmax(0,1fr)) !important; }
         }
-        /* Quiet down overly loud text shadows on mobile */
+        
         @media (max-width: 768px) {
             #deathTitle { text-shadow: 0 0 16px rgba(239,68,68,0.6) !important; }
         }
-        /* Custom scrollbar minimal */
+        
         .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--line-strong) !important; }
 
-        /* ============================================================
-           QOL PACK — micro-animations & fitur kecil tambahan
-           (murni tambahan visual/UX, tidak menyentuh logic game inti)
-           ============================================================ */
-        /* Tactile press feedback di semua tombol */
+        
         button:not(:disabled), .skin-btn, .map-card {
             transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.12s ease, filter 0.12s ease;
         }
@@ -344,7 +322,6 @@
             filter: brightness(0.92);
         }
 
-        /* Ripple kecil saat tombol diklik */
         .qol-ripple-host { position: relative; overflow: hidden; }
         .qol-ripple {
             position: absolute; border-radius: 50%; pointer-events: none;
@@ -353,7 +330,6 @@
         }
         @keyframes qolRippleAnim { to { transform: scale(2.6); opacity: 0; } }
 
-        /* Angka skor "pop" tiap kali nambah */
         @keyframes qolPop {
             0% { transform: scale(1); }
             35% { transform: scale(1.35); color: #6ee7b7; }
@@ -361,7 +337,6 @@
         }
         .qol-pop { animation: qolPop 0.32s ease-out; display: inline-block; }
 
-        /* Toast QoL (notif kecil melayang) */
         #qolToastHost {
             position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
             z-index: 500; display: flex; flex-direction: column; gap: 8px;
@@ -383,7 +358,6 @@
         }
         @keyframes qolToastOut { to { transform: translateY(-14px) scale(0.9); opacity: 0; } }
 
-        /* Overlay auto-pause saat pindah tab */
         #qolPauseOverlay {
             position: fixed; inset: 0; z-index: 400; display: none;
             align-items: center; justify-content: center; flex-direction: column; gap: 10px;
@@ -396,7 +370,6 @@
         #qolPauseOverlay .qol-count { font-size: 46px; font-weight: 900; color: #34d399; text-shadow: 0 0 24px rgba(52,211,153,0.6); }
         @keyframes qolFadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Tombol kecil baru (screenshot, fps, shortcut) — mengikuti gaya muteBtn/audioSettingsBtn */
         .qol-icon-btn {
             position: absolute; top: 12px; z-index: 60;
             background: rgba(15,23,42,0.85); border: 1px solid rgba(255,255,255,0.2);
@@ -409,7 +382,6 @@
         .qol-icon-btn:active { transform: scale(0.9); }
         #qolHelpBtn { left: 12px; bottom: 12px; top: auto; z-index: 60; }
 
-        /* Badge FPS — pojok kiri atas, tidak nabrak tombol mute/setting di kanan */
         #qolFpsBadge {
             position: fixed; top: 12px; left: 12px; z-index: 60;
             background: rgba(15,23,42,0.85); border: 1px solid rgba(255,255,255,0.2);
@@ -421,7 +393,6 @@
         #qolFpsBadge.warn { color: #f59e0b; }
         #qolFpsBadge.bad { color: #ef4444; }
 
-        /* Efek flash kamera saat screenshot */
         #qolFlash {
             position: fixed; inset: 0; background: #fff; z-index: 300;
             opacity: 0; pointer-events: none;
@@ -429,7 +400,6 @@
         #qolFlash.flash { animation: qolFlashAnim 0.35s ease-out; }
         @keyframes qolFlashAnim { 0% { opacity: 0.85; } 100% { opacity: 0; } }
 
-        /* Panel shortcut bantuan */
         #qolHelpPanel {
             position: fixed; left: 12px; bottom: 62px; z-index: 61;
             width: 230px; padding: 12px 14px; border-radius: 14px;
@@ -441,7 +411,6 @@
         #qolHelpPanel .qol-row { display: flex; justify-content: space-between; font-size: 11px; color: #cbd5e1; padding: 3px 0; }
         #qolHelpPanel kbd { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; padding: 1px 6px; font-family: 'Space Grotesk', monospace; font-size: 10px; }
 
-        /* Death screen dapat sedikit "kick" animasi saat muncul */
         @keyframes qolDeathShake {
             0%, 100% { transform: translateX(0); }
             20% { transform: translateX(-6px) rotate(-0.4deg); }
@@ -451,7 +420,6 @@
         }
         .qol-death-kick { animation: qolDeathShake 0.4s ease; }
 
-        /* Hormati preferensi reduce-motion user (aksesibilitas) */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.001ms !important;
@@ -460,11 +428,6 @@
             }
         }
 
-        /* ============================================================
-           PROFESSIONAL MINIMALIST OVERRIDE  (visual + perf, no logic)
-           Loads LAST inside the same <style> so it wins over the
-           inline Tailwind utility classes on existing markup.
-           ============================================================ */
         :root {
             --p-bg:       #0a0d12;
             --p-surface:  rgba(17, 22, 30, 0.72);
@@ -474,7 +437,7 @@
             --p-text:     #e8ecf1;
             --p-dim:      #8a94a3;
             --p-mute:     #5a6472;
-            --p-accent:   #22c493;         /* single restrained accent */
+            --p-accent:   #22c493;         
             --p-accent-2: #e5e7eb;
             --p-danger:   #e05365;
             --p-radius:   10px;
@@ -490,7 +453,6 @@
             color: var(--p-text);
         }
 
-        /* Typography reset — kill "font-black" walls of screaming text */
         h1, h2, h3, h4 {
             font-family: 'Space Grotesk', 'Inter', sans-serif !important;
             letter-spacing: -0.015em !important;
@@ -500,7 +462,6 @@
         .font-black { font-weight: 700 !important; }
         .tracking-tighter, .tracking-widest { letter-spacing: -0.01em !important; }
 
-        /* Neutralize gradient text everywhere */
         .bg-clip-text.text-transparent,
         [class*="from-"][class*="to-"].text-transparent {
             background: none !important;
@@ -510,7 +471,6 @@
         }
         .glitch-text { text-shadow: none !important; color: var(--p-text) !important; }
 
-        /* Panels — flat, quiet, consistent */
         .panel,
         #mainMenu > div,
         #statsTotalModal > div,
@@ -527,7 +487,6 @@
             -webkit-backdrop-filter: blur(20px) saturate(120%);
         }
 
-        /* Overlay dims — softer, single tone */
         #mainMenu, #statsTotalModal, #achievementsModal,
         #optimizationModal, #dailyModal, #mapEditorModal,
         #marketplaceModal, #deathScreen {
@@ -536,9 +495,6 @@
             -webkit-backdrop-filter: blur(14px);
         }
 
-        /* Buttons — neutral base, single accent for primary intent.
-           We flatten Tailwind's gradient / colored borders and stick to
-           surface + hairline border. Primary action = accent fill. */
         button, .btn {
             font-family: 'Inter', sans-serif !important;
             font-weight: 600 !important;
@@ -565,8 +521,6 @@
             outline-offset: 2px !important;
         }
 
-        /* Strip loud gradient / colored button variants that flood the
-           menu, death screen, spectator bar, etc. */
         button[class*="from-"], button[class*="bg-gradient"] {
             background: var(--p-surface-2) !important;
         }
@@ -577,8 +531,6 @@
             color: var(--p-dim) !important;
         }
 
-        /* Primary action buttons (Play / Respawn / Replay) — accent fill.
-           Match by their icons in the existing markup. */
         #respawnBtn, #replayBtn {
             background: var(--p-accent) !important;
             border-color: var(--p-accent) !important;
@@ -591,7 +543,6 @@
         #spectateBtn { background: var(--p-surface-2) !important; color: var(--p-text) !important; }
         #menuBtn     { background: transparent !important; color: var(--p-dim) !important; }
 
-        /* Menu title area — quieter badge */
         #mainMenu .inline-block.px-4.py-1.rounded-full {
             background: rgba(255,255,255,0.04) !important;
             border: 1px solid var(--p-line) !important;
@@ -600,7 +551,6 @@
             letter-spacing: 0.18em !important;
         }
 
-        /* Map / skin containers — flat inner surfaces */
         #mainMenu .bg-black\/50 {
             background: rgba(0,0,0,0.25) !important;
             border-color: var(--p-line) !important;
@@ -621,7 +571,6 @@
         .skin-btn:hover  { box-shadow: 0 0 0 1px var(--p-line-2) !important; transform: scale(1.06) !important; }
         .skin-btn.selected { box-shadow: 0 0 0 2px var(--p-accent) !important; transform: scale(1.08) !important; }
 
-        /* Section headings inside menu — muted uppercase eyebrow */
         #mainMenu h3 {
             color: var(--p-dim) !important;
             font-size: 11px !important;
@@ -629,14 +578,12 @@
             letter-spacing: 0.18em !important;
             text-transform: uppercase !important;
         }
-        #mainMenu h3 span { display: none !important; } /* drop emoji from heading */
+        #mainMenu h3 span { display: none !important; } 
 
-        /* HUD panels — compact */
         #ui-layer h1 { font-size: 14px !important; font-weight: 600 !important; }
         #ui-layer .panel { padding: 10px 12px !important; }
         #ui-layer .text-green-400 { color: var(--p-accent) !important; }
 
-        /* Stats grid cells — flat cards */
         #statsTotalModal .bg-black\/50,
         #optimizationModal .bg-black\/50,
         #achievementsModal .bg-black\/60,
@@ -645,7 +592,6 @@
             border-color: var(--p-line) !important;
         }
 
-        /* Mute button — flush minimalist chip */
         #muteBtn {
             top: 10px !important; right: 10px !important;
             width: 36px !important; height: 36px !important;
@@ -656,7 +602,6 @@
         }
         #muteBtn:hover { transform: none !important; border-color: var(--p-accent) !important; }
 
-        /* Death screen — cool down the drama */
         #deathTitle {
             color: var(--p-text) !important;
             text-shadow: none !important;
@@ -664,12 +609,10 @@
             letter-spacing: -0.02em !important;
         }
 
-        /* Scrollbars minimal */
         .custom-scrollbar::-webkit-scrollbar { width: 4px !important; height: 4px !important; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--p-line-2) !important; border-radius: 4px !important; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent !important; }
 
-        /* Kill decorative glow / drop-shadow utilities across the tree */
         [class*="shadow-["], [class*="drop-shadow-["] {
             box-shadow: none !important;
             filter: none !important;
@@ -677,10 +620,7 @@
         [class*="animate-pulse"] { animation: none !important; }
         #weatherUI { background: rgba(224,83,101,0.12) !important; border-color: rgba(224,83,101,0.4) !important; }
 
-        /* ============================================================
-           PERFORMANCE
-           ============================================================ */
-        /* Skip painting off-screen modals until they're actually shown */
+        
         #statsTotalModal.hidden,
         #achievementsModal.hidden,
         #optimizationModal.hidden,
@@ -691,12 +631,12 @@
             content-visibility: hidden;
             contain: strict;
         }
-        /* GPU compositing for the constantly-repainting HUD */
+        
         #ui-layer, #minimapPanel, #bossAlert, #muteBtn {
             will-change: transform;
             transform: translateZ(0);
         }
-        /* Respect reduced motion */
+        
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.001ms !important;
@@ -709,7 +649,6 @@
 
     <canvas id="gameCanvas"></canvas>
 
-    <!-- In-Game UI -->
     <div id="ui-layer" class="p-2 md:p-4 flex justify-between items-start hidden">
         <div class="panel p-3 md:p-4 rounded-xl shadow-lg max-w-[200px] md:max-w-xs flex flex-col gap-2">
             <div>
@@ -724,8 +663,7 @@
                 <p id="uiInvis" class="text-purple-400 hidden flex justify-between"><span>👻 Hidden</span> <span id="timeInvis"></span></p>
                 <p id="uiRiver" class="text-cyan-400 hidden flex justify-between"><span>🌊 Arus Sungai</span> <span id="timeRiver"></span></p>
             </div>
-            
-            <!-- Weather Warning UI -->
+
             <div id="weatherUI" class="text-[10px] md:text-xs font-bold space-y-1 mt-1 p-2 bg-red-900/80 rounded border border-red-500 hidden animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.5)]">
                 <p class="text-white text-center">⚠️ BAHAYA ALAM MENDEKAT!</p>
             </div>
@@ -768,12 +706,10 @@
             <canvas id="minimapCanvas" width="160" height="160" class="rounded bg-black/80"></canvas>
         </div>
 
-        <!-- Virtual joystick (mobile only) -->
         <div id="joystickBase">
             <div id="joystickKnob"></div>
         </div>
 
-        <!-- Dash button (mobile only) -->
         <div id="dashBtnMobile">
             <span class="dash-icon">💨</span>
             <span>DASH</span>
@@ -784,7 +720,6 @@
         <h2 id="bossAlertText" class="text-3xl md:text-6xl font-black text-red-500 uppercase tracking-widest drop-shadow-[0_0_20px_rgba(255,0,0,1)]"></h2>
     </div>
 
-    <!-- Main Menu -->
     <div id="mainMenu" class="absolute inset-0 bg-black/80 backdrop-blur-lg flex flex-col items-center justify-center pointer-events-auto z-50 p-3 md:p-4">
         <div class="bg-slate-900/95 border border-slate-600 rounded-[2rem] p-5 md:p-8 flex flex-col gap-5 w-full max-w-md shadow-[0_0_80px_rgba(16,185,129,0.3)] overflow-y-auto hide-scrollbar max-h-full">
 
@@ -795,7 +730,6 @@
                 <p class="text-gray-300 text-[10px] md:text-xs font-bold tracking-widest uppercase mb-1 bg-slate-800 inline-block px-4 py-1 rounded-full border border-slate-600">Survival of the Biggest</p>
             </div>
 
-            <!-- ===== HOME: cuma 2 tombol ===== -->
             <div id="menuHome" class="flex flex-col gap-3">
                 <button onclick="showMenuView('play')" class="group relative overflow-hidden px-6 py-6 bg-gradient-to-br from-emerald-500 to-teal-700 hover:from-emerald-400 hover:to-teal-600 border-2 border-emerald-300 text-white rounded-2xl shadow-[0_0_35px_rgba(16,185,129,0.45)] transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02]">
                     <span class="block text-3xl font-black tracking-tight">▶️ MAIN</span>
@@ -812,7 +746,6 @@
                 </button>
             </div>
 
-            <!-- ===== PLAY VIEW ===== -->
             <div id="menuPlay" class="hidden flex-col gap-3">
                 <button onclick="showMenuView('home')" class="self-start text-xs font-bold text-gray-400 hover:text-white flex items-center gap-1">← Kembali</button>
 
@@ -859,7 +792,6 @@
                 </div>
             </div>
 
-            <!-- ===== MORE VIEW ===== -->
             <div id="menuMore" class="hidden flex-col gap-4">
                 <button onclick="showMenuView('home')" class="self-start text-xs font-bold text-gray-400 hover:text-white flex items-center gap-1">← Kembali</button>
 
@@ -893,7 +825,6 @@
         </div>
     </div>
 
-    <!-- Menu view switcher (progressive disclosure: Home -> Play/More) -->
     <script>
       window.showMenuView = function(view){
         const home = document.getElementById('menuHome');
@@ -913,7 +844,6 @@
       };
     </script>
 
-    <!-- Total Stats Modal -->
     <div id="statsTotalModal" class="absolute inset-0 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center hidden pointer-events-auto z-[60] p-4">
         <div class="bg-slate-900/95 border border-cyan-600/60 rounded-2xl p-6 w-full max-w-2xl shadow-[0_0_60px_rgba(6,182,212,0.35)]">
             <div class="flex items-center justify-between mb-4">
@@ -943,7 +873,6 @@
         </div>
     </div>
 
-    <!-- Achievements Modal -->
     <div id="achievementsModal" class="absolute inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center hidden pointer-events-auto z-[70] p-4">
         <div class="bg-slate-900/95 border border-yellow-600/60 rounded-2xl p-5 w-full max-w-3xl shadow-[0_0_60px_rgba(234,179,8,0.35)] max-h-[90vh] flex flex-col">
             <div class="flex items-center justify-between mb-3">
@@ -963,10 +892,8 @@
         </div>
     </div>
 
-    <!-- Achievement Toast -->
     <div id="achToastWrap" class="fixed top-4 right-4 z-[100] flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- Optimization Modal -->
     <div id="optimizationModal" class="absolute inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center hidden pointer-events-auto z-[80] p-4">
         <div class="bg-slate-900/95 border border-emerald-600/60 rounded-2xl p-5 w-full max-w-xl shadow-[0_0_60px_rgba(16,185,129,0.35)] max-h-[90vh] overflow-y-auto custom-scrollbar">
             <div class="flex items-center justify-between mb-3">
@@ -986,14 +913,12 @@
         </div>
     </div>
 
-
-    <!-- Replay cinematic overlay -->
+    
     <div id="replayOverlay">
         <div id="replayLabel"><span class="rec-dot"></span>REPLAY · 10 DETIK TERAKHIR</div>
         <div id="replayProgress"><div id="replayProgressBar"></div></div>
     </div>
 
-    <!-- Mute button -->
     <button id="muteBtn" title="Mute / Unmute">🔊</button>
     <button id="audioSettingsBtn" title="Pengaturan Suara">⚙️</button>
     <div id="audioSettingsPanel" class="hidden panel">
@@ -1025,7 +950,6 @@
         </div>
     </div>
 
-    <!-- Chat Komunitas -->
     <button id="chatToggleBtn" title="Chat Komunitas">💬<span id="chatUnreadDot"></span></button>
     <div id="chatPanel" class="hidden panel">
         <div class="chat-header">
@@ -1033,7 +957,6 @@
             <button id="chatCloseBtn">✕</button>
         </div>
 
-        <!-- Login / Daftar -->
         <div id="chatAuthSection">
             <div class="chat-auth-tabs">
                 <button id="chatTabLogin" class="active">Masuk</button>
@@ -1054,7 +977,6 @@
             </div>
         </div>
 
-        <!-- Chat (muncul setelah login) -->
         <div id="chatMainSection" class="hidden">
             <div class="chat-user-bar">
                 <span id="chatMyUsername"></span>
@@ -1069,7 +991,6 @@
         </div>
     </div>
 
-    <!-- Death / Victory Screen -->
     <div id="deathScreen" class="absolute inset-0 bg-black/90 backdrop-blur-sm flex flex-col items-center justify-center hidden pointer-events-auto z-50">
         <h1 id="deathTitle" class="text-5xl md:text-7xl font-black text-red-500 mb-2 drop-shadow-[0_0_30px_rgba(239,68,68,1)] uppercase tracking-tighter text-center px-4">KAMU MATI!</h1>
         <p class="text-base md:text-xl mb-3 text-gray-300">Panjang Akhir: <span id="finalScore" class="font-black text-green-400 text-2xl md:text-3xl">0</span></p>
@@ -1079,7 +1000,6 @@
 
         <p id="livesLeftMsg" class="text-base md:text-xl text-blue-400 mb-8 hidden font-bold bg-blue-900/40 px-6 py-2 rounded-full border border-blue-500">Sisa Nyawa: <span id="livesLeftCount" class="text-2xl text-white"></span></p>
 
-        <!-- Stats panel -->
         <div id="statsPanel" class="panel rounded-2xl p-4 md:p-5 grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 w-full max-w-3xl mx-auto px-4 mb-4 text-center">
             <div><div class="text-[10px] md:text-xs text-gray-400 uppercase tracking-wider">Jarak</div><div class="text-lg md:text-2xl font-black text-cyan-300" id="stJarak">0 m</div></div>
             <div><div class="text-[10px] md:text-xs text-gray-400 uppercase tracking-wider">Food</div><div class="text-lg md:text-2xl font-black text-emerald-300" id="stFood">0</div></div>
@@ -1088,7 +1008,6 @@
             <div><div class="text-[10px] md:text-xs text-gray-400 uppercase tracking-wider">Top Speed</div><div class="text-lg md:text-2xl font-black text-fuchsia-300" id="stSpeed">0</div></div>
         </div>
 
-        <!-- Heatmap -->
         <div class="panel rounded-2xl p-3 md:p-4 w-full max-w-xs mx-auto mb-4 px-4">
             <div class="flex items-center justify-between mb-2">
                 <div class="text-xs md:text-sm font-bold text-gray-200 uppercase">🔥 Heatmap Kematian</div>
@@ -1114,7 +1033,6 @@
         </div>
     </div>
 
-    <!-- Spectator HUD -->
     <div id="spectatorBar" class="hidden absolute top-2 left-1/2 -translate-x-1/2 panel rounded-full px-4 py-2 flex items-center gap-3 z-40 pointer-events-auto">
         <button id="spectPrev" class="w-8 h-8 rounded-full bg-slate-700 hover:bg-slate-600 text-white font-black">‹</button>
         <div class="text-center min-w-[160px]">
@@ -1129,8 +1047,7 @@
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d', { alpha: false }); 
-        
-        // UI Refs
+
         const UI = {
             score: document.getElementById('playerScore'),
             energyBarFill: document.getElementById('energyBarFill'),
@@ -1172,7 +1089,7 @@
             replayOverlay: document.getElementById('replayOverlay'),
             replayBar: document.getElementById('replayProgressBar'),
             muteBtn: document.getElementById('muteBtn'),
-            // Stats panel
+            
             stJarak: document.getElementById('stJarak'),
             stFood: document.getElementById('stFood'),
             stKill: document.getElementById('stKill'),
@@ -1180,7 +1097,7 @@
             stSpeed: document.getElementById('stSpeed'),
             heatmapCanvas: document.getElementById('heatmapCanvas'),
             resetHeatBtn: document.getElementById('resetHeatBtn'),
-            // Spectator
+            
             spectateBtn: document.getElementById('spectateBtn'),
             spectatorBar: document.getElementById('spectatorBar'),
             spectName: document.getElementById('spectName'),
@@ -1190,11 +1107,10 @@
             spectExit: document.getElementById('spectExit')
         };
 
-        // Core Configuration
         let MAX_SNAKES = 50;
         let MAX_SNAKES_DEFAULT = 50;
         let MAX_FOOD = 2000;
-        // ===== Hardware Optimization (auto-detect RAM) =====
+        
         (function applyHardwareOpt(){
             let saved = 'auto';
             try { saved = localStorage.getItem('snakeKingOpt_v1') || 'auto'; } catch(e){}
@@ -1221,22 +1137,20 @@
             window.__optWorldScale = p.world;
         })();
         const MAX_BOOSTS = 40; 
-        const PVP_MAX_FOOD = 60; // arena PvP kecil & cuma 2 entitas, food harus jauh lebih dikit dari mode terbuka
+        const PVP_MAX_FOOD = 60; 
         const GRID_SIZE = 60;
 
-        // ===== Sistem Energy Dash =====
-        // Energy abis duluan pas dash. Kalau energy 0 & masih maksa dash, baru skor yang pelan-pelan berkurang.
-        const ENERGY_DASH_DRAIN = 100 / (3 * 60);          // energy full ke 0 dalam ~3 detik dash terus-terusan
-        const ENERGY_PASSIVE_REGEN = 100 / (7 * 60);       // energy 0 ke full dalam ~7 detik kalau gak dash
-        const ENERGY_FOOD_BONUS = 3;                        // bonus energy tiap makan food biasa
-        const ENERGY_EMPTY_SCORE_DRAIN = 2 / 60;            // skor berkurang ~2 poin/detik selama maksa dash tanpa energy
+        
+        const ENERGY_DASH_DRAIN = 100 / (3 * 60);          
+        const ENERGY_PASSIVE_REGEN = 100 / (7 * 60);       
+        const ENERGY_FOOD_BONUS = 3;                        
+        const ENERGY_EMPTY_SCORE_DRAIN = 2 / 60;            
         let screenShake = 0;
 
         let width, height;
         let camera = { x: 5000, y: 5000, zoom: 1 };
 
-        // Kamera di HP dizoom lebih dekat biar ular & elemen game keliatan lebih gede,
-        // karena layar HP jauh lebih kecil/sempit dibanding desktop.
+        
         function isMobileScreen() {
             return Math.min(window.innerWidth, window.innerHeight) <= 768;
         }
@@ -1249,42 +1163,37 @@
         let currentWorldSize = 12000;
         let targetWorldSize = 12000;
         let arenaTimer = 20 * 60;
-        
-        // PVP Variables
+
         let pvpCurrentRound = 1;
         let pvpTimeLeft = 140 * 60; 
         
         let gameState = 'menu';
         let playingFrames = 0, waveBossCount = 0;
 
-        // Survival mode
         let survivalFrames = 0;
         let survivalLevel = 1;
         let survivalKills = 0;
-        let survivalAiBoost = 0; // 0 - 1 escalation
-        const SURVIVAL_TICK = 30 * 60; // 30 detik
+        let survivalAiBoost = 0; 
+        const SURVIVAL_TICK = 30 * 60; 
 
-        // Replay system: ring buffer of snapshots for last 10s
         const REPLAY_MAX_FRAMES = 600;
-        const REPLAY_SAMPLE_EVERY = 2; // record every 2 ticks => effective 5s of memory @ smaller cost; playback compensates
+        const REPLAY_SAMPLE_EVERY = 2; 
         let replayBuffer = [];
         let replayRecordTick = 0;
         let replayIndex = 0;
         let replayPlaying = false;
-        let replaySnapshotFoods = []; // snapshot foods captured at death moment for visual context
+        let replaySnapshotFoods = []; 
         let replayLastSnapshot = null;
-        
-        // Inputs
+
         const keys = { w: false, s: false, a: false, d: false, space: false };
-        const keys2 = { w: false, s: false, a: false, d: false, space: false }; // P2 duo mode (arrow keys + Enter)
+        const keys2 = { w: false, s: false, a: false, d: false, space: false }; 
         let mousePos = { x: 0, y: 0 };
         let isMouseDown = false;
-        // Virtual joystick & dash button (mobile)
+        
         let joystickActive = false;
         let joystickAngle = 0;
         let dashPressed = false;
 
-        // ===== Stats & Heatmap =====
         const HEATMAP_KEY = 'snakeKingHeatmap_v1';
         const HEATMAP_MAX = 250;
         function loadHeatmap() {
@@ -1303,7 +1212,6 @@
             saveHeatmap(all);
         }
 
-        // ===== Total cumulative stats (localStorage) =====
         const TOTAL_STATS_KEY = 'snakeKingTotalStats_v1';
         function loadTotalStats() {
             try {
@@ -1361,7 +1269,7 @@
             const c = canvas.getContext('2d');
             const W = canvas.width, H = canvas.height;
             c.clearRect(0,0,W,H);
-            // background grid
+            
             c.fillStyle = 'rgba(255,255,255,0.04)';
             for(let i=0;i<W;i+=20){ c.fillRect(i,0,1,H); }
             for(let j=0;j<H;j+=20){ c.fillRect(0,j,W,1); }
@@ -1378,7 +1286,7 @@
                 c.fillStyle = g;
                 c.beginPath(); c.arc(x,y,14,0,Math.PI*2); c.fill();
             });
-            // mark player's last death (latest)
+            
             if (arr.length) {
                 const last = arr[arr.length-1];
                 const x = (last.x / ws) * W, y = (last.y / ws) * H;
@@ -1387,7 +1295,6 @@
             }
         }
 
-        // ===== Spectator =====
         let spectatorIndex = 0;
         function enterSpectator() {
             const alive = snakes.filter(s => !s.dead && !s.isPlayer).sort((a,b)=>b.score-a.score);
@@ -1397,7 +1304,7 @@
             UI.deathScreen.classList.add('hidden');
             UI.layer.classList.remove('hidden');
             UI.spectatorBar.classList.remove('hidden');
-            // Hide some HUD pieces that don't make sense
+            
             UI.boosts.classList.add('hidden');
             updateSpectatorTarget();
             return true;
@@ -1438,7 +1345,7 @@
         window.addEventListener('keydown', (e) => {
             const k = e.key.toLowerCase();
             const duo = (typeof currentMode !== 'undefined' && currentMode === 'duo');
-            // Arrow keys → keys2 in duo mode, else fall through to keys
+            
             if (duo) {
                 if (k==='arrowup') { keys2.w = true; e.preventDefault(); }
                 if (k==='arrowdown') { keys2.s = true; e.preventDefault(); }
@@ -1485,7 +1392,6 @@
         window.addEventListener('touchmove', (e) => { if (isFromMobileControls(e)) return; mousePos.x = e.touches[0].clientX; mousePos.y = e.touches[0].clientY; }, {passive: true});
         window.addEventListener('touchend', () => isMouseDown = false);
 
-        // ===== Virtual Joystick (mobile) =====
         (function setupJoystick(){
             const base = document.getElementById('joystickBase');
             const knob = document.getElementById('joystickKnob');
@@ -1528,7 +1434,6 @@
             base.addEventListener('touchcancel', (e) => { e.stopPropagation(); reset(); }, { passive: true });
         })();
 
-        // ===== Dash Button (mobile) =====
         (function setupDashButton(){
             const btn = document.getElementById('dashBtnMobile');
             if (!btn) return;
@@ -1568,7 +1473,6 @@
                 this.noiseSynth = new Tone.NoiseSynth({ noise: { type: 'brown' }, envelope: { attack: 0.05, decay: 0.5, sustain: 0.1, release: 1.5 } }).connect(this.sfxGain);
                 this.noiseSynth.volume.value = -5;
 
-                // Chiptune background music
                 this.musicSynth = new Tone.Synth({ oscillator: { type: "triangle" }, envelope: { attack: 0.01, decay: 0.2, sustain: 0.05, release: 0.2 } }).connect(this.musicGain);
                 this.musicSynth.volume.value = -22;
                 this.bassSynth = new Tone.Synth({ oscillator: { type: "square" }, envelope: { attack: 0.01, decay: 0.3, sustain: 0.1, release: 0.2 } }).connect(this.musicGain);
@@ -1635,14 +1539,12 @@
             }
         };
 
-        // Mute button wiring (initialised lazily so audio can be unlocked on click)
         document.getElementById('muteBtn').addEventListener('click', async () => {
             if (!AudioSys.initialized) { await AudioSys.init(); }
             const muted = AudioSys.toggleMute();
             UI.muteBtn.innerText = muted ? '🔇' : '🔊';
         });
 
-        // Audio settings button + panel wiring
         (function initAudioSettingsUI(){
             const btn = document.getElementById('audioSettingsBtn');
             const panel = document.getElementById('audioSettingsPanel');
@@ -1652,7 +1554,6 @@
             const sfxVal = document.getElementById('sfxVolVal');
             if (!btn || !panel) return;
 
-            // Initialize slider positions from saved settings
             musicSlider.value = audioSettings.music;
             sfxSlider.value = audioSettings.sfx;
             musicVal.textContent = audioSettings.music + '%';
@@ -1664,7 +1565,6 @@
                 panel.classList.toggle('hidden');
             });
 
-            // Close panel when clicking outside of it
             document.addEventListener('click', (e) => {
                 if (!panel.classList.contains('hidden') && !panel.contains(e.target) && e.target !== btn) {
                     panel.classList.add('hidden');
@@ -1713,7 +1613,6 @@
             floatingTexts.push({ x: x, y: y, text: text, color: color, life: 1.0, dy: -1.5, large: large });
         }
 
-        // SISTEM DINAMIKA CUACA
         const WeatherSys = {
             fogZones: [],
             strikes: [],
@@ -1722,8 +1621,7 @@
             update: function() {
                 if(gameState !== 'playing' && gameState !== 'winRound') return;
                 this.timer++;
-                
-                // Acak kemunculan Zona Kabut
+
                 if (Math.random() < 0.002 && this.fogZones.length < 3) {
                     let cx, cy;
                     if (currentMode === 'pvp') {
@@ -1742,11 +1640,10 @@
                         alpha: 0
                     });
                 }
-                
-                // Acak kemunculan Petir/Meteor
+
                 if (currentMode !== 'hideseek' && Math.random() < 0.006) {
                      let cx, cy;
-                     // Sedikit bias agar sering mengincar dekat player
+                     
                      if (Math.random() < 0.35 && player && !player.dead) {
                          cx = player.head.x + randomRange(-800, 800);
                          cy = player.head.y + randomRange(-800, 800);
@@ -1763,38 +1660,34 @@
                      }
                      this.strikes.push({
                          x: cx, y: cy, radius: randomRange(300, 500),
-                         state: 'warning', timer: 150 // Waktu peringatan sblm jatuh
+                         state: 'warning', timer: 150 
                      });
                 }
-                
-                // Update Kabut
+
                 for(let i = this.fogZones.length - 1; i >= 0; i--) {
                     let f = this.fogZones[i];
                     f.life--;
-                    if (f.life > f.maxLife - 60) f.alpha += 1/60; // Fade in
-                    else if (f.life < 60) f.alpha -= 1/60; // Fade out
+                    if (f.life > f.maxLife - 60) f.alpha += 1/60; 
+                    else if (f.life < 60) f.alpha -= 1/60; 
                     else f.alpha = 1;
                     
                     if(f.life <= 0) this.fogZones.splice(i, 1);
                 }
-                
-                // Update Petir
+
                 for(let i = this.strikes.length - 1; i >= 0; i--) {
                     let s = this.strikes[i];
                     s.timer--;
                     
                     if (s.state === 'warning' && s.timer <= 0) {
                         s.state = 'strike';
-                        s.timer = 25; // Durasi animasi petir
-                        
-                        // Hitung jarak ke player untuk volume
+                        s.timer = 25; 
+
                         let dToPlayer = (player && !player.dead) ? dist(s.x, s.y, player.head.x, player.head.y) : 0;
                         if (dToPlayer < 2500) {
                             screenShake = Math.max(screenShake, 25);
                             AudioSys.playThunder(Math.max(0, 1 - (dToPlayer/2500)));
                         }
 
-                        // Cek tabrakan/damage ke ular
                         let hitSnakes = new Set();
                         snakes.forEach(snake => {
                             if (snake.dead || hitSnakes.has(snake)) return;
@@ -1806,7 +1699,7 @@
                                     const isLightningImmune = snake.skin && snake.skin.lightningImmune;
 
                                     if (isLightningImmune) {
-                                        // Skin anti-petir: kebal total, gak ada damage skor sama sekali
+                                        
                                         spawnParticles(seg.x, seg.y, '#22d3ee', 20, 2);
                                         if (snake.isPlayer) {
                                             spawnFloatingText(snake.head.x, snake.head.y, "⚡ KEBAL PETIR!", "#22d3ee", true);
@@ -1816,10 +1709,9 @@
                                         break;
                                     }
 
-                                    let damage = snake.score * 0.40; // Hilang 40%
+                                    let damage = snake.score * 0.40; 
                                     snake.score -= damage;
-                                    
-                                    // Drop makanan
+
                                     let foodCount = Math.min(25, Math.floor(damage / 4));
                                     for(let f=0; f<foodCount; f++) {
                                         foods.push(new Food(seg.x + randomRange(-150, 150), seg.y + randomRange(-150, 150), 3, snake.skin.head));
@@ -1835,7 +1727,7 @@
                                     if (snake.score < 30) {
                                         snake.die(null);
                                     } else if (snake.isPlayer) {
-                                        window.__evLightningSurvived = true; // dipakai sistem achievement, jauh lebih akurat drpd polling state
+                                        window.__evLightningSurvived = true; 
                                     }
                                     break;
                                 }
@@ -1848,7 +1740,7 @@
             },
             
             drawLower: function(ctx) {
-                // Peringatan area
+                
                 this.strikes.forEach(s => {
                     if (s.state === 'warning') {
                         ctx.beginPath();
@@ -1866,15 +1758,14 @@
             },
             
             drawUpper: function(ctx, viewW, viewH) {
-                // Efek Kilat / Meteor Jatuh
+                
                 this.strikes.forEach(s => {
                     if (s.state === 'strike') {
                         ctx.beginPath();
                         ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
                         ctx.fillStyle = `rgba(255, 255, 255, ${s.timer / 25})`;
                         ctx.fill();
-                        
-                        // Garis Petir
+
                         ctx.beginPath();
                         ctx.moveTo(s.x + randomRange(-40, 40), s.y - 1500);
                         ctx.lineTo(s.x + randomRange(-30, 30), s.y - 700);
@@ -1884,8 +1775,7 @@
                         ctx.stroke();
                     }
                 });
-                
-                // Efek Kabut (dilewati kalau pemain lokal pakai skin anti-kabut/gelap)
+
                 const _localHasNightVision = (typeof player !== 'undefined' && player && player.skin && player.skin.nightVision);
                 if (!_localHasNightVision) this.fogZones.forEach(f => {
                     if(f.x > camera.x - viewW/2 - f.radius && f.x < camera.x + viewW/2 + f.radius && 
@@ -1957,8 +1847,7 @@
 
         function generateEnvironment() {
             mapObjects = { decorations: [], rivers: [] };
-            
-            // Generate Rivers
+
             const numRivers = Math.floor(currentWorldSize * currentWorldSize / 25000000) + 2; 
             for(let i=0; i<numRivers; i++) {
                 let points = [];
@@ -1994,7 +1883,6 @@
                 if (points.length > 2) mapObjects.rivers.push({ points: points, width: width });
             }
 
-            // Generate Decorations
             const numPatches = Math.floor(currentWorldSize * currentWorldSize / 2000000); 
             for(let i=0; i<numPatches; i++) {
                 let isForest = selectedMapIndex === 0;
@@ -2086,15 +1974,15 @@
             constructor(isPlayer, name, skinData, controlSlot) {
                 this.isPlayer = isPlayer;
                 this.name = name;
-                this.controlSlot = controlSlot || (isPlayer ? 1 : 0); // 1 = P1 (WASD+mouse), 2 = P2 (arrows keyboard-only)
+                this.controlSlot = controlSlot || (isPlayer ? 1 : 0); 
                 this.score = 30;
                 this.radius = 12;
                 this.segments = []; 
                 this.angle = randomRange(0, Math.PI * 2);
                 this.isBoss = false; 
                 this.activeBoosts = { speed: 0, vision: 0, invis: 0, river: 0 };
-                this.maxEnergy = 100; // dipakai buat scaling energy per role (misal hider dapet lebih banyak)
-                this.energy = 100; // Sistem energy: dash makan energy dulu, skor baru kepotong kalau energy abis
+                this.maxEnergy = 100; 
+                this.energy = 100; 
                 this.skin = skinData || gameSkins[Math.floor(Math.random() * gameSkins.length)];
                 
                 let startX, startY;
@@ -2115,7 +2003,7 @@
                 for(let i=0; i<10; i++) this.segments.push({ x: startX - (i * 10) * Math.cos(this.angle), y: startY - (i * 10) * Math.sin(this.angle) });
                 this.dead = false; this.targetAngle = this.angle; this.aiTimer = 0;
                 this.aiTurnSpeed = randomRange(0.015, 0.04); this.dashFrames = 0;
-                // Stats (mainly used for player)
+                
                 this.distanceTraveled = 0;
                 this.foodsEaten = 0;
                 this.kills = 0;
@@ -2162,7 +2050,6 @@
                     }
                 }
 
-                // Speed scales with size — semakin panjang, semakin cepat (max +55%)
                 let sizeSpeedMult = 1 + Math.min(0.55, this.score / 2400);
                 if (this.isPlayer && (gameState === 'playing' || gameState === 'winRound')) {
                     const myKeys = (this.controlSlot === 2) ? keys2 : keys;
@@ -2172,7 +2059,7 @@
                         if (myKeys.a) this.angle -= aSpeed; if (myKeys.d) this.angle += aSpeed; 
                         this.targetAngle = this.angle; 
                     } else if (joystickActive && this.controlSlot !== 2) {
-                        // Virtual joystick (mobile) — arah datang langsung dari sudut joystick
+                        
                         this.targetAngle = joystickAngle;
                         let deltaAngle = this.targetAngle - this.angle;
                         while (deltaAngle <= -Math.PI) deltaAngle += Math.PI * 2;
@@ -2194,30 +2081,29 @@
                     
                     const dashBtn = (this.controlSlot === 2) ? myKeys.space : (myKeys.space || isMouseDown || dashPressed);
                     if (dashBtn && speed > 0 && this.energy > 0) {
-                        // Dash pakai ENERGY dulu — skor aman selama energy masih ada
+                        
                         speed = 6.5 * speedMult * sizeSpeedMult;
                         this.energy = Math.max(0, this.energy - ENERGY_DASH_DRAIN);
                         if (Math.random() < 0.25) foods.push(new Food(this.segments[this.segments.length - 1].x, this.segments[this.segments.length - 1].y, 1, this.skin.head, 5));
                     } else if (dashBtn && speed > 0 && this.energy <= 0 && this.score > 12) {
-                        // Energy abis tapi maksa lari terus → SKOR yang jadi taruhannya, pelan-pelan
+                        
                         speed = 6.5 * speedMult * sizeSpeedMult;
                         this.score -= ENERGY_EMPTY_SCORE_DRAIN;
                         if (Math.random() < 0.25) foods.push(new Food(this.segments[this.segments.length - 1].x, this.segments[this.segments.length - 1].y, 1, this.skin.head, 5));
                     } else {
-                        // Gak dash → energy regen pelan-pelan otomatis
+                        
                         this.energy = Math.min(this.maxEnergy, this.energy + ENERGY_PASSIVE_REGEN);
                     }
                 } else {
-                    // AI Logic
+                    
                     speed = (this.isBoss ? 3.2 : 2.2) * speedMult * sizeSpeedMult; 
                     this.aiTimer--;
                     
                     if (this.aiTimer <= 0) {
-                        this.aiTimer = randomRange(20, 50); // reaksi lebih lambat
+                        this.aiTimer = randomRange(20, 50); 
                         let closestObj = null; let minDist = 800; 
-                        let dangerAngle = null; let dangerDist = 180; // jarak deteksi bahaya lebih pendek
+                        let dangerAngle = null; let dangerDist = 180; 
 
-                        // Hindari ular lain (lebih cuek, sering miss)
                         if (Math.random() < 0.6) {
                             for (let j = 0; j < snakes.length; j++) {
                                 const s2 = snakes[j];
@@ -2235,8 +2121,7 @@
                                 }
                             }
                         }
-                        
-                        // Cek Bahaya Cuaca (Petir) - kadang ga sadar
+
                         if (Math.random() < 0.5) {
                             for (let j = 0; j < WeatherSys.strikes.length; j++) {
                                 const strike = WeatherSys.strikes[j];
@@ -2256,7 +2141,7 @@
                             if (dangerDist < 120 && this.score > 40 && Math.random() < 0.3) this.dashFrames = randomRange(5, 15);
                         } else {
                             let targetIsPrey = false;
-                            // Jarang berburu pemain
+                            
                             if ((this.score > 300 || this.isBoss || currentMode === 'pvp') && Math.random() < 0.35) {
                                 for (let j = 0; j < snakes.length; j++) {
                                     const prey = snakes[j];
@@ -2276,7 +2161,7 @@
                             }
                             
                             if (closestObj && Math.random() < 0.8) {
-                                // kadang salah arah dikit (ngaco)
+                                
                                 this.targetAngle = Math.atan2(closestObj.y - this.head.y, closestObj.x - this.head.x) + randomRange(-0.35, 0.35);
                                 if (targetIsPrey && minDist < 250 && this.score > 50 && Math.random() < 0.4) this.dashFrames = randomRange(8, 20);
                             } else {
@@ -2320,22 +2205,21 @@
                     let newHeadX = this.head.x + Math.cos(this.angle) * speed;
                     let newHeadY = this.head.y + Math.sin(this.angle) * speed;
 
-                    // Tembok maze solid — beneran gak bisa ditembus begitu maze aktif
                     if (currentMode === 'hideseek' && HideSeek.mazeActive) {
                         const r = this.radius * 0.85;
                         if (HideSeek.hsBoxCollision(newHeadX, newHeadY, r)) {
                             if (!HideSeek.hsBoxCollision(newHeadX, this.head.y, r)) {
-                                newHeadY = this.head.y; // geser nempel tembok, tetep bisa jalan di sumbu X
+                                newHeadY = this.head.y; 
                             } else if (!HideSeek.hsBoxCollision(this.head.x, newHeadY, r)) {
-                                newHeadX = this.head.x; // geser nempel tembok, tetep bisa jalan di sumbu Y
+                                newHeadX = this.head.x; 
                             } else {
-                                newHeadX = this.head.x; newHeadY = this.head.y; // mentok total, berhenti di tembok
+                                newHeadX = this.head.x; newHeadY = this.head.y; 
                             }
                         }
                     }
 
                     this.segments.unshift({x: newHeadX, y: newHeadY});
-                    // Track stats
+                    
                     if (this.isPlayer) {
                         const dx = newHeadX - this._lastHead.x, dy = newHeadY - this._lastHead.y;
                         const moved = Math.sqrt(dx*dx + dy*dy);
@@ -2387,7 +2271,6 @@
                     AudioSys.playDie();
                     screenShake = 20;
 
-                    // DUO MODE: if partner still alive, don't show death screen yet — just KO
                     if (currentMode === 'duo') {
                         const partner = (this === player) ? player2 : player;
                         if (partner && !partner.dead) {
@@ -2395,12 +2278,11 @@
                                 (this.controlSlot === 2 ? "P2 K.O." : "P1 K.O."),
                                 (this.controlSlot === 2 ? "#f472b6" : "#60a5fa"), true);
                             recordDeath(this.head.x, this.head.y);
-                            return; // skip death screen
+                            return; 
                         }
                     }
 
-
-                    // Configure death screen content but defer reveal until after replay
+                    
                     if (currentMode === 'duo' && player && player2) {
                         UI.finalScore.innerText = `${Math.floor(player.score)} + ${Math.floor(player2.score)}`;
                     } else {
@@ -2409,7 +2291,6 @@
                     UI.deathScreen.classList.remove('win-anim');
                     UI.survSummary.classList.add('hidden');
 
-                    // === Record stats + heatmap ===
                     recordDeath(this.head.x, this.head.y);
                     recordPlayerDeathStats(this);
                     UI.stJarak.innerText = Math.floor(this.distanceTraveled / 10) + ' m';
@@ -2418,7 +2299,7 @@
                     UI.stHidup.innerText = formatTime(this.aliveFrames);
                     UI.stSpeed.innerText = this.topSpeed.toFixed(1);
                     drawHeatmapInto(UI.heatmapCanvas);
-                    // Spectate button only useful if other snakes alive
+                    
                     const othersAlive = snakes.some(s => s !== this && !s.dead && !s.isPlayer);
                     UI.spectateBtn.classList.toggle('hidden', !othersAlive || currentMode === 'pvp');
 
@@ -2457,7 +2338,6 @@
                         UI.respawnBtn.classList.add('hidden');
                     }
 
-                    // Enter replay state — auto-plays the last 10s, THEN reveals death screen
                     startReplay();
                 } else {
                     if (killer && killer.isPlayer) {
@@ -2535,7 +2415,6 @@
             UI.bossWave.innerText = wave;
         }
 
-        // ===== HIDE & SEEK MODE =====
         function _segRectHit(x1,y1,x2,y2,r) {
             const x=r.x,y=r.y,w=r.w,h=r.h;
             if (Math.max(x1,x2) < x || Math.min(x1,x2) > x+w) return false;
@@ -2558,14 +2437,14 @@
             mazeActive: false, mazeMsgTimer: 0,
             active: false, timer: 0, ended: false,
             CONE_RANGE: 700, CONE_HALF: Math.PI/5,
-            HIDER_LIGHT_RANGE: 240, // senter hider — sengaja jauh lebih pendek & bulat (bukan cone) dari senter seeker
+            HIDER_LIGHT_RANGE: 240, 
             init() {
                 this.boxes = []; this.batteries = []; this.pylons = []; this.exit = null;
                 this.mazeActive = false; this.mazeMsgTimer = 0;
                 this.active = true; this.ended = false;
-                this.timer = 8 * 60 * 60; // 8 menit
+                this.timer = 8 * 60 * 60; 
                 const size = currentWorldSize;
-                // Map lebih luas → box lebih banyak
+                
                 const N = 360;
                 for (let i=0;i<N;i++){
                     const w = randomRange(120, 380);
@@ -2582,7 +2461,7 @@
                         this.boxes.push({x: Math.max(50,Math.min(size-w-50,cx + randomRange(-200,200))), y: Math.max(50,Math.min(size-h-50,cy + randomRange(-200,200))), w, h, color:'#3b2410'});
                     }
                 }
-                // 3 tiang (pylon) tersebar
+                
                 for (let i=0;i<3;i++){
                     const angle = (i/3)*Math.PI*2 + Math.PI/6;
                     const r = size * 0.28;
@@ -2590,7 +2469,7 @@
                     const py = size/2 + Math.sin(angle) * r;
                     this.pylons.push({x:px, y:py, filled:0, needed:3, radius:110, pulse:Math.random()*Math.PI*2});
                 }
-                // 9 baterai tersebar
+                
                 for (let i=0;i<9;i++){
                     let bx, by, tries=0;
                     do {
@@ -2606,16 +2485,16 @@
                 for (const b of this.boxes) if (_segRectHit(x1,y1,x2,y2,b)) return true;
                 return false;
             },
-            // Cek tabrakan fisik (bukan cuma LOS) — dipakai buat bikin tembok maze beneran solid
+            
             hsBoxCollision(x, y, r) {
                 for (const b of this.boxes) {
                     if (x + r > b.x && x - r < b.x + b.w && y + r > b.y && y - r < b.y + b.h) return b;
                 }
                 return null;
             },
-            // Generator maze asli (recursive backtracker + braiding) yang nutupin SELURUH map, bukan strip acak
+            
             generateFullMaze(size, safePoints) {
-                const targetCells = 22; // lebih banyak sel = lorong lebih sempit, gak berasa "ruangan gede"
+                const targetCells = 22; 
                 const cellSize = size / targetCells;
                 const cols = Math.max(6, Math.floor(size / cellSize));
                 const rows = cols;
@@ -2640,8 +2519,7 @@
                     visited[nr][nc] = true;
                     stack.push([nr,nc]);
                 }
-                // BRAIDING: buang mayoritas dead-end (jalan buntu 1 pintu) biar selalu ada jalur alternatif kabur.
-                // Sengaja gak 100% biar masih ada tensi, tapi 85% dead-end dikasih jalan kedua.
+
                 const degree = (r,c) => (walls[r][c].N?0:1)+(walls[r][c].S?0:1)+(walls[r][c].E?0:1)+(walls[r][c].W?0:1);
                 for (let r=0;r<rows;r++){
                     for (let c=0;c<cols;c++){
@@ -2674,8 +2552,7 @@
                         if (c===cols-1 && w.E) boxes.push({x: x+cellSize-wallT/2, y, w: wallT, h: cellSize, color:'#0f172a'});
                     }
                 }
-                // CLEARANCE: begitu maze nyala, jangan sampe ada hider yang ujug-ujug ke-boks tembok
-                // persis di posisi dia berdiri saat itu juga — kasih ruang aman radius kecil dulu.
+
                 if (safePoints && safePoints.length) {
                     const clearR = cellSize * 0.65;
                     return boxes.filter(b => {
@@ -2688,7 +2565,7 @@
                 }
                 return boxes;
             },
-            // AI lebih pintar: cek tembok di depan dulu sebelum belok ke goal, biar gak nyangkut di box/maze
+            
             steerToward(snake, goalX, goalY, turnRate) {
                 let desired = Math.atan2(goalY - snake.head.y, goalX - snake.head.x);
                 const lookAhead = 260;
@@ -2703,7 +2580,7 @@
                     for (const off of offsets) {
                         if (clear(desired + off)) { desired += off; found = true; break; }
                     }
-                    if (!found) desired += (Math.random() < 0.5 ? 1 : -1) * 2.2; // mentok total → putar balik
+                    if (!found) desired += (Math.random() < 0.5 ? 1 : -1) * 2.2; 
                 }
                 snake.targetAngle = desired;
                 let diff = ((desired - snake.angle + Math.PI*3) % (Math.PI*2)) - Math.PI;
@@ -2714,21 +2591,20 @@
                 this.mazeActive = true;
                 this.mazeMsgTimer = 240;
                 const size = currentWorldSize;
-                // Seluruh map beneran jadi maze (grid recursive-backtracker + braiding), bukan strip acak lagi.
-                // Box lama (hiding spot) dibuang, diganti tembok maze yang solid — gak bisa ditembus.
+
                 const hiderSafePoints = snakes.filter(s => s.hsRole === 'hider' && !s.dead)
                     .map(s => ({x: s.head.x, y: s.head.y}));
                 this.boxes = this.generateFullMaze(size, hiderSafePoints);
-                // Seeker jadi 2.4x lebih cepat — tapi disebar biar gak numpuk ngejar 1 hider yang sama
+                
                 const seekerBots = snakes.filter(s => s.hsRole === 'seeker' && !s.dead);
                 seekerBots.forEach((s, i) => {
                     s.hsSpeedMult = 2.4;
-                    s.hsPatrolBias = (i / Math.max(1, seekerBots.length)) * Math.PI * 2; // arah jelajah beda2 tiap seeker
+                    s.hsPatrolBias = (i / Math.max(1, seekerBots.length)) * Math.PI * 2; 
                 });
-                // Pintu keluar besar di tengah utara
+                
                 const doorW = 420, doorH = 260;
                 this.exit = { x: size/2 - doorW/2, y: 260, w: doorW, h: doorH };
-                // Jamin area pintu 100% bersih, gak ada tembok yang nutupin jalan keluar
+                
                 this.boxes = this.boxes.filter(b => {
                     const ex = this.exit;
                     return !(b.x < ex.x+ex.w && b.x+b.w > ex.x && b.y < ex.y+ex.h && b.y+b.h > ex.y);
@@ -2744,7 +2620,7 @@
                     if (b.taken) continue;
                     const d = Math.hypot(snake.head.x - b.x, snake.head.y - b.y);
                     if (d < b.radius + (snake.radius||20)) {
-                        // Deposit ke pylon terdekat yg masih butuh
+                        
                         let best=null, bd=Infinity;
                         for (const p of this.pylons) {
                             if (p.filled >= p.needed) continue;
@@ -2782,14 +2658,12 @@
                 if (this.timer > 0) this.timer--;
                 if (this.mazeMsgTimer > 0) this.mazeMsgTimer--;
 
-                // Baterai & pintu untuk semua hider
                 for (const s of snakes) {
                     if (s.hsRole !== 'hider' || s.dead) continue;
                     this.tryPickupBattery(s);
                     this.tryEscape(s);
                 }
 
-                // Sebar target biar seeker bot gak numpuk ngerubungin 1 hider doang kalau hider lain lagi kosongan
                 const aliveHiders = snakes.filter(h => !h.dead && h.hsRole === 'hider');
                 const seekerTargets = new Map();
                 if (aliveHiders.length > 1) {
@@ -2832,7 +2706,6 @@
                     }
                 }
 
-                // AI hider: cari baterai → tiang, kabur dari seeker, atau lari ke pintu
                 for (const h of snakes) {
                     if (h.dead || h.isPlayer || h.hsRole !== 'hider') continue;
                     let threat = null, td = Infinity;
@@ -2862,7 +2735,6 @@
                     }
                 }
 
-                // Win condition — escaped = safe
                 const hiders = snakes.filter(x => x.hsRole === 'hider');
                 const hidersSafe = hiders.filter(x => !x.dead || x.escaped).length;
                 const hidersAliveOnField = hiders.filter(x => !x.dead).length;
@@ -2904,7 +2776,7 @@
                     ctx.fillStyle = 'rgba(255,255,255,0.05)';
                     ctx.fillRect(b.x+6, b.y+6, b.w-12, 4);
                 }
-                // Baterai
+                
                 const t = performance.now()/500;
                 for (const b of this.batteries) {
                     if (b.taken) continue;
@@ -2912,13 +2784,13 @@
                     const pulse = 1 + Math.sin(t + b.glow)*0.15;
                     ctx.save();
                     ctx.translate(b.x, b.y);
-                    // glow
+                    
                     const g = ctx.createRadialGradient(0,0,10,0,0,80*pulse);
                     g.addColorStop(0,'rgba(34,211,238,0.55)');
                     g.addColorStop(1,'rgba(34,211,238,0)');
                     ctx.fillStyle = g;
                     ctx.beginPath(); ctx.arc(0,0,80*pulse,0,Math.PI*2); ctx.fill();
-                    // body
+                    
                     ctx.fillStyle = '#0e7490';
                     ctx.fillRect(-18, -26, 36, 52);
                     ctx.fillStyle = '#22d3ee';
@@ -2930,7 +2802,7 @@
                     ctx.fillText('⚡', 0, 2);
                     ctx.restore();
                 }
-                // Pylon (tiang)
+                
                 for (const p of this.pylons) {
                     if (p.x+120 < vx || p.x-120 > vx+vw || p.y+120 < vy || p.y-120 > vy+vh) continue;
                     p.pulse += 0.05;
@@ -2943,45 +2815,45 @@
                     g.addColorStop(1,`rgba(${glowCol},0)`);
                     ctx.fillStyle = g;
                     ctx.beginPath(); ctx.arc(0,0,180,0,Math.PI*2); ctx.fill();
-                    // base
+                    
                     ctx.fillStyle = '#1f2937';
                     ctx.fillRect(-50,-10,100,60);
                     ctx.strokeStyle = '#0f172a'; ctx.lineWidth = 3;
                     ctx.strokeRect(-50,-10,100,60);
-                    // tower
+                    
                     ctx.fillStyle = '#374151';
                     ctx.beginPath();
                     ctx.moveTo(-30,-10); ctx.lineTo(-14,-90); ctx.lineTo(14,-90); ctx.lineTo(30,-10); ctx.closePath();
                     ctx.fill(); ctx.stroke();
-                    // slot indicators
+                    
                     for (let i=0;i<p.needed;i++){
                         ctx.fillStyle = i < p.filled ? '#22d3ee' : '#111827';
                         ctx.strokeStyle = '#0f172a'; ctx.lineWidth = 2;
                         ctx.fillRect(-24 + i*16, -60, 12, 26);
                         ctx.strokeRect(-24 + i*16, -60, 12, 26);
                     }
-                    // label
+                    
                     ctx.fillStyle = full ? '#4ade80' : '#fde047';
                     ctx.font = 'bold 16px Inter'; ctx.textAlign='center';
                     ctx.fillText(full ? '✅ POWER' : (p.filled + '/' + p.needed), 0, 70);
                     ctx.restore();
                 }
-                // Exit door
+                
                 if (this.exit) {
                     const e = this.exit;
                     if (!(e.x+e.w < vx || e.x > vx+vw || e.y+e.h < vy || e.y > vy+vh)) {
                         const pulse = 0.6 + Math.sin(t*2)*0.4;
                         ctx.save();
-                        // glow
+                        
                         const g = ctx.createRadialGradient(e.x+e.w/2, e.y+e.h/2, 40, e.x+e.w/2, e.y+e.h/2, 400);
                         g.addColorStop(0, `rgba(34,197,94,${0.4*pulse})`);
                         g.addColorStop(1, 'rgba(34,197,94,0)');
                         ctx.fillStyle = g;
                         ctx.fillRect(e.x-200, e.y-200, e.w+400, e.h+400);
-                        // frame
+                        
                         ctx.fillStyle = '#166534';
                         ctx.fillRect(e.x-16, e.y-16, e.w+32, e.h+32);
-                        // door
+                        
                         const grad = ctx.createLinearGradient(e.x, e.y, e.x, e.y+e.h);
                         grad.addColorStop(0, '#22c55e');
                         grad.addColorStop(1, '#15803d');
@@ -2989,7 +2861,7 @@
                         ctx.fillRect(e.x, e.y, e.w, e.h);
                         ctx.strokeStyle = '#052e16'; ctx.lineWidth = 6;
                         ctx.strokeRect(e.x, e.y, e.w, e.h);
-                        // arrow
+                        
                         ctx.fillStyle = '#f0fdf4';
                         ctx.font = 'bold 90px Inter'; ctx.textAlign='center'; ctx.textBaseline='middle';
                         ctx.fillText('🚪', e.x+e.w/2, e.y+e.h/2 - 10);
@@ -3002,10 +2874,10 @@
             },
             drawOverlay(ctx, viewW, viewH) {
                 if (!this.active || currentMode !== 'hideseek') return;
-                // Peta lebih gelap
+                
                 ctx.fillStyle = 'rgba(2,4,10,0.78)';
                 ctx.fillRect(camera.x - viewW/2, camera.y - viewH/2, viewW, viewH);
-                // Senter hider — bulat kecil ke segala arah, jangkauan pendek, cuma buat liat sekitar dikit
+                
                 for (const h of snakes) {
                     if (h.dead || h.hsRole !== 'hider') continue;
                     ctx.save();
@@ -3091,7 +2963,6 @@
             snakes = []; foods = []; boosts = []; particles = []; floatingTexts = [];
             WeatherSys.fogZones = []; WeatherSys.strikes = [];
 
-            // Reset survival HUD & cap
             survivalFrames = 0; survivalLevel = 1; survivalKills = 0; survivalAiBoost = 0;
             UI.survival.classList.add('hidden');
             MAX_SNAKES = (mode === 'survival') ? 10 : MAX_SNAKES_DEFAULT;
@@ -3125,7 +2996,7 @@
                 snakes.push(player);
 
                 if (mode === 'duo') {
-                    // P2 gets a different skin (next available)
+                    
                     const p2SkinIdx = (selectedSkinIndex + 5) % gameSkins.length;
                     player2 = new Snake(true, "P2 (Arrow)", gameSkins[p2SkinIdx], 2);
                     snakes.push(player2);
@@ -3134,11 +3005,11 @@
                 }
 
                 if (mode === 'hideseek') {
-                    // 30% peluang jadi seeker
+                    
                     const playerIsSeeker = Math.random() < 0.30;
                     player.hsRole = playerIsSeeker ? 'seeker' : 'hider';
                     player.name = playerIsSeeker ? 'KAMU 🔦' : 'KAMU 👻';
-                    // Hider dapet energy 2.2x lebih banyak biar lebih tahan lama kabur/dash dari seeker
+                    
                     const HIDER_ENERGY_MULT = 2.2;
                     if (!playerIsSeeker) { player.maxEnergy = 100 * HIDER_ENERGY_MULT; player.energy = player.maxEnergy; }
                     const seekersBot = playerIsSeeker ? 2 : 3;
@@ -3156,7 +3027,7 @@
                         b.energy = b.maxEnergy;
                         snakes.push(b);
                     }
-                    MAX_SNAKES = snakes.length; // cegah respawn
+                    MAX_SNAKES = snakes.length; 
                     HideSeek.init();
                     for(let i=0; i<Math.floor(MAX_FOOD*0.4); i++) foods.push(new Food());
                     UI.bossText.innerText = playerIsSeeker ? 'KAMU SEEKER! Buru semua hider 🔦 (2.4x cepat setelah maze aktif)' : 'KAMU HIDER 👻 Isi 3 tiang @3 baterai → maze muncul → lari ke pintu 🚪 (8 menit)';
@@ -3242,7 +3113,7 @@
 
         UI.spectateBtn.addEventListener('click', () => {
             if (!enterSpectator()) {
-                // none alive
+                
                 UI.spectateBtn.classList.add('hidden');
             }
         });
@@ -3268,10 +3139,9 @@
             gameState = 'menu';
         }
 
-        // ====== Replay system ======
         function startReplay(manual = false) {
             if (replayBuffer.length === 0) {
-                // No buffer → show death screen immediately
+                
                 UI.layer.classList.add('hidden');
                 UI.deathScreen.classList.remove('hidden');
                 gameState = 'dead';
@@ -3302,7 +3172,7 @@
         }
 
         function update() {
-            // Replay playback drives camera & frame index, then exits
+            
             if (gameState === 'replay') {
                 if (!replayPlaying || replayBuffer.length === 0) { endReplay(); return; }
                 const idx = Math.min(replayIndex, replayBuffer.length - 1);
@@ -3311,7 +3181,7 @@
                 UI.replayBar.style.width = (((idx+1) / replayBuffer.length) * 100) + '%';
                 replayIndex++;
                 if (replayIndex >= replayBuffer.length) {
-                    // Hold last frame for a beat, then end
+                    
                     setTimeout(() => { if (gameState === 'replay') endReplay(); }, 600);
                     replayPlaying = false;
                 }
@@ -3325,9 +3195,8 @@
             
             if (gameState === 'playing' || gameState === 'winRound' || gameState === 'spectate') {
                 playingFrames++;
-                WeatherSys.update(); // Update Cuaca
+                WeatherSys.update(); 
 
-                // ===== Survival mode escalation =====
                 if (currentMode === 'survival' && gameState === 'playing') {
                     survivalFrames++;
                     if (survivalFrames % 30 === 0) UI.survTime.innerText = formatTime(survivalFrames);
@@ -3335,7 +3204,7 @@
                         survivalLevel++;
                         MAX_SNAKES = Math.min(60, MAX_SNAKES + 3);
                         survivalAiBoost = Math.min(0.06, survivalAiBoost + 0.008);
-                        // Boost existing bots' AI a bit
+                        
                         snakes.forEach(s => { if (!s.isPlayer) { s.aiTurnSpeed = Math.min(0.12, s.aiTurnSpeed + 0.01); s.aiTimer = Math.min(s.aiTimer, 30); } });
                         UI.survLevel.innerText = survivalLevel;
                         AudioSys.playLevelUp();
@@ -3345,7 +3214,6 @@
                         setTimeout(() => { UI.bossAlert.classList.remove('boss-alert-anim'); UI.bossAlert.classList.add('hidden'); }, 2500);
                     }
                 }
-
 
                 if (currentMode === 'pvp' && gameState === 'playing') {
                     pvpTimeLeft--;
@@ -3384,8 +3252,7 @@
                 }
 
                 if (currentMode !== 'pvp' && playingFrames % 2000 === 0 && waveBossCount < 5) { waveBossCount++; spawnBoss(waveBossCount); }
-                
-                // UI Peringatan Petir
+
                 let weatherWarning = false;
                 for(let s of WeatherSys.strikes) {
                     if (s.state === 'warning' && player && distSq(player.head.x, player.head.y, s.x, s.y) < 2500000) {
@@ -3395,7 +3262,6 @@
                 if(weatherWarning) UI.weatherAlert.classList.remove('hidden');
                 else UI.weatherAlert.classList.add('hidden');
 
-                // UI Boosts
                 let bActive = false;
                 if (player && player.activeBoosts.speed > 0) { UI.speed.classList.remove('hidden'); UI.tSpeed.innerText = Math.ceil(player.activeBoosts.speed/60)+"s"; bActive = true; } else UI.speed.classList.add('hidden');
                 if (player && player.activeBoosts.vision > 0) { UI.vision.classList.remove('hidden'); UI.tVision.innerText = Math.ceil(player.activeBoosts.vision/60)+"s"; bActive = true; } else UI.vision.classList.add('hidden');
@@ -3446,7 +3312,7 @@
                                 spawnFloatingText(f.x, f.y, `+${Math.floor(f.value)}`);
                                 spawnParticles(f.x, f.y, f.color, 5);
                                 s1.foodsEaten = (s1.foodsEaten || 0) + 1;
-                                s1.energy = Math.min(s1.maxEnergy || 100, s1.energy + ENERGY_FOOD_BONUS); // makan food ngisi energy dikit
+                                s1.energy = Math.min(s1.maxEnergy || 100, s1.energy + ENERGY_FOOD_BONUS); 
                             }
                             foods.splice(j, 1);
                         }
@@ -3493,7 +3359,7 @@
                 }
 
                 if (currentMode === 'duo' && ((player && !player.dead) || (player2 && !player2.dead))) {
-                    // Follow midpoint of both alive players; zoom out to keep both in view
+                    
                     const alive = [player, player2].filter(s => s && !s.dead);
                     let mx = 0, my = 0;
                     alive.forEach(s => { mx += s.head.x; my += s.head.y; });
@@ -3502,7 +3368,7 @@
                     if (alive.length === 2) {
                         spread = dist(alive[0].head.x, alive[0].head.y, alive[1].head.x, alive[1].head.y);
                     }
-                    // Zoom fits both: base 1.0, zoom out as they drift apart
+                    
                     let targetZoom = 1.0;
                     if (spread > 600) targetZoom = Math.max(0.35, 1.0 - (spread - 600) / 2600);
                     targetZoom *= mobileZoomBoost();
@@ -3523,7 +3389,7 @@
                             : (avgE < 30 ? 'linear-gradient(90deg,#f59e0b,#f97316)' : 'linear-gradient(90deg,#22d3ee,#60a5fa)');
                     }
                 } else if (player && !player.dead) {
-                    // Cek jika pemain di dalam kabut
+                    
                     let inFog = false;
                     for (let f of WeatherSys.fogZones) {
                         if (distSq(player.head.x, player.head.y, f.x, f.y) < f.radius ** 2) {
@@ -3532,8 +3398,8 @@
                     }
 
                     let targetZoom = currentMode === 'pvp' ? 0.7 : 1.0; 
-                    if (inFog && !(player.skin && player.skin.nightVision)) targetZoom = 1.7; // Kamera mendekat (pandangan menyempit) saat di dalam kabut — kecuali pakai skin anti-kabut
-                    if (player.activeBoosts.vision > 0) targetZoom = 0.5; // Vision boost mengabaikan kabut
+                    if (inFog && !(player.skin && player.skin.nightVision)) targetZoom = 1.7; 
+                    if (player.activeBoosts.vision > 0) targetZoom = 0.5; 
                     targetZoom *= mobileZoomBoost();
                     
                     camera.x += (player.head.x - camera.x) * 0.1;
@@ -3550,7 +3416,6 @@
                     }
                 }
 
-                // Spectator camera follows target
                 if (gameState === 'spectate') {
                     const t = spectatorCurrent();
                     if (!t) { exitSpectator(); }
@@ -3567,14 +3432,13 @@
                 
                 if (currentMode !== 'pvp') updateLeaderboard();
 
-                // ===== Replay recording (any non-pvp mode) =====
                 if (currentMode !== 'pvp' && player && !player.dead) {
                     replayRecordTick++;
                     if (replayRecordTick % REPLAY_SAMPLE_EVERY === 0) {
                         const snap = { camX: camera.x, camY: camera.y, camZ: camera.zoom, snakes: [] };
                         for (const s of snakes) {
                             if (s.dead) continue;
-                            // Only capture snakes near the camera to save memory
+                            
                             if (!s.isPlayer && Math.abs(s.head.x - camera.x) > 1600) continue;
                             if (!s.isPlayer && Math.abs(s.head.y - camera.y) > 1600) continue;
                             const segs = [];
@@ -3702,7 +3566,7 @@
             drawDecorations(viewW, viewH);
             HideSeek.drawBoxes(ctx, viewW, viewH);
             
-            WeatherSys.drawLower(ctx); // Gambar peringatan petir (di bawah ular)
+            WeatherSys.drawLower(ctx); 
 
             foods.forEach(f => { if(f.x > camera.x - viewW/2 - f.radius && f.x < camera.x + viewW/2 + f.radius && f.y > camera.y - viewH/2 - f.radius && f.y < camera.y + viewH/2 + f.radius) f.draw(ctx); });
             boosts.forEach(b => { if(b.x > camera.x - viewW/2 - b.radius && b.x < camera.x + viewW/2 + b.radius && b.y > camera.y - viewH/2 - b.radius && b.y < camera.y + viewH/2 + b.radius) b.draw(ctx); });
@@ -3714,7 +3578,7 @@
                 snakes.forEach(s => s.draw(ctx));
             }
 
-            WeatherSys.drawUpper(ctx, viewW, viewH); // Gambar efek kilat & kabut (di atas ular)
+            WeatherSys.drawUpper(ctx, viewW, viewH); 
             HideSeek.drawOverlay(ctx, viewW, viewH);
 
             if (currentMode === 'pvp') {
@@ -3755,7 +3619,6 @@
 
             ctx.restore();
 
-            // Di pojok kiri bawah game, TIDAK BISA DIHAPUS:
             ctx.fillStyle = 'rgba(255,255,255,0.3)';
             ctx.font = '10px Inter';
             ctx.fillText('© Snake King.IO — github.com/akhtarnurrahman10-pixel/snake-king-io', 10, height-10);
@@ -3774,7 +3637,7 @@
                     ctx.arc(seg.x, seg.y, s.radius, 0, Math.PI*2);
                     ctx.fill();
                 }
-                // name tag for player
+                
                 if (s.isPlayer) {
                     ctx.font = "bold 18px Inter"; ctx.textAlign = "center";
                     ctx.fillStyle = "#fff"; ctx.shadowColor = "black"; ctx.shadowBlur = 4;
@@ -3812,7 +3675,6 @@
             mCtx.clearRect(0, 0, 160, 160);
             const scale = 160 / currentWorldSize;
 
-            // Heatmap overlay (faint)
             const all = loadHeatmap();
             const arr = all[String(selectedMapIndex)] || [];
             arr.forEach(p => {
@@ -3841,7 +3703,6 @@
             update();
             draw();
 
-            // Di pojok kiri bawah game, TIDAK BISA DIHAPUS:
             ctx.fillStyle = 'rgba(255,255,255,0.3)';
             ctx.font = '10px Inter';
             ctx.fillText('© Snake King.IO — github.com/akhtarnurrahman10-pixel/snake-king-io', 10, height-10);
@@ -3850,7 +3711,6 @@
         }
         requestAnimationFrame(loop);
 
-        // Watermark independen (jaga-jaga kalau 2 di atas ke-hapus): dipaksa nempel tiap 400ms.
         setInterval(() => {
             try {
                 ctx.fillStyle = 'rgba(255,255,255,0.3)';
@@ -3860,7 +3720,6 @@
         }, 400);
     </script>
 
-    <!-- =================== ACHIEVEMENT SYSTEM (60 achievements) =================== -->
     <style>
       .ach-card { transition: all .2s ease; }
       .ach-card.locked { filter: grayscale(.9); opacity: .55; }
@@ -3880,9 +3739,8 @@
       const ACH_STATS_KEY = 'snakeKingAchStats_v1';
       const CATS = { beginner:'🐣 Beginner', intermediate:'🐍 Intermediate', advanced:'👑 Advanced', legendary:'🔥 Legendary' };
 
-      // Achievement list (60). check(ctx) returns true to unlock. ctx = { stats, life, game, mode, mapIdx, skinIdx, player, unlocked }
       const A = [
-        // BEGINNER (15)
+        
         ['b1','Langkah Pertama','Main 1 game','beginner','🐣', c => c.life.games >= 1],
         ['b2','Pemakan Ulung','Makan 50 food dalam 1 game','beginner','🍎', c => c.game.food >= 50],
         ['b3','Tumbuh Dewasa','Capai skor 100','beginner','📈', c => (c.player?.score|0) >= 100 || c.life.bestScore >= 100],
@@ -3899,7 +3757,6 @@
         ['b14','Penonton Setia','Spectate 1 game','beginner','👁️', c => c.life.spectates >= 1],
         ['b15','Pemanas','Main total 3 game','beginner','🔥', c => c.life.games >= 3],
 
-        // INTERMEDIATE (20)
         ['i1','Pembunuh Pertama','Kill 1 ular','intermediate','🗡️', c => c.life.kills >= 1],
         ['i2','Skor 500','Capai skor 500','intermediate','🏅', c => (c.player?.score|0) >= 500 || c.life.bestScore >= 500],
         ['i3','Skor 1000','Capai skor 1000','intermediate','🏆', c => (c.player?.score|0) >= 1000 || c.life.bestScore >= 1000],
@@ -3921,7 +3778,6 @@
         ['i19','PvP Challenger','Main PvP 2 kali','intermediate','⚔️', c => (c.life.modes.pvp|0) >= 2],
         ['i20','Bunuh 5 Ular','Total kill 5 (lifetime)','intermediate','🗡️', c => c.life.kills >= 5],
 
-        // ADVANCED (15)
         ['a1','Skor 5000','Capai skor 5000','advanced','🥇', c => (c.player?.score|0) >= 5000 || c.life.bestScore >= 5000],
         ['a2','Skor 10000','Capai skor 10000','advanced','🌟', c => (c.player?.score|0) >= 10000 || c.life.bestScore >= 10000],
         ['a3','Survivor 10 Menit','Bertahan 10 menit','advanced','⏰', c => c.game.frames >= 10*60*60 || c.life.bestFrames >= 10*60*60],
@@ -3938,7 +3794,6 @@
         ['a14','Waktu 1 Jam','Total waktu main 1 jam (lifetime)','advanced','⏳', c => c.life.totalFrames >= 60*60*60],
         ['a15','5 Game Berturut','Main 5 game tanpa refresh','advanced','🔁', c => c.life.sessionGames >= 5],
 
-        // LEGENDARY (10)
         ['l1','Dewa Ular','Skor 20000+','legendary','🐉', c => (c.player?.score|0) >= 20000 || c.life.bestScore >= 20000],
         ['l2','Survivor Sejati','Bertahan 20 menit','legendary','⏰', c => c.game.frames >= 20*60*60 || c.life.bestFrames >= 20*60*60],
         ['l3','Pembunuh Bos Sejati','Bunuh semua 5 Boss Wave dalam 1 game','legendary','👹', c => c.game.bossKills >= 5],
@@ -3969,7 +3824,6 @@
       let life = loadLife();
       let unlocked = loadStore();
 
-      // ===== 2 Skin Legendary — reward khusus kalau SEMUA 60 achievement kelar =====
       const ACH_SKIN_KEY = 'snakeKingAchSkinUnlocks_v1';
       const ACH_REWARD_SKINS = [
         { name:'👑 Ascended',    head:'#fff7cc', body1:'#facc15', body2:'#78350f', anim:'ascended' },
@@ -3978,7 +3832,7 @@
       function loadAchSkinUnlock(){ try { return JSON.parse(localStorage.getItem(ACH_SKIN_KEY) || '[]'); } catch(e){ return []; } }
       function saveAchSkinUnlock(arr){ try { localStorage.setItem(ACH_SKIN_KEY, JSON.stringify(arr)); } catch(e){} }
       const achSkinUnlocked = new Set(loadAchSkinUnlock());
-      // Kalau sebelumnya udah 100% tapi belum pernah dikasih reward ini, kasih retroaktif (tanpa toast)
+      
       if (unlocked['l10'] && achSkinUnlocked.size < ACH_REWARD_SKINS.length) {
         ACH_REWARD_SKINS.forEach((s,i)=>achSkinUnlocked.add(i));
         saveAchSkinUnlock(Array.from(achSkinUnlocked));
@@ -3994,7 +3848,7 @@
         });
       });
       function unlockAchievementRewardSkins(){
-        if (achSkinUnlocked.size >= ACH_REWARD_SKINS.length) return; // udah pernah dikasih
+        if (achSkinUnlocked.size >= ACH_REWARD_SKINS.length) return; 
         ACH_REWARD_SKINS.forEach((s,i) => achSkinUnlocked.add(i));
         saveAchSkinUnlock(Array.from(achSkinUnlocked));
         gameSkins.forEach(gs => { if (gs.achSkinIdx !== undefined) gs.locked = false; });
@@ -4012,7 +3866,7 @@
         wrap.appendChild(el);
         setTimeout(()=>el.remove(), 6500);
       }
-      // sync lifetime from base stats key
+      
       function syncFromBase() {
         try {
           const s = JSON.parse(localStorage.getItem('snakeKingTotalStats_v1') || '{}');
@@ -4024,7 +3878,6 @@
         } catch(e){}
       }
 
-      // Per-game tracker
       let game = null;
       function resetGame() {
         game = { food:0, kills:0, dashes:0, boosts:0, fogFrames:0, riverFrames:0, bossKills:0, frames:0,
@@ -4068,11 +3921,10 @@
         if (el) el.innerText = `${Object.keys(unlocked).length}/60`;
       }
 
-      // Hook initGame
       const _initGame = window.initGame;
       window.initGame = async function(mode) {
         syncFromBase();
-        // commit per-game stats if previous game existed
+        
         resetGame();
         game.startMode = mode;
         game.startMap = (typeof selectedMapIndex !== 'undefined') ? selectedMapIndex : 0;
@@ -4088,7 +3940,6 @@
         return _initGame.apply(this, arguments);
       };
 
-      // Hook recordPlayerDeathStats — runs once at player death
       const _record = window.recordPlayerDeathStats;
       window.recordPlayerDeathStats = function(p) {
         const res = _record ? _record.apply(this, arguments) : undefined;
@@ -4096,7 +3947,7 @@
           life.deaths = (life.deaths|0) + 1;
           life.kills = (life.kills|0) + (p.kills|0);
           if ((p.score|0) < 50) life.youngDeath = true;
-          // casual no-death streak: dying in 'lives' resets, otherwise unaffected
+          
           if (currentMode === 'lives') life.casualNoDeathStreak = 0;
           syncFromBase();
           saveLife(life);
@@ -4105,15 +3956,12 @@
         return res;
       };
 
-      // Hook openTotalStats to refresh badge
       const _openStats = window.openTotalStats;
       window.openTotalStats = function() { updateBadge(); return _openStats && _openStats.apply(this, arguments); };
 
-      // Spectate hook
       const _spectBtn = document.getElementById('spectateBtn');
       if (_spectBtn) _spectBtn.addEventListener('click', ()=>{ life.spectates=(life.spectates|0)+1; saveLife(life); checkAll(); });
 
-      // Poll loop — runs every frame, observes globals from main script scope
       let pollTick = 0;
       function poll() {
         requestAnimationFrame(poll);
@@ -4123,7 +3971,6 @@
           const p = (typeof player !== 'undefined') ? player : null;
           if (!p) return;
 
-          // Lifetime score/frames tracking even during play
           if ((p.score|0) > life.bestScore) life.bestScore = p.score|0;
           if ((p.aliveFrames|0) > life.bestFrames) life.bestFrames = p.aliveFrames|0;
 
@@ -4131,14 +3978,12 @@
 
           game.frames = p.aliveFrames|0;
 
-          // Food delta
           const fE = p.foodsEaten|0;
           if (fE > game.prevFood) { game.food += (fE - game.prevFood); game.prevFood = fE; }
-          // Kills delta
+          
           const kE = p.kills|0;
           if (kE > game.prevKills) { game.kills += (kE - game.prevKills); game.prevKills = kE; }
 
-          // Boost transitions
           const ab = p.activeBoosts || {};
           if ((ab.speed|0) > 0 && game.prevSpeed === 0) { game.boosts++; life.boosts++; life.speedCount++; }
           if ((ab.vision|0) > 0 && game.prevVision === 0) { game.boosts++; life.boosts++; life.visionCount++; }
@@ -4147,7 +3992,6 @@
           game.prevSpeed = ab.speed|0; game.prevVision = ab.vision|0; game.prevInvis = ab.invis|0; game.prevRiver = ab.river|0;
           if ((ab.river|0) > 0) game.riverFrames++;
 
-          // Fog detection
           try {
             if (typeof WeatherSys !== 'undefined' && WeatherSys.fogZones) {
               for (const f of WeatherSys.fogZones) {
@@ -4157,7 +4001,6 @@
             }
           } catch(e){}
 
-          // Lightning survival (pakai flag akurat dari momen sambaran asli — bukan tebak2an state yg keliru/kelewat)
           if (window.__evLightningSurvived) {
             window.__evLightningSurvived = false;
             game.lightningSurvivedThisGame = 1;
@@ -4167,56 +4010,50 @@
             }
           }
 
-          // Dash (player hold) — termasuk tombol dash mobile (dashPressed), sebelumnya kelewat jadi gak ke-detect di HP
           const dashHold = ((typeof keys !== 'undefined' && keys.space) || (typeof isMouseDown !== 'undefined' && isMouseDown) || (typeof dashPressed !== 'undefined' && dashPressed));
           if (dashHold && !game.prevDashHold && (p.score|0) > 35) { game.dashes++; life.dashes++; }
           game.prevDashHold = dashHold;
 
-          // Boss kills tracking
           if (typeof snakes !== 'undefined') {
             for (const s of snakes) {
               if (s.isBoss) {
                 if (!game.bossSeen.has(s)) game.bossSeen.add(s);
                 if (s.dead && !game.bossDeadSeen.has(s)) {
                   game.bossDeadSeen.add(s);
-                  // attribute to player roughly: only count if player still alive
+                  
                   if (!p.dead) { game.bossKills++; life.bossKills++; }
                 }
               }
             }
           }
 
-          // Survival level
           if (typeof currentMode !== 'undefined' && currentMode === 'survival' && typeof survivalLevel !== 'undefined') {
             if (survivalLevel > life.bestSurvivalLevel) life.bestSurvivalLevel = survivalLevel;
           }
-          // PvP round
+          
           if (typeof currentMode !== 'undefined' && currentMode === 'pvp' && typeof pvpCurrentRound !== 'undefined') {
             if (pvpCurrentRound > life.pvpMaxRound) life.pvpMaxRound = pvpCurrentRound;
           }
 
-          // Wins
-          // arena win: survive 10 minutes alive
+          
           if (currentMode === 'arena' && p.aliveFrames >= 10*60*60 && !p.dead) {
             if (!(life.wins.arena|0)) { life.wins.arena = 1; }
           }
-          // hardcore/lives win = best score 5000+ achieved alive
+          
           if ((currentMode === 'hardcore' || currentMode === 'lives') && (p.score|0) >= 5000) {
             if (!(life.wins[currentMode]|0)) life.wins[currentMode] = 1;
           }
-          // survival win = level 10 reached
+          
           if (currentMode === 'survival' && survivalLevel >= 10) {
             if (!(life.wins.survival|0)) life.wins.survival = 1;
           }
-          // pvp win = end-game state 'win' shown
+          
           if (currentMode === 'pvp' && typeof gameState !== 'undefined' && gameState === 'win') {
             if (!(life.wins.pvp|0)) life.wins.pvp = 1;
           }
 
-          // (Penghitungan lightningSurvived sudah instan di atas via flag __evLightningSurvived)
-
-          // Casual no-death tracking: when player wins (or reaches end alive long enough) in 'lives'
-          // Increment streak when this game ends without dying - handled separately; here ensure increment per game if survives 60s alive
+          
+          
           if (currentMode === 'lives' && !p.dead && p.aliveFrames >= 60*60 && !game._casualCounted) {
             game._casualCounted = true;
             life.casualNoDeathStreak = (life.casualNoDeathStreak|0) + 1;
@@ -4227,7 +4064,6 @@
       }
       requestAnimationFrame(poll);
 
-      // ============= UI =============
       let activeTab = 'all';
       function renderAch() {
         const list = document.getElementById('achList');
@@ -4268,7 +4104,6 @@
         document.getElementById('achievementsModal').classList.add('hidden');
       };
 
-      // Reset stats hook: also reset achievement progress
       const _reset = window.resetTotalStats;
       window.resetTotalStats = function() {
         if (!confirm('Reset semua statistik DAN achievement?')) return;
@@ -4281,12 +4116,11 @@
       };
 
       updateBadge();
-      // initial sync + check
+      
       syncFromBase(); saveLife(life); checkAll(true);
     })();
     </script>
 
-    <!-- =================== HARDWARE OPTIMIZATION UI =================== -->
     <script>
     (function(){
       const OPT_KEY = 'snakeKingOpt_v1';
@@ -4323,7 +4157,7 @@
             setSaved(p.id);
             updateBadge();
             render();
-            // Show reload hint
+            
             if (!document.getElementById('optReloadHint')) {
               const hint = document.createElement('div');
               hint.id = 'optReloadHint';
@@ -4350,9 +4184,6 @@
     })();
     </script>
 
-    <!-- ============================================================
-         CUSTOM MAP EDITOR — 20 Bencana / 20 Dekorasi / 20 Booster
-         ============================================================ -->
     <div id="mapEditorModal" class="absolute inset-0 bg-black/90 backdrop-blur-md hidden pointer-events-auto z-[80] p-3 md:p-6 overflow-y-auto">
       <div class="max-w-6xl mx-auto bg-slate-900/95 border border-fuchsia-600/60 rounded-2xl p-4 md:p-6 shadow-[0_0_60px_rgba(217,70,239,0.35)]">
         <div class="flex items-center justify-between mb-3">
@@ -4361,7 +4192,6 @@
         </div>
         <p class="text-xs text-gray-400 mb-3">Bikin map sendiri: 20 bencana (chance 20–60%), 20 dekorasi (maks 30x), 20 booster, jumlah ular, dll. Bisa export/import JSON & download file .js.</p>
 
-        <!-- General settings -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4 bg-black/40 border border-slate-700 rounded-xl p-3">
           <label class="text-xs text-gray-300">
             <div class="flex justify-between"><span>Nama Map</span></div>
@@ -4402,7 +4232,6 @@
           </label>
         </div>
 
-        <!-- Tabs -->
         <div class="flex gap-2 mb-3 text-xs">
           <button data-metab="dis" class="me-tab px-3 py-1.5 rounded-lg bg-red-900/60 border border-red-500/60 text-red-100 font-bold">☄️ Bencana</button>
           <button data-metab="dec" class="me-tab px-3 py-1.5 rounded-lg bg-emerald-900/60 border border-emerald-500/60 text-emerald-100 font-bold">🌿 Dekorasi</button>
@@ -4413,7 +4242,6 @@
         <div id="meTabDec" class="me-panel hidden grid-cols-1 md:grid-cols-2 gap-2 max-h-[40vh] overflow-y-auto custom-scrollbar pr-1"></div>
         <div id="meTabBst" class="me-panel hidden grid-cols-1 md:grid-cols-2 gap-2 max-h-[40vh] overflow-y-auto custom-scrollbar pr-1"></div>
 
-        <!-- Actions -->
         <div class="mt-4 flex flex-wrap gap-2 justify-end items-center">
           <input id="meImportFile" type="file" accept=".json,.js,application/json,text/javascript" class="hidden">
           <button onclick="meImportJSON()" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 border border-slate-500 text-white font-bold text-xs rounded-lg">📥 Import</button>
@@ -4428,8 +4256,7 @@
 
     <script>
     (function(){
-      // ===== Catalogs: 20 of each, mostly NEW vs original game =====
-      // effect types implemented below: zoneDamage, projectile, blackout, swarm, magnet, slow
+
       const DISASTERS = [
         { id:'meteor',     name:'Meteor Shower',   icon:'☄️', color:'#f97316', effect:'zoneDamage', radius:380, dmg:0.35 },
         { id:'tornado',    name:'Tornado',         icon:'🌪️', color:'#94a3b8', effect:'projectile', speed:6, radius:200, dmg:0.25 },
@@ -4499,8 +4326,7 @@
         { id:'rainbow',   name:'Rainbow Skin',   icon:'🌈', color:'#ec4899', kind:'mult',      value:2.5, dur:240 },
       ];
 
-      // ===== Default config =====
-      const DEF_CHANCE = 30; // percent
+      const DEF_CHANCE = 30; 
       function makeDefault(){
         return {
           name:'My Custom Map', bg:'#0a0a1a',
@@ -4514,7 +4340,7 @@
       function loadCfg(){
         try{ const s = JSON.parse(localStorage.getItem(STORE_KEY)||'null'); if(!s) return makeDefault();
           const def = makeDefault();
-          // merge so new items appear
+          
           Object.assign(def, s, {
             disasters: Object.assign(def.disasters, s.disasters||{}),
             decorations: Object.assign(def.decorations, s.decorations||{}),
@@ -4526,7 +4352,6 @@
       function saveCfg(c){ localStorage.setItem(STORE_KEY, JSON.stringify(c)); }
       let CFG = loadCfg();
 
-      // ===== Render editor =====
       function $(id){return document.getElementById(id);}
       function syncGeneral(){
         $('meName').value=CFG.name; $('meBg').value=CFG.bg;
@@ -4626,7 +4451,6 @@
       }
       function renderAll(){ syncGeneral(); renderDisasters(); renderDecorations(); renderBoosters(); }
 
-      // Tabs
       document.querySelectorAll('.me-tab').forEach(btn=>{
         btn.addEventListener('click',()=>{
           const t = btn.dataset.metab;
@@ -4636,7 +4460,6 @@
         });
       });
 
-      // Actions
       window.openMapEditor = function(){ CFG = loadCfg(); renderAll(); bindGeneral(); $('mapEditorModal').classList.remove('hidden'); };
       window.closeMapEditor = function(){ $('mapEditorModal').classList.add('hidden'); };
       window.meSaveCfg = function(){ saveCfg(CFG); alert('Map disimpan!'); };
@@ -4653,7 +4476,7 @@
           r.onload = ()=>{
             try{
               let txt = r.result.toString();
-              // accept either pure JSON or `export default {...}` / `window.CUSTOM_MAP = {...}`
+              
               const m = txt.match(/\{[\s\S]*\}/);
               if(!m) throw new Error('Tidak ada objek JSON');
               const obj = JSON.parse(m[0]);
@@ -4681,7 +4504,6 @@
         initGame(CFG.mode || 'lives');
       };
 
-      // ===== Game integration: apply CFG when custom map is active =====
       const _initGame = window.initGame;
       window.initGame = async function(mode){
         const C = window.__ACTIVE_CUSTOM_MAP;
@@ -4704,7 +4526,6 @@
         return r;
       };
 
-      // Custom decoration sprites (emoji) drawn under snakes via wrap
       const _drawDecor = window.drawDecorations;
       window.drawDecorations = function(viewW, viewH){
         if (typeof _drawDecor === 'function') _drawDecor(viewW, viewH);
@@ -4739,25 +4560,21 @@
         });
       }
 
-      // ===== Custom disasters tick =====
       const _wUpdate = WeatherSys.update.bind(WeatherSys);
-      const customEvents = []; // {kind, x,y,radius,timer, ...}
+      const customEvents = []; 
       WeatherSys.update = function(){
         _wUpdate();
         const C = window.__ACTIVE_CUSTOM_MAP;
         if (!C) return;
         if (gameState !== 'playing' && gameState !== 'winRound') return;
 
-        // Roll disasters — chance% per disaster is interpreted as expected events per minute scaled
         DISASTERS.forEach(d=>{
           const v = C.disasters[d.id]; if (!v || !v.enabled) return;
-          // chance% (20..60) → per-frame probability
-          // ~ 0.0003 .. 0.001 per frame ≈ 1..3.6 events/min per disaster
+
           const p = (v.chance/60000);
           if (Math.random() < p) spawnCustomDisaster(d);
         });
 
-        // Update events
         for(let i=customEvents.length-1;i>=0;i--){
           const e = customEvents[i];
           if (e.update) e.update();
@@ -4765,7 +4582,6 @@
           if (e.timer<=0) customEvents.splice(i,1);
         }
 
-        // Spawn boosters periodically
         const targetBoost = (C.boost|0);
         if (boosts.length < targetBoost && Math.random()<0.02) spawnCustomBooster(C);
       };
@@ -4917,7 +4733,6 @@
         }
       }
 
-      // ===== Custom booster spawn (extra pickups) =====
       function spawnCustomBooster(C){
         const pool = BOOSTERS.filter(b=>{ const v=C.boosters[b.id]; return v && v.enabled && v.weight>0; });
         if (!pool.length) return;
@@ -4941,14 +4756,13 @@
         boosts.push(item);
       }
 
-      // Hook pickup: check our custom items inside snake update? Easier: poll each frame
-      // We piggyback on WeatherSys.update which runs each frame.
+      
       const _wUpdate2 = WeatherSys.update.bind(WeatherSys);
       WeatherSys.update = function(){
         _wUpdate2();
         if (!window.__ACTIVE_CUSTOM_MAP) return;
         if (gameState!=='playing' && gameState!=='winRound') return;
-        // pickup custom boosters
+        
         for(let i=boosts.length-1;i>=0;i--){
           const b = boosts[i]; if (!b || !b.spec || b.taken) continue;
           for (const s of snakes){
@@ -4986,7 +4800,6 @@
         if (typeof AudioSys!=='undefined' && AudioSys.playBoost) AudioSys.playBoost();
       }
 
-      // Snake speed boost applier (frame tick)
       const _wU3 = WeatherSys.update.bind(WeatherSys);
       WeatherSys.update = function(){
         _wU3();
@@ -5001,7 +4814,6 @@
     })();
     </script>
 
-    <!-- =================== ANIMATED SKINS + DAILY CHALLENGES =================== -->
     <style>
       .dc-card { transition: all .2s ease; }
       .dc-card.done { border-color: #10b981 !important; background: rgba(16,185,129,0.12) !important; }
@@ -5014,7 +4826,6 @@
       .dc-reward-badge { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:800; background:linear-gradient(90deg,#8b5cf6,#ec4899); color:#fff; }
     </style>
 
-    <!-- Daily challenge modal -->
     <div id="dailyModal" class="absolute inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center hidden pointer-events-auto z-[75] p-4">
       <div class="bg-slate-900/95 border border-pink-500/60 rounded-2xl p-5 md:p-6 w-full max-w-2xl shadow-[0_0_60px_rgba(236,72,153,0.35)] max-h-[92vh] overflow-y-auto custom-scrollbar">
         <div class="flex items-center justify-between mb-2">
@@ -5039,8 +4850,7 @@
 
     <script>
     (function(){
-      // ===== ANIMATED SKIN DEFINITIONS =====
-      // Each has: id (offset from base 18), name, head/body colors, anim type
+
       const ANIM_SKINS = [
         { name:'🌈 Rainbow',  head:'#ff0080', body1:'#ff8000', body2:'#ffff00', anim:'rainbow' },
         { name:'🔥 Inferno',  head:'#ff3d00', body1:'#ff9100', body2:'#ffea00', anim:'fire' },
@@ -5052,7 +4862,7 @@
         { name:'☠️ Toxic',    head:'#a3e635', body1:'#4d7c0f', body2:'#1a2e05', anim:'toxic' },
         { name:'🕊️ Phoenix',  head:'#fca5a5', body1:'#ef4444', body2:'#7f1d1d', anim:'phoenix' },
         { name:'🌀 Void',     head:'#c084fc', body1:'#6b21a8', body2:'#020617', anim:'void' },
-        // ===== +45 SKIN BARU KHUSUS DAILY CHALLENGE =====
+        
         { name:'🌋 Lava',        head:'#ff4500', body1:'#8b0000', body2:'#2b0000', anim:'lava' },
         { name:'🌨️ Blizzard',    head:'#ffffff', body1:'#bae6fd', body2:'#0369a1', anim:'blizzard' },
         { name:'🌪️ Storm',       head:'#94a3b8', body1:'#475569', body2:'#1e293b', anim:'storm' },
@@ -5103,7 +4913,6 @@
       function loadUnlocks(){ try { return JSON.parse(localStorage.getItem(UNLOCK_KEY) || '[]'); } catch(e){ return []; } }
       function saveUnlocks(arr){ try { localStorage.setItem(UNLOCK_KEY, JSON.stringify(arr)); } catch(e){} }
 
-      // Merge animated skins into gameSkins (all appended; locked flag on each entry)
       const baseCount = gameSkins.length;
       const unlocked = new Set(loadUnlocks());
       ANIM_SKINS.forEach((s, i) => {
@@ -5116,7 +4925,6 @@
         });
       });
 
-      // Override renderMenu to add lock overlays + anim glow
       const _renderMenu = window.renderMenu || renderMenu;
       window.renderMenu = function(){
         _renderMenu();
@@ -5143,13 +4951,12 @@
       };
       renderMenu();
 
-      // ===== HOOK Snake.draw for animated skin effects =====
       const _draw = Snake.prototype.draw;
       Snake.prototype.draw = function(ctx){
         if (this.dead) return;
         const skin = this.skin;
         if (skin && skin.anim) {
-          // Rainbow shifts colors over time
+          
           if (skin.anim === 'rainbow') {
             const t = Date.now() * 0.001;
             const hueShift = (t * 60) % 360;
@@ -5157,7 +4964,7 @@
             skin.body1 = `hsl(${(hueShift + 60) % 360}, 100%, 55%)`;
             skin.body2 = `hsl(${(hueShift + 120) % 360}, 100%, 45%)`;
           }
-          // Aurora: hue melayang pelan di pita hijau-biru-ungu
+          
           else if (skin.anim === 'aurora') {
             const t = Date.now() * 0.0006;
             const hueShift = 140 + Math.sin(t) * 60;
@@ -5165,7 +4972,7 @@
             skin.body1 = `hsl(${(hueShift + 40) % 360}, 85%, 60%)`;
             skin.body2 = `hsl(${(hueShift + 80) % 360}, 80%, 40%)`;
           }
-          // Lava: berdenyut panas antara merah-oranye
+          
           else if (skin.anim === 'lava') {
             const t = Date.now() * 0.002;
             const pulse = (Math.sin(t) + 1) / 2;
@@ -5174,7 +4981,7 @@
             skin.body1 = `hsl(${hue - 5}, 90%, 35%)`;
             skin.body2 = `hsl(0, 80%, 10%)`;
           }
-          // Ascended: kilau emas berdenyut tajam ala cahaya ilahi (reward 100% achievement)
+          
           else if (skin.anim === 'ascended') {
             const t = Date.now() * 0.0015;
             const flash = Math.pow((Math.sin(t * 3) + 1) / 2, 3);
@@ -5182,7 +4989,7 @@
             skin.body1 = `hsl(45, 95%, ${45 + flash * 15}%)`;
             skin.body2 = `hsl(30, 80%, 20%)`;
           }
-          // Grandmaster: hitam-emas royal berdenyut pelan (reward 100% achievement)
+          
           else if (skin.anim === 'grandmaster') {
             const t = Date.now() * 0.001;
             const pulse = (Math.sin(t) + 1) / 2;
@@ -5190,7 +4997,7 @@
             skin.body1 = `hsl(0, 0%, ${5 + pulse * 5}%)`;
             skin.body2 = '#000000';
           }
-          // Emit trail particles
+          
           if (typeof particles !== 'undefined' && Math.random() < 0.5) {
             const tail = this.segments[this.segments.length - 1];
             const color = skin.anim === 'fire' ? '#ff9100'
@@ -5230,7 +5037,7 @@
               vx: (Math.random()-0.5)*1.5, vy: (Math.random()-0.5)*1.5,
               life: 0.8, decay: 0.03, color, size: 3 });
           }
-          // Glow halo behind head
+          
           ctx.save();
           ctx.shadowColor = skin.head;
           ctx.shadowBlur = 18 + Math.sin(Date.now()*0.006)*6;
@@ -5241,12 +5048,10 @@
         _draw.call(this, ctx);
       };
 
-      // ===== DAILY CHALLENGES (50 pool → 5 per day) =====
-      // Each challenge: id, name, desc, goal, track(ctx) -> current progress numeric
-      // Progress evaluated at end of each game (recordPlayerDeathStats hook).
-      // Reward: unlock a random locked animated skin.
+      
+
       const DC_POOL = [
-        // ===== EASY =====
+        
         {id:'d01',n:'Pemula Aktif',      d:'Main 1 game apapun',                    goal:1,   t: p => 1},
         {id:'d02',n:'Ular Lapar',        d:'Makan 30 food dalam 1 game',            goal:30,  t: p => p.foodsEaten|0},
         {id:'d03',n:'Skor 200',          d:'Capai skor 200',                         goal:200, t: p => p.score|0},
@@ -5257,7 +5062,7 @@
         {id:'d08',n:'Kolektor Food',     d:'Makan 60 food',                         goal:60,  t: p => p.foodsEaten|0},
         {id:'d09',n:'Skor 500',          d:'Capai skor 500',                         goal:500, t: p => p.score|0},
         {id:'d10',n:'Marathon Kecil',    d:'Bertahan 2 menit',                      goal:120, t: p => Math.floor((p.aliveFrames||0)/60)},
-        // ===== MEDIUM =====
+        
         {id:'d11',n:'Pembunuh Ganda',    d:'Bunuh 3 ular musuh',                    goal:3,   t: p => p.kills|0},
         {id:'d12',n:'Skor 1000',         d:'Capai skor 1000',                        goal:1000,t: p => p.score|0},
         {id:'d13',n:'Speed Freak',       d:'Dash 15x dalam 1 game',                 goal:15,  t: p => p.__dashCount|0},
@@ -5273,7 +5078,7 @@
         {id:'d23',n:'Killer Streak',     d:'Bunuh 5 ular dalam 1 game',             goal:5,   t: p => p.kills|0},
         {id:'d24',n:'Marathon',          d:'Bertahan 10 menit',                     goal:600, t: p => Math.floor((p.aliveFrames||0)/60)},
         {id:'d25',n:'Food Master',       d:'Makan 200 food',                        goal:200, t: p => p.foodsEaten|0},
-        // ===== HARD =====
+        
         {id:'d26',n:'Pembantai',         d:'Bunuh 10 ular dalam 1 game',            goal:10,  t: p => p.kills|0},
         {id:'d27',n:'Skor 5000',         d:'Capai skor 5000',                        goal:5000,t: p => p.score|0},
         {id:'d28',n:'Dash Machine',      d:'Dash 30x',                              goal:30,  t: p => p.__dashCount|0},
@@ -5289,7 +5094,7 @@
         {id:'d38',n:'Titan Panjang',     d:'Segmen ular ≥ 400',                     goal:400, t: p => p.__maxSeg|0},
         {id:'d39',n:'Killer Elite',      d:'Bunuh 15 ular',                         goal:15,  t: p => p.kills|0},
         {id:'d40',n:'Marathon Legendaris',d:'Bertahan 20 menit',                    goal:1200,t: p => Math.floor((p.aliveFrames||0)/60)},
-        // ===== EXTREME =====
+        
         {id:'d41',n:'Skor 12000',        d:'Capai skor 12000',                       goal:12000,t: p => p.score|0},
         {id:'d42',n:'Dewa Ular',         d:'Skor 15000',                            goal:15000,t: p => p.score|0},
         {id:'d43',n:'Pembantai Bos',     d:'Bunuh 3 Boss dalam 1 game',             goal:3,   t: p => p.__bossKills|0},
@@ -5305,10 +5110,10 @@
       const DC_KEY = 'snakeKingDaily_v1';
       function todayKey(){ const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
       function seededPick(dateStr, n){
-        // Simple deterministic hash
+        
         let h = 0;
         for (let i=0;i<dateStr.length;i++) h = ((h<<5)-h + dateStr.charCodeAt(i))|0;
-        // Fisher-Yates with seeded rng
+        
         function rng(){ h = (h*1664525 + 1013904223)|0; return ((h>>>0) / 4294967296); }
         const arr = DC_POOL.slice();
         for (let i=arr.length-1;i>0;i--){
@@ -5347,7 +5152,7 @@
         const idx = locked[Math.floor(Math.random() * locked.length)];
         unlocked.add(idx);
         saveUnlocks(Array.from(unlocked));
-        // Update in-memory gameSkins entry
+        
         const target = gameSkins.find(s => s.animIdx === idx);
         if (target) target.locked = false;
         renderMenu();
@@ -5365,7 +5170,6 @@
         setTimeout(()=>el.remove(), 5200);
       }
 
-      // Evaluate progress at end of game via recordPlayerDeathStats hook
       const _rec = window.recordPlayerDeathStats;
       window.recordPlayerDeathStats = function(p){
         const res = _rec ? _rec.apply(this, arguments) : undefined;
@@ -5389,13 +5193,12 @@
         return res;
       };
 
-      // Track live per-game stats attached to player instance (dash, boosts, riverHits, bossKills, maxSeg)
       function tickTracking(){
         try {
           if (typeof gameState !== 'undefined' && (gameState === 'playing' || gameState === 'winRound')) {
             const arr = [player, player2].filter(x => x && !x.dead);
             arr.forEach(p => {
-              // init
+              
               if (typeof p.__dashCount === 'undefined') {
                 p.__dashCount = 0; p.__speedBoostCount = 0; p.__visionBoostCount = 0;
                 p.__invisBoostCount = 0; p.__riverHits = 0; p.__bossKills = 0; p.__maxSeg = 0;
@@ -5409,13 +5212,13 @@
               if ((ab.invis|0)>0 && p.__prevInvis===0) p.__invisBoostCount++;
               if ((ab.river|0)>0 && p.__prevRiver===0) p.__riverHits++;
               p.__prevSpeed=ab.speed|0; p.__prevVision=ab.vision|0; p.__prevInvis=ab.invis|0; p.__prevRiver=ab.river|0;
-              // Dash for P1 (space/mouse/tombol dash mobile); untuk P2 (space via Enter)
+              
               const myKeys = (p.controlSlot === 2) ? keys2 : keys;
               const dashHold = myKeys.space || (p.controlSlot !== 2 && (isMouseDown || (typeof dashPressed !== 'undefined' && dashPressed)));
               if (dashHold && !p.__prevDashHold && (p.score|0)>35) p.__dashCount++;
               p.__prevDashHold = dashHold;
             });
-            // Boss kills — attribute to any alive player when a boss dies
+            
             if (typeof snakes !== 'undefined') {
               if (!window.__dcBossSeen) window.__dcBossSeen = new WeakSet();
               snakes.forEach(s => {
@@ -5431,7 +5234,6 @@
       }
       requestAnimationFrame(tickTracking);
 
-      // Also treat "reaching a live-score goal" as instant complete — poll while playing (lebih sensitif: tiap 300ms, bukan 2 detik)
       setInterval(()=>{
         try {
           if (typeof gameState === 'undefined' || (gameState !== 'playing' && gameState !== 'winRound')) return;
@@ -5457,7 +5259,6 @@
         } catch(e){}
       }, 300);
 
-      // ===== MODAL RENDERING =====
       function renderDaily(){
         const st = getToday();
         document.getElementById('dailyDate').innerText = 'Hari ini: ' + st.date;
@@ -5480,7 +5281,7 @@
             </div>
           </div>`;
         }).join('');
-        // Skin grid
+        
         const grid = document.getElementById('dcSkinGrid');
         grid.innerHTML = ANIM_SKINS.map((s,i) => {
           const isU = unlocked.has(i);
@@ -5491,7 +5292,7 @@
         }).join('');
         document.getElementById('dcSkinCount').innerText = unlocked.size;
         document.getElementById('dcSkinTotal').innerText = ANIM_SKINS.length;
-        // Reset timer
+        
         const tick = ()=>{
           const now = new Date();
           const end = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0,0,0);
@@ -5519,9 +5320,6 @@
     })();
     </script>
 
-<!-- ============================================================
-     🗺️ MAP MARKETPLACE — Lovable Cloud (Supabase)
-     ============================================================ -->
 <div id="marketplaceModal" class="absolute inset-0 bg-black/90 backdrop-blur-md hidden pointer-events-auto z-[85] p-3 md:p-6 overflow-y-auto" style="display:none;">
   <div class="max-w-5xl mx-auto bg-slate-900/95 border border-emerald-500/60 rounded-2xl p-4 md:p-6 shadow-[0_0_60px_rgba(16,185,129,0.35)]">
     <div class="flex items-center justify-between mb-3">
@@ -5544,7 +5342,6 @@
   </div>
 </div>
 
-<!-- Hall of Fame Modal -->
 <div id="hofModal" class="absolute inset-0 bg-black/90 backdrop-blur-md hidden pointer-events-auto z-[86] p-3 md:p-6 overflow-y-auto" style="display:none;">
   <div class="max-w-4xl mx-auto bg-slate-900/95 border border-yellow-500/60 rounded-2xl p-4 md:p-6 shadow-[0_0_60px_rgba(234,179,8,0.35)]">
     <div class="flex items-center justify-between mb-3">
@@ -5557,7 +5354,6 @@
   </div>
 </div>
 
-<!-- Leaderboard Global Modal -->
 <div id="lbModal" class="absolute inset-0 bg-black/90 backdrop-blur-md hidden pointer-events-auto z-[86] p-3 md:p-6 overflow-y-auto" style="display:none;">
   <div class="max-w-3xl mx-auto bg-slate-900/95 border border-sky-500/60 rounded-2xl p-4 md:p-6 shadow-[0_0_60px_rgba(14,165,233,0.35)]">
     <div class="flex items-center justify-between mb-3">
@@ -5584,13 +5380,11 @@
 <script type="module">
   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-  // ⚠️ OPEN SOURCE SETUP: isi dengan project Supabase kamu sendiri.
-  // Lihat file SETUP_SUPABASE.md untuk skema tabel & cara setup lengkapnya.
-  const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL'; // contoh: https://xxxxx.supabase.co
-  const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY'; // anon/public key project kamu
+  
+  const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL'; 
+  const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY'; 
   const sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
 
-  // Stable per-browser user id
   function getUserId(){
     let id = localStorage.getItem('mk_user_id');
     if (!id){ id = 'u_' + Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('mk_user_id', id); }
@@ -5839,13 +5633,9 @@
   // The editor stores CFG under its own STORE_KEY (snakeKingCustomMap_v1) — that's what we read above.
 </script>
 
-<!-- Marketplace button injection lives OUTSIDE the module script above so it
-     still runs (and the button still appears) even if the Supabase import
-     fails to load (e.g. no internet, blocked CDN). Clicking falls back to a
-     friendly message instead of doing nothing if that happens. -->
 <script>
   function injectMarketplaceButton(){
-    // Look for existing Map Editor button and insert a sibling
+    
     const btns = document.querySelectorAll('button');
     let editorBtn = null;
     btns.forEach(b => { if (b.getAttribute('onclick') === 'openMapEditor()') editorBtn = b; });
@@ -5857,7 +5647,7 @@
       mk.innerHTML = '🗺️ Marketplace';
       editorBtn.parentNode.insertBefore(mk, editorBtn.nextSibling);
     }
-    // Also inject "Upload ke Marketplace" button inside the map editor modal action row
+    
     const meSaveBtn = Array.from(document.querySelectorAll('button')).find(b => b.getAttribute('onclick') === 'meSaveCfg()');
     if (meSaveBtn && !document.getElementById('mkUploadFromEditor')){
       const up = document.createElement('button');
@@ -5870,18 +5660,12 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', injectMarketplaceButton);
   else injectMarketplaceButton();
-  // Retry a few times in case buttons are added later or DOM wasn't fully ready
+  
   setTimeout(injectMarketplaceButton, 500);
   setTimeout(injectMarketplaceButton, 1500);
   setTimeout(injectMarketplaceButton, 3000);
 </script>
 
-<!-- ============================================================
-     📅 SISTEM EVENT BULANAN — Jadwal Otomatis Sepanjang Tahun
-     (Jan Tahun Baru • Mar Ramadhan • Apr April Mop & Hari Kiamat •
-      Jun Idul Adha • Jul Hari Anak • Agu 17 Agustus • Okt Halloween •
-      Nov Ultah Developer • Des Musim Dingin)
-     ============================================================ -->
 <style>
   #eventScheduleModal { display:none; }
   #eventScheduleModal.flex { display:flex; }
@@ -5893,7 +5677,6 @@
   #currentEventBanner.has-event { animation: evBannerGlow 2.4s ease-in-out infinite; }
 </style>
 
-<!-- Event Schedule Modal -->
 <div id="eventScheduleModal" class="absolute inset-0 bg-black/90 backdrop-blur-md hidden flex-col items-center justify-center pointer-events-auto z-[92] p-4">
   <div class="bg-slate-900/95 border border-amber-400/50 rounded-2xl p-5 md:p-6 w-full max-w-xl shadow-[0_0_60px_rgba(251,191,36,0.3)] max-h-[92vh] overflow-y-auto custom-scrollbar">
     <div class="flex items-center justify-between mb-2">
@@ -5907,7 +5690,7 @@
 
 <script>
 (function(){
-  // Bulan: 0=Januari ... 11=Desember
+  
   window.MONTHLY_EVENTS = {
     0: {
       id:'newyear', name:'Tahun Baru', icon:'🎉', color:'#fbbf24',
@@ -5920,7 +5703,7 @@
       disasters:[ { name:'Kembang Api Liar', icon:'🎆', color:'#fbbf24', effect:'fireworks' } ],
       boss:{ name:'RAJA TAHUN BARU', head:'#fde047', body1:'#f59e0b', body2:'#78350f' },
     },
-    1: null, // Februari — kosong dulu
+    1: null, 
     2: {
       id:'ramadhan', name:'Ramadhan', icon:'🌙', color:'#facc15',
       desc:'Suasana bulan suci: lentera, bulan sabit, dan berkah malam.',
@@ -5949,7 +5732,7 @@
       ],
       boss:{ name:'LORD KIAMAT', head:'#7f1d1d', body1:'#450a0a', body2:'#000000' },
     },
-    4: null, // Mei — kosong dulu
+    4: null, 
     5: {
       id:'iduladha', name:'Idul Adha', icon:'🐐', color:'#eab308',
       desc:'Peringatan Idul Adha dengan nuansa padang & berkah kurban.',
@@ -5983,7 +5766,7 @@
       disasters:[ { name:'Petasan Merdeka', icon:'🧨', color:'#dc2626', effect:'firecracker' } ],
       boss:{ name:'JENDERAL GARUDA', head:'#fde047', body1:'#b91c1c', body2:'#1c1917' },
     },
-    8: null, // September — kosong dulu
+    8: null, 
     9: {
       id:'halloween', name:'Halloween', icon:'🎃', color:'#f97316',
       desc:'Labu, vampir, dan zombie berkeliaran di arena malam Halloween.',
@@ -6061,10 +5844,6 @@
 })();
 </script>
 
-
-<!-- ============================================================
-     🎡 EVENT SPIN WHEEL — Sistem Tiket & Skin Eksklusif
-     ============================================================ -->
 <style>
   #spinWheelModal, #spinResultModal { display: none; }
   #spinWheelModal.flex, #spinResultModal.flex { display: flex; }
@@ -6083,7 +5862,6 @@
   .spin-skin-card { transition: all .2s ease; }
 </style>
 
-<!-- Spin Wheel Modal -->
 <div id="spinWheelModal" class="absolute inset-0 bg-black/90 backdrop-blur-md hidden flex-col items-center justify-center pointer-events-auto z-[90] p-4">
   <div class="bg-slate-900/95 border border-fuchsia-500/60 rounded-2xl p-5 md:p-6 w-full max-w-lg shadow-[0_0_60px_rgba(217,70,239,0.35)] max-h-[92vh] overflow-y-auto custom-scrollbar text-center">
     <div class="flex items-center justify-between mb-2">
@@ -6144,7 +5922,6 @@
   </div>
 </div>
 
-<!-- Spin Result Popup -->
 <div id="spinResultModal" class="absolute inset-0 bg-black/85 backdrop-blur-md hidden flex-col items-center justify-center pointer-events-auto z-[95] p-4">
   <div class="bg-slate-900/95 border-2 rounded-2xl p-6 w-full max-w-sm text-center" id="spinResultCard" style="border-color:#e879f9;">
     <div id="spinResultIcon" style="font-size:52px;"></div>
@@ -6154,7 +5931,6 @@
   </div>
 </div>
 
-<!-- Jumpscare overlay -->
 <div id="jumpscareOverlay"><div class="js-emoji">👻</div></div>
 
 <script>
@@ -6179,7 +5955,6 @@
   let spinning = false;
   let wheelRotation = 0;
 
-  // 8 skin evergreen (dipakai kalau bulan ini gak ada event): 2 Basic, 2 Rare, 2 Epic, 2 Legend
   const DEFAULT_SPIN_SKINS = [
     { key:'def_sprout',  name:'🌱 Sprout',    rarity:'basic',  head:'#86efac', body1:'#22c55e', body2:'#14532d' },
     { key:'def_wood',    name:'🪵 Woodland',  rarity:'basic',  head:'#d6a15c', body1:'#92400e', body2:'#451a03' },
@@ -6195,7 +5970,6 @@
     return r==='basic' ? '#22c55e' : r==='rare' ? '#3b82f6' : r==='epic' ? '#a855f7' : r==='legend' ? '#eab308' : '#94a3b8';
   }
 
-  // Kumpulkan SEMUA skin (evergreen + semua skin event sepanjang tahun) buat koleksi permanen
   const ALL_SPIN_SKINS = DEFAULT_SPIN_SKINS.slice();
   if (typeof window.MONTHLY_EVENTS !== 'undefined') {
     Object.keys(window.MONTHLY_EVENTS).forEach(mk => {
@@ -6206,7 +5980,6 @@
     });
   }
 
-  // Roda spin AKTIF bulan ini: pakai skin event kalau ada, kalau kosong pakai evergreen
   let SPIN_SKINS = DEFAULT_SPIN_SKINS;
   let SPIN_OUTCOMES = [];
 
@@ -6217,7 +5990,7 @@
     const each = remaining / n;
     const outs = [];
     for (let i = 0; i < n; i++) outs.push({ type:'skin', skinIdx:i, weight:each });
-    // Selipkan scam & jumpscare di tengah urutan biar roda gak monoton
+    
     const mid = Math.floor(outs.length/2);
     outs.splice(mid, 0, { type:'scam', weight:scamW });
     outs.push({ type:'jumpscare', weight:jumpW });
@@ -6256,7 +6029,6 @@
     }
   }
 
-  // Daftarkan SEMUA skin event ke koleksi skin utama (locked kalau belum dimenangkan), dikunci pakai key permanen
   const spinBase = (typeof gameSkins !== 'undefined') ? gameSkins.length : 0;
   if (typeof gameSkins !== 'undefined') {
     ALL_SPIN_SKINS.forEach((s, i) => {
@@ -6515,7 +6287,6 @@
   window.claimDailyReward = claimDailyReward;
   window.doSpin = spinWheel;
 
-  // Kill milestone tickets (dievaluasi tiap game berakhir)
   const _recordPlayerDeathStatsSpin = window.recordPlayerDeathStats;
   window.recordPlayerDeathStats = function(p){
     if (typeof _recordPlayerDeathStatsSpin === 'function') _recordPlayerDeathStatsSpin(p);
@@ -6537,16 +6308,11 @@
 })();
 </script>
 
-<!-- ============================================================
-     ☄️🐍 BENCANA EVENT & BOSS ULAR OTOMATIS
-     Muncul sendiri di gameplay normal (bukan cuma custom map),
-     mengikuti event bulan yang sedang aktif.
-     ============================================================ -->
 <script>
 (function(){
-  const eventFx = []; // {timer, update(), draw(c)}
-  let evDisasterCooldown = 600;     // ~10 detik sebelum bencana event pertama muncul
-  let evBossCooldown = 900;         // ~15 detik sebelum boss event pertama muncul
+  const eventFx = []; 
+  let evDisasterCooldown = 600;     
+  let evBossCooldown = 900;         
   let evLastGameState = null;
 
   function activeEvent(){
@@ -6559,9 +6325,8 @@
     c.restore();
   }
 
-  // ===== Generic effect factories =====
   function fxFoodRain(opts){
-    // opts: {dur, everyN, count, colors, valueMin, valueMax, label, color}
+    
     eventFx.push({
       timer: opts.dur, tick:0,
       update(){
@@ -6579,7 +6344,7 @@
   }
 
   function fxOverlaySlow(opts){
-    // opts: {dur, color, alpha, factor}
+    
     eventFx.push({
       timer: opts.dur,
       update(){
@@ -6592,12 +6357,12 @@
       },
       draw(c){ fullscreenOverlay(c, opts.color, opts.alpha); },
     });
-    // Kembalikan speed normal setelah efek habis
+    
     setTimeout(()=>{ try { snakes.forEach(s=>{ if (s._evBaseSpeed) { s.speed = s._evBaseSpeed; s._evBaseSpeed = null; } }); } catch(e){} }, (opts.dur/60)*1000 + 200);
   }
 
   function fxZoneDamage(opts){
-    // opts: {x,y,radius,dmg,color}
+    
     eventFx.push({
       x:opts.x, y:opts.y, radius:opts.radius, dmg:opts.dmg, color:opts.color,
       timer: 260, warn: 70,
@@ -6625,7 +6390,7 @@
   }
 
   function fxSparks(opts){
-    // opts: {n, dmg, color}
+    
     if (!player || player.dead) return;
     for (let i=0;i<opts.n;i++){
       const ang = Math.random()*Math.PI*2;
@@ -6683,7 +6448,6 @@
     });
   }
 
-  // ===== Dispatcher: satu def disaster event -> efek nyata =====
   function triggerEventDisaster(def){
     if (!def) return;
     if (typeof spawnFloatingText === 'function' && player && !player.dead){
@@ -6727,7 +6491,6 @@
     }
   }
 
-  // ===== Boss event =====
   function trySpawnEventBoss(ev){
     if (!ev || !ev.boss) return;
     if (typeof snakes === 'undefined' || typeof Snake === 'undefined' || !player || player.dead) return;
@@ -6762,7 +6525,6 @@
     setTimeout(()=>el.remove(), 5200);
   }
 
-  // ===== Hook ke WeatherSys (jalan tiap frame, TANPA syarat custom map) =====
   const _evWUpdate = WeatherSys.update.bind(WeatherSys);
   WeatherSys.update = function(){
     _evWUpdate();
@@ -6774,7 +6536,6 @@
       if (gameState !== 'playing') return;
       const ev = activeEvent();
 
-      // Update & bersihkan efek aktif
       for (let i=eventFx.length-1;i>=0;i--){
         const fx = eventFx[i];
         if (fx.update) fx.update();
@@ -6784,25 +6545,23 @@
 
       if (!ev) return;
 
-      // Bencana event
       if (Array.isArray(ev.disasters) && ev.disasters.length){
         evDisasterCooldown--;
         if (evDisasterCooldown <= 0){
           const def = ev.disasters[Math.floor(Math.random()*ev.disasters.length)];
           triggerEventDisaster(def);
-          evDisasterCooldown = 1800 + Math.floor(Math.random()*900); // ~30-45 detik
+          evDisasterCooldown = 1800 + Math.floor(Math.random()*900); 
         }
       }
 
-      // Boss event
       if (ev.boss){
         evBossCooldown--;
         if (evBossCooldown <= 0){
           trySpawnEventBoss(ev);
-          evBossCooldown = 5400; // ~90 detik sebelum boss berikutnya bisa muncul lagi
+          evBossCooldown = 5400; 
         }
       }
-    } catch(e){ /* jangan sampai bikin game crash */ }
+    } catch(e){  }
   };
 
   const _evWUpper = WeatherSys.drawUpper.bind(WeatherSys);
@@ -6813,23 +6572,17 @@
 })();
 </script>
 
-
-<!-- ============================================================
-     💬 CHAT KOMUNITAS + LOGIN (Supabase Auth, project terpisah
-     dari Map Marketplace supaya beban kepisah di 2 database)
-     ============================================================ -->
 <script type="module">
   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-  // ⚠️ OPEN SOURCE SETUP: isi dengan project Supabase kamu sendiri (boleh project
-  // yang sama dengan Marketplace di atas, atau project terpisah). Lihat
-  // SETUP_SUPABASE.md untuk skema tabel, RLS, trigger, dan cron job-nya.
-  const CHAT_URL = 'YOUR_SUPABASE_PROJECT_URL'; // contoh: https://xxxxx.supabase.co
-  const CHAT_KEY = 'YOUR_SUPABASE_ANON_KEY'; // anon/public key project kamu
+  
+  
+  const CHAT_URL = 'YOUR_SUPABASE_PROJECT_URL'; 
+  const CHAT_KEY = 'YOUR_SUPABASE_ANON_KEY'; 
   const chatSb = createClient(CHAT_URL, CHAT_KEY);
 
   const CHAT_MAX = 6;
-  const CHAT_WINDOW_MS = 2 * 24 * 60 * 60 * 1000; // 2 hari
+  const CHAT_WINDOW_MS = 2 * 24 * 60 * 60 * 1000; 
 
   let currentUser = null;
   let currentUsername = '';
@@ -7040,23 +6793,17 @@
   refreshSession();
 </script>
 
-<!-- ============================================================
-     🏆 LEADERBOARD GLOBAL — kill, waktu main, skor terbaik (lifetime)
-     Anonim (gak wajib login), sync tiap ±7 jam biar hemat request.
-     Data pemain gak aktif >2 hari otomatis kehapus di server.
-     ============================================================ -->
 <script type="module">
   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-  const LB_URL = 'YOUR_SUPABASE_PROJECT_URL'; // contoh: https://xxxxx.supabase.co
-  const LB_KEY = 'YOUR_SUPABASE_ANON_KEY'; // anon/public key project kamu
+  const LB_URL = 'YOUR_SUPABASE_PROJECT_URL'; 
+  const LB_KEY = 'YOUR_SUPABASE_ANON_KEY'; 
   const lbSb = createClient(LB_URL, LB_KEY, { auth: { persistSession: false } });
 
-  const LB_SYNC_INTERVAL_MS = 7 * 60 * 60 * 1000; // 7 jam
+  const LB_SYNC_INTERVAL_MS = 7 * 60 * 60 * 1000; 
   const LB_LAST_SYNC_KEY = 'lb_last_sync_at';
-  const ACH_STATS_KEY = 'snakeKingAchStats_v1'; // key yang sama dipakai sistem achievement (life stats)
+  const ACH_STATS_KEY = 'snakeKingAchStats_v1'; 
 
-  // Identitas anonim per-browser — dipakai bareng sama Marketplace biar konsisten
   function getUserId(){
     let id = localStorage.getItem('mk_user_id');
     if (!id){ id = 'u_' + Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('mk_user_id', id); }
@@ -7083,7 +6830,7 @@
 
   async function syncLeaderboardIfDue(force){
     const last = parseInt(localStorage.getItem(LB_LAST_SYNC_KEY) || '0', 10);
-    if (!force && Date.now() - last < LB_SYNC_INTERVAL_MS) return; // belum waktunya, hemat request
+    if (!force && Date.now() - last < LB_SYNC_INTERVAL_MS) return; 
     const stats = readLifeStats();
     const username = getUserName();
     try {
@@ -7094,13 +6841,12 @@
         updated_at: new Date().toISOString(),
       }, { onConflict: 'user_id' });
       if (!error) localStorage.setItem(LB_LAST_SYNC_KEY, String(Date.now()));
-    } catch(e){ /* diem-diem aja, coba lagi nanti */ }
+    } catch(e){  }
   }
 
-  // Cek pas load, lalu cek ulang tiap 10 menit (biar kalau app dibiarin kebuka lama, begitu lewat 7 jam langsung sync)
   syncLeaderboardIfDue(false);
   setInterval(() => syncLeaderboardIfDue(false), 10 * 60 * 1000);
-  // Juga coba sync tiap kali game berakhir (recordPlayerDeathStats), tapi tetap dijaga interval 7 jam di atas
+  
   const _lbHookDeath = window.recordPlayerDeathStats;
   window.recordPlayerDeathStats = function(){
     const r = _lbHookDeath ? _lbHookDeath.apply(this, arguments) : undefined;
@@ -7182,8 +6928,6 @@
   };
 </script>
 
-<!-- Tombol Leaderboard hidup di script terpisah (bukan module) supaya tetap
-     muncul walau import Supabase di atas gagal load (offline/CDN diblokir). -->
 <script>
   function injectLeaderboardButton(){
     const btns = document.querySelectorAll('button');
@@ -7213,11 +6957,8 @@
   setTimeout(injectLeaderboardButton, 3000);
 </script>
 
-
 <script>
-/* ============================================================
-   LEVEL MODE — 40 levels, progressive bots / map / AI
-   ============================================================ */
+
 (function(){
   const MAX_LEVEL = 40;
   const state = {
@@ -7230,7 +6971,7 @@
   };
   window.__levelMode = state;
 
-  function targetFor(lv){ return 250 + lv * 175; }              // 425 .. 7250
+  function targetFor(lv){ return 250 + lv * 175; }              
   function botsFor(lv){ return Math.min(60, 5 + Math.floor(lv * 1.2)); }
   function worldFor(lv){ return Math.min(22000, 8000 + lv * 350); }
   function aiTurnFor(lv){ return Math.min(0.13, 0.055 + lv * 0.0018); }
@@ -7274,9 +7015,9 @@
     if (opts && opts.hardResize){
       currentWorldSize = w; targetWorldSize = w;
     } else {
-      targetWorldSize = w; // ease toward
+      targetWorldSize = w; 
     }
-    // spawn to fill
+    
     let guard = 0;
     while (snakes.length < MAX_SNAKES && guard++ < 80) {
       try { spawnBot(); } catch(e){ break; }
@@ -7287,7 +7028,7 @@
 
   function advanceLevel(){
     if (state.level >= MAX_LEVEL){
-      // WIN whole mode
+      
       state.active = false;
       try{
         gameState = 'win';
@@ -7311,7 +7052,6 @@
     screenShake = Math.max(screenShake||0, 12);
   }
 
-  // Wrap initGame to seed level mode
   const _initGame = window.initGame;
   window.initGame = async function(mode){
     const isLevel = (mode === 'level');
@@ -7321,7 +7061,6 @@
       state.target = targetFor(1);
       state.prevScoreBaseline = 0;
 
-      // Pre-size world & bot cap BEFORE base init so player spawns in a sane arena
       const prevScale = window.__optWorldScale;
       const prevCap = MAX_SNAKES_DEFAULT;
       const desiredWorld = worldFor(1);
@@ -7330,7 +7069,6 @@
 
       await _initGame('hardcore');
 
-      // Restore globals so other modes are unaffected next time
       window.__optWorldScale = prevScale;
       MAX_SNAKES_DEFAULT = prevCap;
 
@@ -7338,7 +7076,6 @@
       MAX_SNAKES = botsFor(1) + 1;
       state.prevScoreBaseline = player ? player.score : 0;
 
-      // Soften bot AI at level 1 so player has room to breathe
       snakes.forEach(s=>{
         if(!s.isPlayer){
           s.aiTurnSpeed = Math.min(s.aiTurnSpeed||0.05, aiTurnFor(1));
@@ -7355,8 +7092,7 @@
     }
   };
 
-
-  // Per-frame ticker (light) — checks target progression
+  
   function tick(){
     try{
       if (state.active && currentMode === 'level' && gameState === 'playing' && player && !player.dead){
@@ -7376,18 +7112,13 @@
 </script>
 
 <script>
-/* ============================================================
-   LEVEL MODE — SKIN REWARDS
-   Setiap 5 level lewat → unlock 1 skin unik (total 8 skin).
-   Desain sengaja beda total dari skin lama (bukan hue-shift standar).
-   ============================================================ */
+
 (function(){
   const STORAGE_KEY = 'snakeKingLevelSkins_v1';
   function loadU(){ try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e){ return []; } }
   function saveU(a){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(a)); } catch(e){} }
   const unlocked = new Set(loadU());
 
-  // 8 skin baru — semua pakai prefix anim `lv_` supaya kepisah dari sistem lama
   const LEVEL_SKINS = [
     { level:5,  name:'🌀 Void Ripple',    head:'#c084fc', body1:'#5b21b6', body2:'#0b0616', anim:'lv_void' },
     { level:10, name:'🔮 Prism Serpent',  head:'#f0abfc', body1:'#38bdf8', body2:'#0f172a', anim:'lv_prism' },
@@ -7399,7 +7130,6 @@
     { level:40, name:'👑 Ascendant King', head:'#fde68a', body1:'#f59e0b', body2:'#111827', anim:'lv_ascend' },
   ];
 
-  // Push ke gameSkins supaya muncul di grid pilih skin
   const base = gameSkins.length;
   LEVEL_SKINS.forEach((s, i) => {
     gameSkins.push({
@@ -7412,7 +7142,6 @@
     });
   });
 
-  // Wrap renderMenu buat overlay kunci + tooltip
   const _renderMenu = window.renderMenu || renderMenu;
   window.renderMenu = function(){
     _renderMenu();
@@ -7434,9 +7163,8 @@
   };
   renderMenu();
 
-  // ===== Wrap Snake.prototype.draw ADD-ON: mutasi warna khusus lv_* =====
-  // Kita wrap lagi di atas wrapper ANIM_SKINS. Skema warna diset sebelum
-  // wrapper lama jalan, sehingga glow halo + trail tetap ikut.
+  
+  
   const _drawPrev = Snake.prototype.draw;
   Snake.prototype.draw = function(ctx){
     if (this.dead) return;
@@ -7445,7 +7173,7 @@
       const t = Date.now() * 0.001;
       switch (skin.anim) {
         case 'lv_void': {
-          // pulsa ungu-dark, head bercahaya kuat, ada denyut ring
+          
           const p = (Math.sin(t*2.2) + 1) / 2;
           skin.head  = `hsl(275, 90%, ${60 + p*20}%)`;
           skin.body1 = `hsl(270, 75%, ${28 + p*8}%)`;
@@ -7461,7 +7189,7 @@
           break;
         }
         case 'lv_prism': {
-          // spektrum penuh — hue jalan tapi saturasi tinggi + kontras tajam
+          
           const h = (t * 90) % 360;
           skin.head  = `hsl(${h}, 100%, 70%)`;
           skin.body1 = `hsl(${(h+120)%360}, 100%, 55%)`;
@@ -7469,7 +7197,7 @@
           break;
         }
         case 'lv_chrome': {
-          // efek metallic scanline — brightness bergelombang seg-by-seg (via time offset)
+          
           const b = 70 + Math.sin(t*3)*20;
           skin.head  = `hsl(210, 15%, ${b + 10}%)`;
           skin.body1 = `hsl(210, 12%, ${b - 15}%)`;
@@ -7477,7 +7205,7 @@
           break;
         }
         case 'lv_solar': {
-          // flare kuning-oranye + spike putih terang random
+          
           const flare = Math.pow((Math.sin(t*4) + 1)/2, 4);
           skin.head  = `hsl(${45 - flare*10}, 100%, ${70 + flare*25}%)`;
           skin.body1 = `hsl(25, 100%, ${45 + flare*15}%)`;
@@ -7490,7 +7218,7 @@
           break;
         }
         case 'lv_glacier': {
-          // biru es dingin — kilau statis + sparkle kecil putih
+          
           const shimmer = (Math.sin(t*1.5) + 1) / 2;
           skin.head  = `hsl(195, 95%, ${85 + shimmer*10}%)`;
           skin.body1 = `hsl(200, 90%, ${55 + shimmer*5}%)`;
@@ -7503,7 +7231,7 @@
           break;
         }
         case 'lv_necro': {
-          // tulang putih pucat + denyut merah gelap seperti aliran darah
+          
           const beat = Math.pow((Math.sin(t*3.5) + 1)/2, 2);
           skin.head  = `hsl(30, 20%, ${88 - beat*8}%)`;
           skin.body1 = `hsl(0, ${40 + beat*40}%, ${28 + beat*10}%)`;
@@ -7511,7 +7239,7 @@
           break;
         }
         case 'lv_nebula': {
-          // ungu-biru dalam + bintang twinkle sepanjang tubuh
+          
           const sw = (Math.sin(t*0.7) + 1) / 2;
           skin.head  = `hsl(${250 + sw*30}, 90%, 75%)`;
           skin.body1 = `hsl(${270 + sw*20}, 75%, 45%)`;
@@ -7525,7 +7253,7 @@
           break;
         }
         case 'lv_ascend': {
-          // ULTIMATE: pelangi emas dengan aura + ring ganda + spark padat
+          
           const p = (Math.sin(t*2) + 1) / 2;
           const h = (t * 40) % 360;
           skin.head  = `hsl(${45 + Math.sin(t*1.3)*15}, 100%, ${70 + p*25}%)`;
@@ -7554,7 +7282,6 @@
     _drawPrev.call(this, ctx);
   };
 
-  // ===== Toast unlock =====
   function showUnlockToast(skin){
     try {
       const el = document.createElement('div');
@@ -7600,7 +7327,6 @@
     }
   }
 
-  // Poll level state — advanceLevel di IIFE lain, jadi kita observe saja
   let lastSeen = 0;
   setInterval(()=>{
     try {
@@ -7615,12 +7341,6 @@
 })();
 </script>
 
-<!-- ============================================================
-     🎡 EVENT SPIN WHEEL — SKIN SPESIAL (BUKAN SEKEDAR HUE-SHIFT)
-     Dibuat sekarang, cara dapetinnya (lucky spin) nyusul dibangun
-     ~1 bulan lagi. Untuk sekarang skin ini muncul di grid skin
-     dalam keadaan terkunci dengan keterangan event.
-     ============================================================ -->
 <script>
 (function(){
   const STORAGE_KEY = 'snakeKingEventSkins_v1';
@@ -7628,9 +7348,8 @@
   function saveU(a){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(a)); } catch(e){} }
   const unlocked = new Set(loadU());
 
-  // 2 skin event dengan KEMAMPUAN GAMEPLAY nyata (bukan cuma tampilan):
-  //  - nightVision : gak kena efek kabut/gelap (kamera & visual tetap normal)
-  //  - lightningImmune : kena sambaran petir TIDAK memotong skor sama sekali
+  
+  
   const EVENT_SKINS = [
     { name: '🌫️ Mata Kabut', head: '#a5f3fc', body1: '#22d3ee', body2: '#0e2a30', nightVision: true,
       desc: 'Bisa lihat jelas walau lagi kabut/gelap. Kamera & pandangan gak kepengaruh sama sekali.' },
@@ -7652,8 +7371,7 @@
     });
   });
 
-  // Dev helper: buka manual dari console kalau perlu testing sebelum lucky spin jadi
-  // contoh: unlockEventSkin(0)  → buka skin Mata Kabut
+  
   window.unlockEventSkin = function(idx){
     unlocked.add(idx);
     saveU(Array.from(unlocked));
@@ -7683,11 +7401,9 @@
 })();
 </script>
 
-
-<!-- =================== SOCIAL / FRIEND / GIFT / CHAT OVERLAY =================== -->
 <div id="socialOverlay" class="hidden fixed inset-0 z-[100] bg-black/80 backdrop-blur-md items-center justify-center p-3" style="display:none">
     <div class="w-full max-w-md max-h-[90vh] bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-indigo-500/60 rounded-3xl shadow-[0_0_50px_rgba(99,102,241,0.4)] flex flex-col overflow-hidden">
-        <!-- Header -->
+        
         <div class="flex items-center justify-between p-4 border-b border-slate-700">
             <div>
                 <h2 class="text-xl font-black text-white flex items-center gap-2">👥 Sosial</h2>
@@ -7699,7 +7415,6 @@
             </div>
         </div>
 
-        <!-- Tabs -->
         <div id="socialTabs" class="hidden grid grid-cols-4 gap-1 p-2 bg-slate-950/60 border-b border-slate-700">
             <button data-tab="friends" class="social-tab px-2 py-2 text-xs font-bold rounded-lg bg-indigo-600 text-white">👥 Teman</button>
             <button data-tab="find" class="social-tab px-2 py-2 text-xs font-bold rounded-lg bg-slate-800 text-gray-300 hover:bg-slate-700">🔍 Cari</button>
@@ -7707,9 +7422,8 @@
             <button data-tab="chat" class="social-tab px-2 py-2 text-xs font-bold rounded-lg bg-slate-800 text-gray-300 hover:bg-slate-700 relative">💬 Chat<span id="chatDot" class="hidden absolute top-0.5 right-1 w-2 h-2 bg-red-500 rounded-full"></span></button>
         </div>
 
-        <!-- Body -->
         <div class="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-3" id="socialBody">
-            <!-- AUTH PANEL -->
+            
             <div id="authPanel" class="space-y-3">
                 <div class="bg-indigo-900/30 border border-indigo-500/40 rounded-xl p-3 text-xs text-indigo-200">
                     Login dulu buat main bareng teman, kirim gift skin, dan chat singkat.
@@ -7730,7 +7444,6 @@
                 <p id="authMsg" class="text-xs text-red-400 min-h-[16px]"></p>
             </div>
 
-            <!-- FRIENDS TAB -->
             <div id="tab-friends" class="hidden space-y-2">
                 <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-3 flex items-center justify-between">
                     <div>
@@ -7747,7 +7460,6 @@
                 <button id="signOutBtn" class="w-full mt-4 py-2 bg-slate-800 hover:bg-red-800 text-gray-300 text-xs font-bold rounded-lg">Sign Out</button>
             </div>
 
-            <!-- FIND TAB -->
             <div id="tab-find" class="hidden space-y-2">
                 <p class="text-xs text-gray-400">Cari via username atau friend code (contoh: <span class="text-indigo-300">#A3B7K9</span>)</p>
                 <div class="flex gap-2">
@@ -7757,7 +7469,6 @@
                 <div id="findResults" class="space-y-2"></div>
             </div>
 
-            <!-- INBOX TAB -->
             <div id="tab-inbox" class="hidden space-y-4">
                 <div>
                     <h3 class="text-xs font-bold text-gray-300 mb-2">🤝 Permintaan Teman</h3>
@@ -7769,7 +7480,6 @@
                 </div>
             </div>
 
-            <!-- CHAT TAB -->
             <div id="tab-chat" class="hidden space-y-3">
                 <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-2 flex items-center justify-between text-xs">
                     <span class="text-gray-400">Quota chat hari ini</span>
@@ -7782,7 +7492,6 @@
     </div>
 </div>
 
-<!-- Gift compose modal -->
 <div id="giftModal" class="hidden fixed inset-0 z-[110] bg-black/85 backdrop-blur-sm items-center justify-center p-4" style="display:none">
     <div class="w-full max-w-sm bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-pink-500/60 rounded-2xl p-4 shadow-[0_0_40px_rgba(236,72,153,0.35)]">
         <h3 class="text-lg font-black text-white mb-1">🎁 Kirim Gift ke <span id="giftToName" class="text-pink-300"></span></h3>
@@ -7798,7 +7507,6 @@
     </div>
 </div>
 
-<!-- Chat thread modal -->
 <div id="chatModal" class="hidden fixed inset-0 z-[110] bg-black/85 backdrop-blur-sm items-center justify-center p-4" style="display:none">
     <div class="w-full max-w-sm h-[70vh] bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-indigo-500/60 rounded-2xl flex flex-col overflow-hidden">
         <div class="flex items-center justify-between p-3 border-b border-slate-700">
@@ -7814,14 +7522,13 @@
     </div>
 </div>
 
-<!-- Toast -->
 <div id="socialToast" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-[200] px-4 py-2 rounded-full bg-indigo-600 text-white text-sm font-bold shadow-lg" style="display:none"></div>
 
 <script type="module">
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 
-const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL'; // contoh: https://xxxxx.supabase.co
-const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY'; // publishable/anon key project kamu
+const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL'; 
+const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY'; 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, storageKey: 'snake-social-auth' }
 });
@@ -7845,7 +7552,6 @@ const state = {
     channel: null, quotaUsed: 0
 };
 
-// ============ AUTH ============
 let authMode = 'login';
 $('authTabLogin').onclick = () => { authMode = 'login'; renderAuthTabs(); };
 $('authTabSignup').onclick = () => { authMode = 'signup'; renderAuthTabs(); };
@@ -7891,7 +7597,6 @@ $('signOutBtn').onclick = async () => {
     await supabase.auth.signOut();
 };
 
-// ============ SESSION ============
 supabase.auth.onAuthStateChange(async (event, session) => {
     state.session = session;
     if (session) {
@@ -7905,7 +7610,7 @@ supabase.auth.onAuthStateChange(async (event, session) => {
     }
     renderUI();
 });
-// Initial session probe
+
 supabase.auth.getSession().then(({ data }) => {
     if (data.session) { state.session = data.session; loadProfile().then(() => { setupRealtime(); refreshAll(); renderUI(); }); }
 });
@@ -7913,7 +7618,7 @@ supabase.auth.getSession().then(({ data }) => {
 async function loadProfile() {
     const { data } = await supabase.from('profiles').select('*').eq('id', state.session.user.id).maybeSingle();
     state.profile = data;
-    // set timezone if missing
+    
     if (data && !data.timezone) {
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
         await supabase.from('profiles').update({ timezone: tz }).eq('id', data.id);
@@ -7921,7 +7626,6 @@ async function loadProfile() {
     }
 }
 
-// ============ REALTIME ============
 function setupRealtime() {
     if (state.channel) supabase.removeChannel(state.channel);
     const uid = state.session.user.id;
@@ -7932,7 +7636,6 @@ function setupRealtime() {
         .subscribe();
 }
 
-// ============ DATA LOADERS ============
 async function refreshAll() {
     await Promise.all([loadFriends(), loadRequests(), loadGifts(), loadChats(), loadQuota()]);
 }
@@ -7970,12 +7673,11 @@ async function loadChats() {
 async function loadQuota() {
     const uid = state.session.user.id;
     const tz = state.profile?.timezone || 'UTC';
-    const today = new Date().toLocaleDateString('en-CA', { timeZone: tz }); // YYYY-MM-DD
+    const today = new Date().toLocaleDateString('en-CA', { timeZone: tz }); 
     const { data } = await supabase.from('chat_quotas').select('count').eq('user_id', uid).eq('quota_date', today).maybeSingle();
     state.quotaUsed = data?.count || 0;
 }
 
-// ============ RENDER ============
 function renderUI() {
     const overlay = $('socialOverlay');
     if (!state.session) {
@@ -8047,7 +7749,7 @@ function renderRequests() {
             </div>
         </div>`).join('');
     c.querySelectorAll('[data-acc]').forEach(b => b.onclick = async () => {
-        if (b.disabled) return; // cegah dobel klik saat masih proses
+        if (b.disabled) return; 
         const originalLabel = b.textContent;
         b.disabled = true; b.style.opacity = '0.5'; b.textContent = '…';
         try {
@@ -8117,7 +7819,6 @@ function renderChatThreads() {
     c.querySelectorAll('[data-open]').forEach(el => el.onclick = () => openChat(el.dataset.open, el.dataset.name));
 }
 
-// ============ FIND ============
 $('findBtn').onclick = doFind;
 $('findInput').addEventListener('keydown', e => { if (e.key === 'Enter') doFind(); });
 async function doFind() {
@@ -8139,12 +7840,11 @@ async function doFind() {
     });
 }
 
-// ============ GIFT ============
 async function openGift(toId, toName) {
     $('giftToName').textContent = '@' + toName;
     $('giftLifetime').textContent = (state.profile?.gift_lifetime_used || 0) + '/6';
     $('giftMsg').value = ''; $('giftMsgLen').textContent = '0'; $('giftMsgErr').textContent = '';
-    // Load giftable skins (quantity > 1 OR event_ AND not received_as_gift)
+    
     const { data: skins } = await supabase.from('user_skins').select('*').eq('user_id', state.session.user.id);
     const eligible = (skins || []).filter(s => !s.received_as_gift && (s.quantity > 1 || s.skin_id.startsWith('event_')));
     const grid = $('giftableSkins');
@@ -8175,7 +7875,6 @@ async function openGift(toId, toName) {
 }
 $('giftMsg').addEventListener('input', e => $('giftMsgLen').textContent = e.target.value.length);
 
-// ============ CHAT ============
 async function openChat(otherId, otherName) {
     state.activeChat = { id: otherId, name: otherName };
     $('dmChatWithName').textContent = '@' + otherName;
@@ -8219,7 +7918,6 @@ async function doSendChat() {
     renderUI();
 }
 
-// ============ UTIL ============
 function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 $('copyCodeBtn').onclick = () => { navigator.clipboard.writeText(state.profile?.friend_code || ''); toast('Code di-copy'); };
 
@@ -8249,8 +7947,6 @@ setInterval(() => { if ($('chatModal').style.display === 'flex') renderChatMessa
 setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c => new Date(c.expires_at).getTime() > now); }, 30000);
 </script>
 
-
-<!-- =================== REDEEM CODE + BACKUP/RESTORE =================== -->
 <style>
   #redeemPanel .rp-btn { transition: transform .15s ease, box-shadow .15s ease; }
   #redeemPanel .rp-btn:hover { transform: translateY(-1px); }
@@ -8263,10 +7959,9 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
 <script>
 (function(){
   const UNLOCK_KEY = 'snakeKingRedeemUnlocks_v1';
-  const USED_KEY   = 'snakeKingRedeemUsed_v1';  // Set kode yg sudah ditukar
+  const USED_KEY   = 'snakeKingRedeemUsed_v1';  
 
-  // Kode rahasia asli (acak, tidak bisa diturunkan dari angkanya sendiri).
-  // Simpan daftar ini dengan aman — hanya kamu yang tahu, bagikan satu-satu ke pemain.
+  
   const SECRET_CODES = {
     '6680247873': 0,
     '0621051430': 1,
@@ -8281,7 +7976,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
     '6641111870': 10,
   };
 
-  // 11 skin: 1 Penakluk Petir + 2 Mata Kabut + 8 lain
   const REDEEM_SKINS = [
     { name:'⚡ Penakluk Petir',   head:'#fde68a', body1:'#facc15', body2:'#3f2d00', lightningImmune:true,
       desc:'Kebal sambaran petir. Skor tidak terpotong sama sekali.' },
@@ -8305,7 +7999,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
   let unlocked = new Set(loadJSON(UNLOCK_KEY, []));
   let usedSet  = new Set(loadJSON(USED_KEY, []));
 
-  // Registrasi ke gameSkins
   const base = gameSkins.length;
   REDEEM_SKINS.forEach((s, i) => {
     gameSkins.push({
@@ -8320,7 +8013,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
     });
   });
 
-  // Wrap renderMenu supaya locked skin punya tampilan gelap & alert
   const _origRender = window.renderMenu || renderMenu;
   window.renderMenu = function(){
     _origRender();
@@ -8338,8 +8030,7 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
   };
   renderMenu();
 
-  // Kode hanya valid kalau cocok persis dengan salah satu SECRET_CODES.
-  // Tidak ada rumus yang bisa dibalik dari kode ke skin — harus tahu kodenya.
+  
   function skinFromCode(code){
     return Object.prototype.hasOwnProperty.call(SECRET_CODES, code) ? SECRET_CODES[code] : -1;
   }
@@ -8363,11 +8054,10 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
     setTimeout(()=>el.remove(), 4500);
   }
 
-  // ===== Inject panel ke Achievements modal =====
   function buildPanel(){
     const modal = document.getElementById('achievementsModal');
     if (!modal || modal.querySelector('#redeemPanel')) return;
-    const inner = modal.querySelector('div'); // wrapper flex-col
+    const inner = modal.querySelector('div'); 
     if (!inner) return;
 
     const panel = document.createElement('div');
@@ -8403,7 +8093,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
     `;
     inner.appendChild(panel);
 
-    // render pool
     const row = panel.querySelector('#rpSkinRow');
     REDEEM_SKINS.forEach((s, i) => {
       const d = document.createElement('div');
@@ -8429,13 +8118,12 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
       }
       unlockSkin(idx);
       usedSet.add(v); saveJSON(USED_KEY, Array.from(usedSet));
-      // refresh pool visual
+      
       row.children[idx]?.classList.remove('locked');
       $msg.innerHTML = `🎉 Sukses! Skin <b>${REDEEM_SKINS[idx].name}</b> terbuka.`;
       panel.querySelector('#rpRedeemInput').value = '';
     };
 
-    // Backup / Restore
     panel.querySelector('#rpExportBtn').onclick = () => {
       const dump = {};
       for (let i=0; i<localStorage.length; i++){
@@ -8487,7 +8175,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
     };
   }
 
-  // Build panel saat achievements modal dibuka pertama kali
   const _origOpen = window.openAchievements;
   window.openAchievements = function(){
     if (typeof _origOpen === 'function') _origOpen();
@@ -8495,10 +8182,8 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
     buildPanel();
   };
 
-  // Dev helper
   window.redeemUnlockAll = function(){ REDEEM_SKINS.forEach((_,i)=>unlockSkin(i, true)); };
 
-  // ===== Standalone Redeem Modal (dari tombol di sebelah Leaderboard) =====
   function buildStandaloneModal(){
     if (document.getElementById('redeemModal')) return;
     const m = document.createElement('div');
@@ -8546,7 +8231,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
     m.querySelector('#rmClose').onclick = () => m.classList.add('hidden');
     m.addEventListener('click', (e) => { if (e.target === m) m.classList.add('hidden'); });
 
-    // Skin grid
     const grid = m.querySelector('#rmSkinGrid');
     REDEEM_SKINS.forEach((s, i) => {
       const d = document.createElement('div');
@@ -8560,7 +8244,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
       grid.appendChild(d);
     });
 
-    // Redeem
     const $msg = m.querySelector('#rmMsg');
     m.querySelector('#rmRedeem').onclick = () => {
       const v = (m.querySelector('#rmInput').value || '').trim();
@@ -8575,7 +8258,7 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
       }
       unlockSkin(idx);
       usedSet.add(v); saveJSON(USED_KEY, Array.from(usedSet));
-      // refresh grid tile
+      
       const tile = grid.children[idx];
       if (tile){
         tile.style.filter = '';
@@ -8586,7 +8269,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
       m.querySelector('#rmInput').value = '';
     };
 
-    // Backup / Restore / Reset (sama seperti panel achievement)
     const $bmsg = m.querySelector('#rmBackupMsg');
     m.querySelector('#rmExport').onclick = () => {
       const dump = {};
@@ -8642,11 +8324,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
 
 </script>
 
-<!-- ============================================================
-     QOL PACK — Auto-Pause, Screenshot, FPS meter, Shortcut Help,
-     Toast, Ripple, Haptic feedback. Semua defensif (cek elemen ada
-     dulu) supaya tidak pernah bentrok dengan sistem yang sudah ada.
-     ============================================================ -->
 <div id="qolToastHost"></div>
 <div id="qolFlash"></div>
 <div id="qolPauseOverlay">
@@ -8667,7 +8344,7 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
 
 <script>
 (function(){
-    // ---------- Toast kecil (tidak konflik dgn toast() lain yg ter-scope lokal) ----------
+    
     const toastHost = document.getElementById('qolToastHost');
     window.qolToast = function(msg, opts){
         if (!toastHost) return;
@@ -8684,7 +8361,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
         }, life);
     };
 
-    // ---------- Toggle Suara (mute) di panel Pengaturan Suara — forward ke tombol asli yg disembunyikan ----------
     const realMuteBtn = document.getElementById('muteBtn');
     const muteToggleBtn = document.getElementById('audioMuteToggleBtn');
     const muteToggleState = document.getElementById('audioMuteToggleState');
@@ -8700,7 +8376,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
     }
     if (muteToggleBtn && realMuteBtn) muteToggleBtn.addEventListener('click', () => realMuteBtn.click());
 
-    // ---------- Tombol "Chat Global" di panel Sosial — buka widget chat komunitas yg sudah ada ----------
     const openGlobalChatBtn = document.getElementById('socialOpenGlobalChatBtn');
     const realChatToggleBtn = document.getElementById('chatToggleBtn');
     if (openGlobalChatBtn && realChatToggleBtn){
@@ -8710,7 +8385,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
         });
     }
 
-    // ---------- Ripple effect universal di tombol & kartu ----------
     document.addEventListener('click', function(e){
         const target = e.target.closest('button, .skin-btn, .map-card');
         if (!target || target.disabled) return;
@@ -8726,12 +8400,10 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
         setTimeout(() => ripple.remove(), 600);
     }, true);
 
-    // ---------- Haptic helper ----------
     function haptic(pattern){
         try { if (navigator.vibrate) navigator.vibrate(pattern); } catch(e){}
     }
 
-    // ---------- Auto-pause saat pindah tab / minimize ----------
     const pauseOverlay = document.getElementById('qolPauseOverlay');
     const countNum = document.getElementById('qolCountNum');
     let resumeTimer = null;
@@ -8764,7 +8436,7 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
         if (document.hidden) doPause();
         else doResumeWithCountdown();
     });
-    // Jeda manual pakai Esc (tidak dipakai fitur lain di game ini)
+    
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && isActivelyPlaying()){
             if (window.__qolPaused){
@@ -8779,7 +8451,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
         }
     });
 
-    // ---------- Screenshot ----------
     const flashEl = document.getElementById('qolFlash');
     function takeScreenshot(){
         const canvas = document.getElementById('gameCanvas');
@@ -8800,7 +8471,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
     const shotBtn = document.getElementById('audioScreenshotBtn');
     if (shotBtn) shotBtn.addEventListener('click', takeScreenshot);
 
-    // ---------- FPS meter (independen, tidak sentuh loop utama) ----------
     const fpsBtn = document.getElementById('audioFpsToggleBtn');
     const fpsToggleLabel = document.getElementById('audioFpsToggleState');
     const fpsBadge = document.getElementById('qolFpsBadge');
@@ -8834,7 +8504,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
         window.qolToast(fpsOn ? 'FPS meter aktif' : 'FPS meter nonaktif', { icon: '⚡' });
     });
 
-    // ---------- Panel bantuan shortcut ----------
     const helpBtn = document.getElementById('qolHelpBtn');
     const helpPanel = document.getElementById('qolHelpPanel');
     if (helpBtn && helpPanel){
@@ -8849,7 +8518,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
         });
     }
 
-    // ---------- Copy feedback generik (tambahan, tidak menggantikan handler asli) ----------
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('button');
         if (!btn) return;
@@ -8861,7 +8529,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
         }
     });
 
-    // ---------- Skor "pop" tiap nambah (observer, tidak ubah kode inti) ----------
     const scoreEl = document.getElementById('playerScore');
     if (scoreEl){
         let lastScoreText = scoreEl.textContent;
@@ -8880,7 +8547,6 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
         scoreObs.observe(scoreEl, { childList: true, characterData: true, subtree: true });
     }
 
-    // ---------- Haptic + micro-shake saat death screen muncul ----------
     const deathScreen = document.getElementById('deathScreen');
     if (deathScreen){
         let wasHidden = deathScreen.classList.contains('hidden');
@@ -8891,14 +8557,13 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
                 deathScreen.classList.remove('qol-death-kick');
                 void deathScreen.offsetWidth;
                 deathScreen.classList.add('qol-death-kick');
-                window.__qolPaused = false; // pastikan tidak nyangkut paused saat mati sambil pindah tab
+                window.__qolPaused = false; 
             }
             wasHidden = nowHidden;
         });
         deathObs.observe(deathScreen, { attributes: true, attributeFilter: ['class'] });
     }
 
-    // ---------- Haptic ringan saat dash mobile ditekan ----------
     const dashBtn = document.getElementById('dashBtnMobile');
     if (dashBtn) dashBtn.addEventListener('touchstart', () => haptic(12), { passive: true });
 })();
@@ -8906,5 +8571,4 @@ setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c =
 
 </body>
 </html>
-
 
