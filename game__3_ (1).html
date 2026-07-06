@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -120,10 +121,12 @@
             transition: all 0.2s ease;
         }
         #muteBtn:hover { transform: scale(1.1); border-color: rgba(255,255,255,0.5); }
+        /* Dipindah ke dalam panel Pengaturan Suara, ikon mengambang disembunyikan biar HUD atas lebih lega */
+        #muteBtn { display: none !important; }
 
         /* Audio settings button + popover panel */
         #audioSettingsBtn {
-            position: absolute; top: 12px; right: 58px; z-index: 60;
+            position: absolute; top: 12px; right: 12px; z-index: 60;
             background: rgba(15,23,42,0.85); border: 1px solid rgba(255,255,255,0.2);
             color: white; width: 42px; height: 42px; border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
@@ -148,6 +151,8 @@
             transition: all 0.2s ease; pointer-events: auto;
         }
         #chatToggleBtn:hover { transform: scale(1.1); border-color: rgba(255,255,255,0.5); }
+        /* Dipindah aksesnya ke dalam panel Sosial (tombol "🌐 Chat Global"), jadi ikon mengambang disembunyikan */
+        #chatToggleBtn { display: none !important; }
         #chatUnreadDot {
             position: absolute; top: -3px; right: -3px; width: 12px; height: 12px;
             background: #f43f5e; border-radius: 50%; border: 2px solid #07090d; display: none;
@@ -325,6 +330,135 @@
         }
         /* Custom scrollbar minimal */
         .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--line-strong) !important; }
+
+        /* ============================================================
+           QOL PACK — micro-animations & fitur kecil tambahan
+           (murni tambahan visual/UX, tidak menyentuh logic game inti)
+           ============================================================ */
+        /* Tactile press feedback di semua tombol */
+        button:not(:disabled), .skin-btn, .map-card {
+            transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.12s ease, filter 0.12s ease;
+        }
+        button:not(:disabled):active, .skin-btn:active, .map-card:active {
+            transform: scale(0.93);
+            filter: brightness(0.92);
+        }
+
+        /* Ripple kecil saat tombol diklik */
+        .qol-ripple-host { position: relative; overflow: hidden; }
+        .qol-ripple {
+            position: absolute; border-radius: 50%; pointer-events: none;
+            background: rgba(255,255,255,0.55); transform: scale(0);
+            animation: qolRippleAnim 0.55s ease-out forwards;
+        }
+        @keyframes qolRippleAnim { to { transform: scale(2.6); opacity: 0; } }
+
+        /* Angka skor "pop" tiap kali nambah */
+        @keyframes qolPop {
+            0% { transform: scale(1); }
+            35% { transform: scale(1.35); color: #6ee7b7; }
+            100% { transform: scale(1); }
+        }
+        .qol-pop { animation: qolPop 0.32s ease-out; display: inline-block; }
+
+        /* Toast QoL (notif kecil melayang) */
+        #qolToastHost {
+            position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+            z-index: 500; display: flex; flex-direction: column; gap: 8px;
+            align-items: center; pointer-events: none;
+        }
+        .qol-toast {
+            pointer-events: auto;
+            background: rgba(15,23,42,0.92); border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px); color: #fff; font-weight: 700; font-size: 13px;
+            padding: 10px 18px; border-radius: 999px; box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+            display: flex; align-items: center; gap: 8px; white-space: nowrap;
+            animation: qolToastIn 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards;
+        }
+        .qol-toast.qol-toast-out { animation: qolToastOut 0.3s ease-in forwards; }
+        @keyframes qolToastIn {
+            0% { transform: translateY(-18px) scale(0.85); opacity: 0; }
+            60% { transform: translateY(2px) scale(1.03); opacity: 1; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        @keyframes qolToastOut { to { transform: translateY(-14px) scale(0.9); opacity: 0; } }
+
+        /* Overlay auto-pause saat pindah tab */
+        #qolPauseOverlay {
+            position: fixed; inset: 0; z-index: 400; display: none;
+            align-items: center; justify-content: center; flex-direction: column; gap: 10px;
+            background: rgba(4,6,12,0.72); backdrop-filter: blur(6px);
+            animation: qolFadeIn 0.25s ease;
+        }
+        #qolPauseOverlay.show { display: flex; }
+        #qolPauseOverlay h2 { font-size: 28px; font-weight: 900; color: #fff; letter-spacing: 0.02em; }
+        #qolPauseOverlay p { color: #94a3b8; font-size: 13px; }
+        #qolPauseOverlay .qol-count { font-size: 46px; font-weight: 900; color: #34d399; text-shadow: 0 0 24px rgba(52,211,153,0.6); }
+        @keyframes qolFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Tombol kecil baru (screenshot, fps, shortcut) — mengikuti gaya muteBtn/audioSettingsBtn */
+        .qol-icon-btn {
+            position: absolute; top: 12px; z-index: 60;
+            background: rgba(15,23,42,0.85); border: 1px solid rgba(255,255,255,0.2);
+            color: white; width: 42px; height: 42px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 17px; cursor: pointer; backdrop-filter: blur(8px);
+            transition: all 0.2s ease; pointer-events: auto;
+        }
+        .qol-icon-btn:hover { transform: scale(1.1); border-color: rgba(255,255,255,0.5); }
+        .qol-icon-btn:active { transform: scale(0.9); }
+        #qolHelpBtn { left: 12px; bottom: 12px; top: auto; z-index: 60; }
+
+        /* Badge FPS — pojok kiri atas, tidak nabrak tombol mute/setting di kanan */
+        #qolFpsBadge {
+            position: fixed; top: 12px; left: 12px; z-index: 60;
+            background: rgba(15,23,42,0.85); border: 1px solid rgba(255,255,255,0.2);
+            color: #34d399; font-family: 'Space Grotesk', monospace; font-weight: 700;
+            font-size: 11px; padding: 4px 10px; border-radius: 8px; display: none;
+            pointer-events: none; backdrop-filter: blur(6px);
+        }
+        #qolFpsBadge.show { display: block; }
+        #qolFpsBadge.warn { color: #f59e0b; }
+        #qolFpsBadge.bad { color: #ef4444; }
+
+        /* Efek flash kamera saat screenshot */
+        #qolFlash {
+            position: fixed; inset: 0; background: #fff; z-index: 300;
+            opacity: 0; pointer-events: none;
+        }
+        #qolFlash.flash { animation: qolFlashAnim 0.35s ease-out; }
+        @keyframes qolFlashAnim { 0% { opacity: 0.85; } 100% { opacity: 0; } }
+
+        /* Panel shortcut bantuan */
+        #qolHelpPanel {
+            position: fixed; left: 12px; bottom: 62px; z-index: 61;
+            width: 230px; padding: 12px 14px; border-radius: 14px;
+            pointer-events: auto; display: none;
+            animation: qolFadeIn 0.2s ease;
+        }
+        #qolHelpPanel.show { display: block; }
+        #qolHelpPanel h4 { font-size: 12px; font-weight: 900; color: #67e8f9; margin-bottom: 8px; letter-spacing: 0.03em; }
+        #qolHelpPanel .qol-row { display: flex; justify-content: space-between; font-size: 11px; color: #cbd5e1; padding: 3px 0; }
+        #qolHelpPanel kbd { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; padding: 1px 6px; font-family: 'Space Grotesk', monospace; font-size: 10px; }
+
+        /* Death screen dapat sedikit "kick" animasi saat muncul */
+        @keyframes qolDeathShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px) rotate(-0.4deg); }
+            40% { transform: translateX(5px) rotate(0.4deg); }
+            60% { transform: translateX(-3px); }
+            80% { transform: translateX(2px); }
+        }
+        .qol-death-kick { animation: qolDeathShake 0.4s ease; }
+
+        /* Hormati preferensi reduce-motion user (aksesibilitas) */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+            }
+        }
 
         /* ============================================================
            PROFESSIONAL MINIMALIST OVERRIDE  (visual + perf, no logic)
@@ -598,6 +732,14 @@
 
             <div class="border-t border-gray-600 pt-2">
                 <p class="text-xs md:text-sm">Skor: <span id="playerScore" class="font-bold text-green-400 text-lg md:text-xl">0</span></p>
+                <div id="energyUI" class="mt-1">
+                    <div class="flex justify-between text-[9px] md:text-[10px] text-cyan-300 font-bold mb-0.5">
+                        <span>⚡ Energy</span><span id="energyPct">100%</span>
+                    </div>
+                    <div class="w-full h-2 bg-black/50 rounded-full border border-cyan-500/30 overflow-hidden">
+                        <div id="energyBarFill" class="h-full bg-gradient-to-r from-cyan-400 to-blue-400 transition-all" style="width:100%"></div>
+                    </div>
+                </div>
                 <p id="bossWaveUI" class="text-[10px] md:text-xs text-red-400 font-bold mt-1 hidden">Boss Wave: <span id="currentBossWave">0</span>/5</p>
                 
                 <div id="pvpUI" class="hidden mt-2 p-2 bg-red-900/40 rounded border border-red-500/50">
@@ -663,6 +805,11 @@
                     <span class="block text-lg font-black tracking-tight">☰ LAINNYA</span>
                     <span class="block text-[11px] font-medium text-gray-400 mt-0.5">Map, Skin, Editor & Statistik</span>
                 </button>
+                <button onclick="window.SocialUI && window.SocialUI.open()" class="px-6 py-4 bg-gradient-to-br from-indigo-700 to-purple-800 hover:from-indigo-600 hover:to-purple-700 border-2 border-indigo-400/60 hover:border-indigo-300 text-white rounded-2xl shadow-[0_0_25px_rgba(129,140,248,0.4)] transition-all duration-300 transform hover:-translate-y-0.5 relative">
+                    <span class="block text-lg font-black tracking-tight">👥 SOSIAL</span>
+                    <span class="block text-[11px] font-medium text-indigo-100 mt-0.5">Teman · Gift · Chat</span>
+                    <span id="socialBadge" class="hidden absolute -top-2 -right-2 min-w-[22px] h-[22px] px-1.5 rounded-full bg-red-500 text-white text-[11px] font-black flex items-center justify-center border-2 border-slate-900">0</span>
+                </button>
             </div>
 
             <!-- ===== PLAY VIEW ===== -->
@@ -704,6 +851,10 @@
                     <button onclick="initGame('level')" class="group relative overflow-hidden px-3 py-3 bg-gradient-to-b from-emerald-900 to-slate-900 hover:from-emerald-800 hover:to-slate-800 border-2 border-emerald-500 hover:border-emerald-300 text-white rounded-2xl shadow-[0_4px_20px_rgba(16,185,129,0.4)] transition-all duration-300 transform hover:-translate-y-1">
                         <h4 class="text-base font-black text-emerald-300 mb-1">🏆 LEVEL MODE</h4>
                         <p class="text-[10px] text-gray-200">40 level. Naik = bot++, peta++, AI++.</p>
+                    </button>
+                    <button onclick="initGame('hideseek')" class="group relative overflow-hidden px-3 py-3 bg-gradient-to-b from-indigo-900 to-slate-900 hover:from-indigo-800 hover:to-slate-800 border-2 border-indigo-400 hover:border-indigo-200 text-white rounded-2xl shadow-[0_4px_20px_rgba(99,102,241,0.4)] transition-all duration-300 transform hover:-translate-y-1">
+                        <h4 class="text-base font-black text-indigo-200 mb-1">🔦 HIDE & SEEK</h4>
+                        <p class="text-[10px] text-gray-200">Map luas gelap. Isi 3 tiang → maze! Kabur ke 🚪.</p>
                     </button>
                 </div>
             </div>
@@ -861,6 +1012,17 @@
             </div>
             <input type="range" id="sfxVolSlider" min="0" max="100" value="85" class="audio-slider">
         </div>
+        <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.12);display:flex;flex-direction:column;gap:8px;">
+            <button id="audioMuteToggleBtn" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:11px;font-weight:700;padding:7px 10px;border-radius:9px;cursor:pointer;">
+                <span id="audioMuteToggleLabel">🔊 Suara</span><span id="audioMuteToggleState" style="font-size:10px;color:#34d399;">Aktif</span>
+            </button>
+            <button id="audioScreenshotBtn" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:11px;font-weight:700;padding:7px 10px;border-radius:9px;cursor:pointer;">
+                <span>📸 Screenshot</span><kbd style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:5px;padding:1px 6px;font-size:9px;">S</kbd>
+            </button>
+            <button id="audioFpsToggleBtn" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:11px;font-weight:700;padding:7px 10px;border-radius:9px;cursor:pointer;">
+                <span>⚡ FPS Meter</span><span id="audioFpsToggleState" style="font-size:10px;color:#94a3b8;">Off</span>
+            </button>
+        </div>
     </div>
 
     <!-- Chat Komunitas -->
@@ -971,6 +1133,8 @@
         // UI Refs
         const UI = {
             score: document.getElementById('playerScore'),
+            energyBarFill: document.getElementById('energyBarFill'),
+            energyPct: document.getElementById('energyPct'),
             leaderboard: document.getElementById('leaderboardList'),
             leaderboardPanel: document.getElementById('leaderboardPanel'),
             minimapPanel: document.getElementById('minimapPanel'),
@@ -1059,6 +1223,13 @@
         const MAX_BOOSTS = 40; 
         const PVP_MAX_FOOD = 60; // arena PvP kecil & cuma 2 entitas, food harus jauh lebih dikit dari mode terbuka
         const GRID_SIZE = 60;
+
+        // ===== Sistem Energy Dash =====
+        // Energy abis duluan pas dash. Kalau energy 0 & masih maksa dash, baru skor yang pelan-pelan berkurang.
+        const ENERGY_DASH_DRAIN = 100 / (3 * 60);          // energy full ke 0 dalam ~3 detik dash terus-terusan
+        const ENERGY_PASSIVE_REGEN = 100 / (7 * 60);       // energy 0 ke full dalam ~7 detik kalau gak dash
+        const ENERGY_FOOD_BONUS = 3;                        // bonus energy tiap makan food biasa
+        const ENERGY_EMPTY_SCORE_DRAIN = 2 / 60;            // skor berkurang ~2 poin/detik selama maksa dash tanpa energy
         let screenShake = 0;
 
         let width, height;
@@ -1573,7 +1744,7 @@
                 }
                 
                 // Acak kemunculan Petir/Meteor
-                if (Math.random() < 0.006) {
+                if (currentMode !== 'hideseek' && Math.random() < 0.006) {
                      let cx, cy;
                      // Sedikit bias agar sering mengincar dekat player
                      if (Math.random() < 0.35 && player && !player.dead) {
@@ -1631,7 +1802,20 @@
                                 let seg = snake.segments[k];
                                 if (distSq(seg.x, seg.y, s.x, s.y) < s.radius * s.radius) {
                                     hitSnakes.add(snake);
-                                    
+
+                                    const isLightningImmune = snake.skin && snake.skin.lightningImmune;
+
+                                    if (isLightningImmune) {
+                                        // Skin anti-petir: kebal total, gak ada damage skor sama sekali
+                                        spawnParticles(seg.x, seg.y, '#22d3ee', 20, 2);
+                                        if (snake.isPlayer) {
+                                            spawnFloatingText(snake.head.x, snake.head.y, "⚡ KEBAL PETIR!", "#22d3ee", true);
+                                            AudioSys.playEat();
+                                            window.__evLightningSurvived = true;
+                                        }
+                                        break;
+                                    }
+
                                     let damage = snake.score * 0.40; // Hilang 40%
                                     snake.score -= damage;
                                     
@@ -1650,6 +1834,8 @@
                                     
                                     if (snake.score < 30) {
                                         snake.die(null);
+                                    } else if (snake.isPlayer) {
+                                        window.__evLightningSurvived = true; // dipakai sistem achievement, jauh lebih akurat drpd polling state
                                     }
                                     break;
                                 }
@@ -1699,8 +1885,9 @@
                     }
                 });
                 
-                // Efek Kabut
-                this.fogZones.forEach(f => {
+                // Efek Kabut (dilewati kalau pemain lokal pakai skin anti-kabut/gelap)
+                const _localHasNightVision = (typeof player !== 'undefined' && player && player.skin && player.skin.nightVision);
+                if (!_localHasNightVision) this.fogZones.forEach(f => {
                     if(f.x > camera.x - viewW/2 - f.radius && f.x < camera.x + viewW/2 + f.radius && 
                        f.y > camera.y - viewH/2 - f.radius && f.y < camera.y + viewH/2 + f.radius) {
                            
@@ -1906,6 +2093,8 @@
                 this.angle = randomRange(0, Math.PI * 2);
                 this.isBoss = false; 
                 this.activeBoosts = { speed: 0, vision: 0, invis: 0, river: 0 };
+                this.maxEnergy = 100; // dipakai buat scaling energy per role (misal hider dapet lebih banyak)
+                this.energy = 100; // Sistem energy: dash makan energy dulu, skor baru kepotong kalau energy abis
                 this.skin = skinData || gameSkins[Math.floor(Math.random() * gameSkins.length)];
                 
                 let startX, startY;
@@ -1949,6 +2138,7 @@
                 
                 let speedMult = this.activeBoosts.speed > 0 ? 1.8 : 1;
                 if (this.activeBoosts.river > 0) speedMult *= 2.0;
+                if (this.hsSpeedMult) speedMult *= this.hsSpeedMult;
 
                 let inRiver = false;
                 if (mapObjects.rivers) {
@@ -2003,9 +2193,19 @@
                     else speed = 3.0 * speedMult * sizeSpeedMult; 
                     
                     const dashBtn = (this.controlSlot === 2) ? myKeys.space : (myKeys.space || isMouseDown || dashPressed);
-                    if (dashBtn && this.score > 35 && speed > 0) {
-                        speed = 6.5 * speedMult * sizeSpeedMult; this.score -= 0.15; 
+                    if (dashBtn && speed > 0 && this.energy > 0) {
+                        // Dash pakai ENERGY dulu — skor aman selama energy masih ada
+                        speed = 6.5 * speedMult * sizeSpeedMult;
+                        this.energy = Math.max(0, this.energy - ENERGY_DASH_DRAIN);
                         if (Math.random() < 0.25) foods.push(new Food(this.segments[this.segments.length - 1].x, this.segments[this.segments.length - 1].y, 1, this.skin.head, 5));
+                    } else if (dashBtn && speed > 0 && this.energy <= 0 && this.score > 12) {
+                        // Energy abis tapi maksa lari terus → SKOR yang jadi taruhannya, pelan-pelan
+                        speed = 6.5 * speedMult * sizeSpeedMult;
+                        this.score -= ENERGY_EMPTY_SCORE_DRAIN;
+                        if (Math.random() < 0.25) foods.push(new Food(this.segments[this.segments.length - 1].x, this.segments[this.segments.length - 1].y, 1, this.skin.head, 5));
+                    } else {
+                        // Gak dash → energy regen pelan-pelan otomatis
+                        this.energy = Math.min(this.maxEnergy, this.energy + ENERGY_PASSIVE_REGEN);
                     }
                 } else {
                     // AI Logic
@@ -2117,8 +2317,23 @@
                 }
 
                 if (speed !== 0) {
-                    const newHeadX = this.head.x + Math.cos(this.angle) * speed;
-                    const newHeadY = this.head.y + Math.sin(this.angle) * speed;
+                    let newHeadX = this.head.x + Math.cos(this.angle) * speed;
+                    let newHeadY = this.head.y + Math.sin(this.angle) * speed;
+
+                    // Tembok maze solid — beneran gak bisa ditembus begitu maze aktif
+                    if (currentMode === 'hideseek' && HideSeek.mazeActive) {
+                        const r = this.radius * 0.85;
+                        if (HideSeek.hsBoxCollision(newHeadX, newHeadY, r)) {
+                            if (!HideSeek.hsBoxCollision(newHeadX, this.head.y, r)) {
+                                newHeadY = this.head.y; // geser nempel tembok, tetep bisa jalan di sumbu X
+                            } else if (!HideSeek.hsBoxCollision(this.head.x, newHeadY, r)) {
+                                newHeadX = this.head.x; // geser nempel tembok, tetep bisa jalan di sumbu Y
+                            } else {
+                                newHeadX = this.head.x; newHeadY = this.head.y; // mentok total, berhenti di tembok
+                            }
+                        }
+                    }
+
                     this.segments.unshift({x: newHeadX, y: newHeadY});
                     // Track stats
                     if (this.isPlayer) {
@@ -2320,6 +2535,549 @@
             UI.bossWave.innerText = wave;
         }
 
+        // ===== HIDE & SEEK MODE =====
+        function _segRectHit(x1,y1,x2,y2,r) {
+            const x=r.x,y=r.y,w=r.w,h=r.h;
+            if (Math.max(x1,x2) < x || Math.min(x1,x2) > x+w) return false;
+            if (Math.max(y1,y2) < y || Math.min(y1,y2) > y+h) return false;
+            let t0=0,t1=1;
+            const dx=x2-x1, dy=y2-y1;
+            const p=[-dx,dx,-dy,dy];
+            const q=[x1-x, x+w-x1, y1-y, y+h-y1];
+            for (let i=0;i<4;i++){
+                if (p[i]===0){ if(q[i]<0) return false; }
+                else { const t=q[i]/p[i];
+                    if(p[i]<0){ if(t>t1) return false; if(t>t0) t0=t; }
+                    else { if(t<t0) return false; if(t<t1) t1=t; }
+                }
+            }
+            return true;
+        }
+        const HideSeek = {
+            boxes: [], batteries: [], pylons: [], exit: null,
+            mazeActive: false, mazeMsgTimer: 0,
+            active: false, timer: 0, ended: false,
+            CONE_RANGE: 700, CONE_HALF: Math.PI/5,
+            HIDER_LIGHT_RANGE: 240, // senter hider — sengaja jauh lebih pendek & bulat (bukan cone) dari senter seeker
+            init() {
+                this.boxes = []; this.batteries = []; this.pylons = []; this.exit = null;
+                this.mazeActive = false; this.mazeMsgTimer = 0;
+                this.active = true; this.ended = false;
+                this.timer = 8 * 60 * 60; // 8 menit
+                const size = currentWorldSize;
+                // Map lebih luas → box lebih banyak
+                const N = 360;
+                for (let i=0;i<N;i++){
+                    const w = randomRange(120, 380);
+                    const h = randomRange(120, 380);
+                    const x = randomRange(300, size - 300 - w);
+                    const y = randomRange(300, size - 300 - h);
+                    const palette = ['#1f2937','#27272a','#3f3f46','#292524','#1e293b'];
+                    this.boxes.push({x,y,w,h, color: palette[Math.floor(Math.random()*palette.length)]});
+                }
+                for (let c=0;c<40;c++){
+                    const cx = randomRange(500, size-500), cy = randomRange(500, size-500);
+                    for (let k=0;k<5;k++){
+                        const w = randomRange(70,130), h = randomRange(70,130);
+                        this.boxes.push({x: Math.max(50,Math.min(size-w-50,cx + randomRange(-200,200))), y: Math.max(50,Math.min(size-h-50,cy + randomRange(-200,200))), w, h, color:'#3b2410'});
+                    }
+                }
+                // 3 tiang (pylon) tersebar
+                for (let i=0;i<3;i++){
+                    const angle = (i/3)*Math.PI*2 + Math.PI/6;
+                    const r = size * 0.28;
+                    const px = size/2 + Math.cos(angle) * r;
+                    const py = size/2 + Math.sin(angle) * r;
+                    this.pylons.push({x:px, y:py, filled:0, needed:3, radius:110, pulse:Math.random()*Math.PI*2});
+                }
+                // 9 baterai tersebar
+                for (let i=0;i<9;i++){
+                    let bx, by, tries=0;
+                    do {
+                        bx = randomRange(700, size-700);
+                        by = randomRange(700, size-700);
+                        tries++;
+                    } while (tries<10 && this.pylons.some(p => Math.hypot(p.x-bx,p.y-by) < 800));
+                    this.batteries.push({x:bx, y:by, radius:42, taken:false, glow:Math.random()*Math.PI*2});
+                }
+            },
+            reset(){ this.boxes=[]; this.batteries=[]; this.pylons=[]; this.exit=null; this.active=false; this.ended=false; this.timer=0; this.mazeActive=false; },
+            losBlocked(x1,y1,x2,y2){
+                for (const b of this.boxes) if (_segRectHit(x1,y1,x2,y2,b)) return true;
+                return false;
+            },
+            // Cek tabrakan fisik (bukan cuma LOS) — dipakai buat bikin tembok maze beneran solid
+            hsBoxCollision(x, y, r) {
+                for (const b of this.boxes) {
+                    if (x + r > b.x && x - r < b.x + b.w && y + r > b.y && y - r < b.y + b.h) return b;
+                }
+                return null;
+            },
+            // Generator maze asli (recursive backtracker + braiding) yang nutupin SELURUH map, bukan strip acak
+            generateFullMaze(size, safePoints) {
+                const targetCells = 22; // lebih banyak sel = lorong lebih sempit, gak berasa "ruangan gede"
+                const cellSize = size / targetCells;
+                const cols = Math.max(6, Math.floor(size / cellSize));
+                const rows = cols;
+                const wallT = Math.max(28, cellSize * 0.09);
+                const walls = [];
+                for (let r=0;r<rows;r++){ walls.push([]); for(let c=0;c<cols;c++){ walls[r].push({N:true,E:true,S:true,W:true}); } }
+                const visited = Array.from({length:rows}, () => Array(cols).fill(false));
+                const stack = [[0,0]];
+                visited[0][0] = true;
+                const dirs = [[0,-1,'N','S'],[1,0,'E','W'],[0,1,'S','N'],[-1,0,'W','E']];
+                while (stack.length) {
+                    const [r,c] = stack[stack.length-1];
+                    const opts = [];
+                    for (const [dc,dr,w1,w2] of dirs) {
+                        const nr = r+dr, nc = c+dc;
+                        if (nr>=0 && nr<rows && nc>=0 && nc<cols && !visited[nr][nc]) opts.push([nr,nc,w1,w2]);
+                    }
+                    if (!opts.length) { stack.pop(); continue; }
+                    const [nr,nc,w1,w2] = opts[Math.floor(Math.random()*opts.length)];
+                    walls[r][c][w1] = false;
+                    walls[nr][nc][w2] = false;
+                    visited[nr][nc] = true;
+                    stack.push([nr,nc]);
+                }
+                // BRAIDING: buang mayoritas dead-end (jalan buntu 1 pintu) biar selalu ada jalur alternatif kabur.
+                // Sengaja gak 100% biar masih ada tensi, tapi 85% dead-end dikasih jalan kedua.
+                const degree = (r,c) => (walls[r][c].N?0:1)+(walls[r][c].S?0:1)+(walls[r][c].E?0:1)+(walls[r][c].W?0:1);
+                for (let r=0;r<rows;r++){
+                    for (let c=0;c<cols;c++){
+                        if (degree(r,c) !== 1) continue;
+                        if (Math.random() > 0.85) continue;
+                        const cand = [];
+                        for (const [dc,dr,w1,w2] of dirs) {
+                            const nr = r+dr, nc = c+dc;
+                            if (nr>=0 && nr<rows && nc>=0 && nc<cols && walls[r][c][w1]) cand.push([nr,nc,w1,w2]);
+                        }
+                        if (cand.length) {
+                            const [nr,nc,w1,w2] = cand[Math.floor(Math.random()*cand.length)];
+                            walls[r][c][w1] = false;
+                            walls[nr][nc][w2] = false;
+                        }
+                    }
+                }
+                const boxes = [];
+                const doorW = 420;
+                const doorX1 = size/2 - doorW/2, doorX2 = size/2 + doorW/2;
+                for (let r=0;r<rows;r++){
+                    for (let c=0;c<cols;c++){
+                        const x = c*cellSize, y = r*cellSize;
+                        const w = walls[r][c];
+                        if (w.N && !(r===0 && x < doorX2 && x+cellSize > doorX1)) {
+                            boxes.push({x, y: y - wallT/2, w: cellSize, h: wallT, color:'#0f172a'});
+                        }
+                        if (w.W) boxes.push({x: x - wallT/2, y, w: wallT, h: cellSize, color:'#0f172a'});
+                        if (r===rows-1 && w.S) boxes.push({x, y: y+cellSize-wallT/2, w: cellSize, h: wallT, color:'#0f172a'});
+                        if (c===cols-1 && w.E) boxes.push({x: x+cellSize-wallT/2, y, w: wallT, h: cellSize, color:'#0f172a'});
+                    }
+                }
+                // CLEARANCE: begitu maze nyala, jangan sampe ada hider yang ujug-ujug ke-boks tembok
+                // persis di posisi dia berdiri saat itu juga — kasih ruang aman radius kecil dulu.
+                if (safePoints && safePoints.length) {
+                    const clearR = cellSize * 0.65;
+                    return boxes.filter(b => {
+                        const bcx = b.x + b.w/2, bcy = b.y + b.h/2;
+                        for (const p of safePoints) {
+                            if (Math.hypot(bcx - p.x, bcy - p.y) < clearR) return false;
+                        }
+                        return true;
+                    });
+                }
+                return boxes;
+            },
+            // AI lebih pintar: cek tembok di depan dulu sebelum belok ke goal, biar gak nyangkut di box/maze
+            steerToward(snake, goalX, goalY, turnRate) {
+                let desired = Math.atan2(goalY - snake.head.y, goalX - snake.head.x);
+                const lookAhead = 260;
+                const clear = (a) => {
+                    const tx = snake.head.x + Math.cos(a) * lookAhead;
+                    const ty = snake.head.y + Math.sin(a) * lookAhead;
+                    return !this.losBlocked(snake.head.x, snake.head.y, tx, ty);
+                };
+                if (!clear(desired)) {
+                    const offsets = [0.35, -0.35, 0.7, -0.7, 1.1, -1.1, 1.6, -1.6];
+                    let found = false;
+                    for (const off of offsets) {
+                        if (clear(desired + off)) { desired += off; found = true; break; }
+                    }
+                    if (!found) desired += (Math.random() < 0.5 ? 1 : -1) * 2.2; // mentok total → putar balik
+                }
+                snake.targetAngle = desired;
+                let diff = ((desired - snake.angle + Math.PI*3) % (Math.PI*2)) - Math.PI;
+                snake.angle += Math.max(-turnRate, Math.min(turnRate, diff));
+            },
+            activateMaze() {
+                if (this.mazeActive) return;
+                this.mazeActive = true;
+                this.mazeMsgTimer = 240;
+                const size = currentWorldSize;
+                // Seluruh map beneran jadi maze (grid recursive-backtracker + braiding), bukan strip acak lagi.
+                // Box lama (hiding spot) dibuang, diganti tembok maze yang solid — gak bisa ditembus.
+                const hiderSafePoints = snakes.filter(s => s.hsRole === 'hider' && !s.dead)
+                    .map(s => ({x: s.head.x, y: s.head.y}));
+                this.boxes = this.generateFullMaze(size, hiderSafePoints);
+                // Seeker jadi 2.4x lebih cepat — tapi disebar biar gak numpuk ngejar 1 hider yang sama
+                const seekerBots = snakes.filter(s => s.hsRole === 'seeker' && !s.dead);
+                seekerBots.forEach((s, i) => {
+                    s.hsSpeedMult = 2.4;
+                    s.hsPatrolBias = (i / Math.max(1, seekerBots.length)) * Math.PI * 2; // arah jelajah beda2 tiap seeker
+                });
+                // Pintu keluar besar di tengah utara
+                const doorW = 420, doorH = 260;
+                this.exit = { x: size/2 - doorW/2, y: 260, w: doorW, h: doorH };
+                // Jamin area pintu 100% bersih, gak ada tembok yang nutupin jalan keluar
+                this.boxes = this.boxes.filter(b => {
+                    const ex = this.exit;
+                    return !(b.x < ex.x+ex.w && b.x+b.w > ex.x && b.y < ex.y+ex.h && b.y+b.h > ex.y);
+                });
+                if (player && !player.dead) {
+                    spawnFloatingText(player.head.x, player.head.y, '⚡ MAZE AKTIF! TEMBOK SOLID — CARI PINTU!', '#22d3ee', true);
+                }
+                screenShake = Math.max(screenShake, 30);
+            },
+            tryPickupBattery(snake) {
+                if (!this.active || snake.dead || snake.hsRole !== 'hider') return;
+                for (const b of this.batteries) {
+                    if (b.taken) continue;
+                    const d = Math.hypot(snake.head.x - b.x, snake.head.y - b.y);
+                    if (d < b.radius + (snake.radius||20)) {
+                        // Deposit ke pylon terdekat yg masih butuh
+                        let best=null, bd=Infinity;
+                        for (const p of this.pylons) {
+                            if (p.filled >= p.needed) continue;
+                            const pd = Math.hypot(p.x-b.x, p.y-b.y);
+                            if (pd < bd) { bd = pd; best = p; }
+                        }
+                        if (!best) continue;
+                        best.filled++;
+                        b.taken = true;
+                        spawnParticles(b.x, b.y, '#22d3ee', 40);
+                        if (snake.isPlayer) {
+                            snake.score += 60;
+                            spawnFloatingText(snake.head.x, snake.head.y, '+BATERAI → TIANG '+best.filled+'/3', '#22d3ee', true);
+                        }
+                        if (this.pylons.every(p => p.filled >= p.needed)) this.activateMaze();
+                    }
+                }
+            },
+            tryEscape(snake) {
+                if (!this.mazeActive || !this.exit) return;
+                if (snake.dead || snake.hsRole !== 'hider' || snake.escaped) return;
+                const e = this.exit;
+                if (snake.head.x >= e.x && snake.head.x <= e.x+e.w && snake.head.y >= e.y && snake.head.y <= e.y+e.h) {
+                    snake.escaped = true; snake.dead = true;
+                    spawnParticles(snake.head.x, snake.head.y, '#22c55e', 80);
+                    if (snake.isPlayer) {
+                        snake.score += 800;
+                        spawnFloatingText(snake.head.x, snake.head.y, 'SELAMAT! 🚪✨', '#22c55e', true);
+                    }
+                }
+            },
+            update() {
+                if (!this.active || currentMode !== 'hideseek') return;
+                if (gameState !== 'playing') return;
+                if (this.timer > 0) this.timer--;
+                if (this.mazeMsgTimer > 0) this.mazeMsgTimer--;
+
+                // Baterai & pintu untuk semua hider
+                for (const s of snakes) {
+                    if (s.hsRole !== 'hider' || s.dead) continue;
+                    this.tryPickupBattery(s);
+                    this.tryEscape(s);
+                }
+
+                // Sebar target biar seeker bot gak numpuk ngerubungin 1 hider doang kalau hider lain lagi kosongan
+                const aliveHiders = snakes.filter(h => !h.dead && h.hsRole === 'hider');
+                const seekerTargets = new Map();
+                if (aliveHiders.length > 1) {
+                    const claimed = new Set();
+                    const botSeekers = snakes.filter(s => !s.dead && !s.isPlayer && s.hsRole === 'seeker');
+                    for (const s of botSeekers) {
+                        let best = null, bd = Infinity;
+                        for (const h of aliveHiders) {
+                            if (claimed.has(h) && claimed.size < aliveHiders.length) continue;
+                            const d = distSq(s.head.x, s.head.y, h.head.x, h.head.y);
+                            if (d < bd) { bd = d; best = h; }
+                        }
+                        if (best) { seekerTargets.set(s, best); claimed.add(best); }
+                    }
+                }
+
+                for (const s of snakes) {
+                    if (s.dead || s.hsRole !== 'seeker') continue;
+                    let nearest = null, nd = Infinity;
+                    for (const h of snakes) {
+                        if (h.dead || h.hsRole !== 'hider') continue;
+                        const dx = h.head.x - s.head.x, dy = h.head.y - s.head.y;
+                        const d = Math.hypot(dx,dy);
+                        if (d < nd) { nd = d; nearest = h; }
+                        if (d > this.CONE_RANGE || d < 1) continue;
+                        let ang = Math.atan2(dy,dx) - s.angle;
+                        while (ang > Math.PI) ang -= Math.PI*2;
+                        while (ang < -Math.PI) ang += Math.PI*2;
+                        if (Math.abs(ang) > this.CONE_HALF) continue;
+                        if (this.losBlocked(s.head.x, s.head.y, h.head.x, h.head.y)) continue;
+                        if (h.isPlayer) spawnFloatingText(h.head.x, h.head.y, 'KETAHUAN!', '#ef4444', true);
+                        else spawnFloatingText(h.head.x, h.head.y, 'DOWN', '#f87171');
+                        spawnParticles(h.head.x, h.head.y, '#fef08a', 30);
+                        h.die(s);
+                        if (s.isPlayer) { s.score += 100; s.kills = (s.kills||0)+1; }
+                    }
+                    if (!s.isPlayer) {
+                        const chaseTarget = seekerTargets.get(s) || nearest;
+                        if (chaseTarget) this.steerToward(s, chaseTarget.head.x, chaseTarget.head.y, 0.09);
+                    }
+                }
+
+                // AI hider: cari baterai → tiang, kabur dari seeker, atau lari ke pintu
+                for (const h of snakes) {
+                    if (h.dead || h.isPlayer || h.hsRole !== 'hider') continue;
+                    let threat = null, td = Infinity;
+                    for (const s of snakes) {
+                        if (s.dead || s.hsRole !== 'seeker') continue;
+                        const d = distSq(h.head.x,h.head.y,s.head.x,s.head.y);
+                        if (d < td) { td = d; threat = s; }
+                    }
+                    let goalX = null, goalY = null;
+                    if (threat && td < 850*850) {
+                        goalX = h.head.x + (h.head.x - threat.head.x);
+                        goalY = h.head.y + (h.head.y - threat.head.y);
+                    } else if (this.mazeActive && this.exit) {
+                        goalX = this.exit.x + this.exit.w/2;
+                        goalY = this.exit.y + this.exit.h/2;
+                    } else {
+                        let best=null, bd=Infinity;
+                        for (const b of this.batteries) {
+                            if (b.taken) continue;
+                            const d = distSq(h.head.x, h.head.y, b.x, b.y);
+                            if (d < bd) { bd=d; best=b; }
+                        }
+                        if (best) { goalX = best.x; goalY = best.y; }
+                    }
+                    if (goalX !== null) {
+                        this.steerToward(h, goalX, goalY, 0.09);
+                    }
+                }
+
+                // Win condition — escaped = safe
+                const hiders = snakes.filter(x => x.hsRole === 'hider');
+                const hidersSafe = hiders.filter(x => !x.dead || x.escaped).length;
+                const hidersAliveOnField = hiders.filter(x => !x.dead).length;
+                if (!this.ended && player) {
+                    let winMsg = null;
+                    if (player.hsRole === 'hider') {
+                        if (player.escaped) winMsg = 'KAMU SELAMAT! 🚪';
+                        else if (this.timer <= 0) winMsg = 'HIDER MENANG! 🎉';
+                        else if (hidersAliveOnField === 0 && !player.escaped) winMsg = 'SEMUA HIDER KALAH';
+                    } else if (player.hsRole === 'seeker') {
+                        if (hidersSafe === 0) winMsg = 'SEEKER MENANG! 🔦';
+                        else if (this.timer <= 0) winMsg = 'WAKTU HABIS — HIDER MENANG';
+                    }
+                    if (winMsg) {
+                        this.ended = true;
+                        gameState = 'win';
+                        UI.finalScore.innerText = Math.floor(player.score);
+                        UI.dTitle.innerText = winMsg;
+                        UI.dTitle.className = "text-4xl md:text-6xl font-black text-indigo-300 mb-2 drop-shadow-[0_0_40px_rgba(99,102,241,1)] uppercase tracking-tighter text-center px-4";
+                        UI.dMsg.classList.add('hidden');
+                        UI.layer.classList.add('hidden');
+                        UI.deathScreen.classList.remove('hidden');
+                        UI.deathScreen.classList.add('win-anim');
+                        UI.respawnBtn.classList.add('hidden');
+                    }
+                }
+            },
+            drawBoxes(ctx, viewW, viewH) {
+                if (!this.active || currentMode !== 'hideseek') return;
+                const vx = camera.x - viewW/2 - 50, vy = camera.y - viewH/2 - 50;
+                const vw = viewW + 100, vh = viewH + 100;
+                for (const b of this.boxes) {
+                    if (b.x + b.w < vx || b.x > vx+vw || b.y + b.h < vy || b.y > vy+vh) continue;
+                    ctx.fillStyle = b.color;
+                    ctx.fillRect(b.x, b.y, b.w, b.h);
+                    ctx.strokeStyle = 'rgba(0,0,0,0.85)';
+                    ctx.lineWidth = 3;
+                    ctx.strokeRect(b.x, b.y, b.w, b.h);
+                    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+                    ctx.fillRect(b.x+6, b.y+6, b.w-12, 4);
+                }
+                // Baterai
+                const t = performance.now()/500;
+                for (const b of this.batteries) {
+                    if (b.taken) continue;
+                    if (b.x < vx || b.x > vx+vw || b.y < vy || b.y > vy+vh) continue;
+                    const pulse = 1 + Math.sin(t + b.glow)*0.15;
+                    ctx.save();
+                    ctx.translate(b.x, b.y);
+                    // glow
+                    const g = ctx.createRadialGradient(0,0,10,0,0,80*pulse);
+                    g.addColorStop(0,'rgba(34,211,238,0.55)');
+                    g.addColorStop(1,'rgba(34,211,238,0)');
+                    ctx.fillStyle = g;
+                    ctx.beginPath(); ctx.arc(0,0,80*pulse,0,Math.PI*2); ctx.fill();
+                    // body
+                    ctx.fillStyle = '#0e7490';
+                    ctx.fillRect(-18, -26, 36, 52);
+                    ctx.fillStyle = '#22d3ee';
+                    ctx.fillRect(-14, -22, 28, 44);
+                    ctx.fillStyle = '#155e75';
+                    ctx.fillRect(-8, -30, 16, 6);
+                    ctx.fillStyle = '#fff';
+                    ctx.font = 'bold 20px Inter'; ctx.textAlign='center'; ctx.textBaseline='middle';
+                    ctx.fillText('⚡', 0, 2);
+                    ctx.restore();
+                }
+                // Pylon (tiang)
+                for (const p of this.pylons) {
+                    if (p.x+120 < vx || p.x-120 > vx+vw || p.y+120 < vy || p.y-120 > vy+vh) continue;
+                    p.pulse += 0.05;
+                    const full = p.filled >= p.needed;
+                    const glowCol = full ? '34,197,94' : '250,204,21';
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    const g = ctx.createRadialGradient(0,0,20,0,0,180);
+                    g.addColorStop(0,`rgba(${glowCol},${0.35+Math.sin(p.pulse)*0.15})`);
+                    g.addColorStop(1,`rgba(${glowCol},0)`);
+                    ctx.fillStyle = g;
+                    ctx.beginPath(); ctx.arc(0,0,180,0,Math.PI*2); ctx.fill();
+                    // base
+                    ctx.fillStyle = '#1f2937';
+                    ctx.fillRect(-50,-10,100,60);
+                    ctx.strokeStyle = '#0f172a'; ctx.lineWidth = 3;
+                    ctx.strokeRect(-50,-10,100,60);
+                    // tower
+                    ctx.fillStyle = '#374151';
+                    ctx.beginPath();
+                    ctx.moveTo(-30,-10); ctx.lineTo(-14,-90); ctx.lineTo(14,-90); ctx.lineTo(30,-10); ctx.closePath();
+                    ctx.fill(); ctx.stroke();
+                    // slot indicators
+                    for (let i=0;i<p.needed;i++){
+                        ctx.fillStyle = i < p.filled ? '#22d3ee' : '#111827';
+                        ctx.strokeStyle = '#0f172a'; ctx.lineWidth = 2;
+                        ctx.fillRect(-24 + i*16, -60, 12, 26);
+                        ctx.strokeRect(-24 + i*16, -60, 12, 26);
+                    }
+                    // label
+                    ctx.fillStyle = full ? '#4ade80' : '#fde047';
+                    ctx.font = 'bold 16px Inter'; ctx.textAlign='center';
+                    ctx.fillText(full ? '✅ POWER' : (p.filled + '/' + p.needed), 0, 70);
+                    ctx.restore();
+                }
+                // Exit door
+                if (this.exit) {
+                    const e = this.exit;
+                    if (!(e.x+e.w < vx || e.x > vx+vw || e.y+e.h < vy || e.y > vy+vh)) {
+                        const pulse = 0.6 + Math.sin(t*2)*0.4;
+                        ctx.save();
+                        // glow
+                        const g = ctx.createRadialGradient(e.x+e.w/2, e.y+e.h/2, 40, e.x+e.w/2, e.y+e.h/2, 400);
+                        g.addColorStop(0, `rgba(34,197,94,${0.4*pulse})`);
+                        g.addColorStop(1, 'rgba(34,197,94,0)');
+                        ctx.fillStyle = g;
+                        ctx.fillRect(e.x-200, e.y-200, e.w+400, e.h+400);
+                        // frame
+                        ctx.fillStyle = '#166534';
+                        ctx.fillRect(e.x-16, e.y-16, e.w+32, e.h+32);
+                        // door
+                        const grad = ctx.createLinearGradient(e.x, e.y, e.x, e.y+e.h);
+                        grad.addColorStop(0, '#22c55e');
+                        grad.addColorStop(1, '#15803d');
+                        ctx.fillStyle = grad;
+                        ctx.fillRect(e.x, e.y, e.w, e.h);
+                        ctx.strokeStyle = '#052e16'; ctx.lineWidth = 6;
+                        ctx.strokeRect(e.x, e.y, e.w, e.h);
+                        // arrow
+                        ctx.fillStyle = '#f0fdf4';
+                        ctx.font = 'bold 90px Inter'; ctx.textAlign='center'; ctx.textBaseline='middle';
+                        ctx.fillText('🚪', e.x+e.w/2, e.y+e.h/2 - 10);
+                        ctx.font = 'bold 22px Inter';
+                        ctx.fillStyle = '#fff';
+                        ctx.fillText('KELUAR', e.x+e.w/2, e.y+e.h - 22);
+                        ctx.restore();
+                    }
+                }
+            },
+            drawOverlay(ctx, viewW, viewH) {
+                if (!this.active || currentMode !== 'hideseek') return;
+                // Peta lebih gelap
+                ctx.fillStyle = 'rgba(2,4,10,0.78)';
+                ctx.fillRect(camera.x - viewW/2, camera.y - viewH/2, viewW, viewH);
+                // Senter hider — bulat kecil ke segala arah, jangkauan pendek, cuma buat liat sekitar dikit
+                for (const h of snakes) {
+                    if (h.dead || h.hsRole !== 'hider') continue;
+                    ctx.save();
+                    const hg = ctx.createRadialGradient(h.head.x, h.head.y, 8, h.head.x, h.head.y, this.HIDER_LIGHT_RANGE);
+                    hg.addColorStop(0, 'rgba(199,224,255,0.45)');
+                    hg.addColorStop(0.65, 'rgba(199,224,255,0.14)');
+                    hg.addColorStop(1, 'rgba(199,224,255,0)');
+                    ctx.fillStyle = hg;
+                    ctx.beginPath();
+                    ctx.arc(h.head.x, h.head.y, this.HIDER_LIGHT_RANGE, 0, Math.PI*2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+                for (const s of snakes) {
+                    if (s.dead || s.hsRole !== 'seeker') continue;
+                    ctx.save();
+                    ctx.translate(s.head.x, s.head.y);
+                    ctx.rotate(s.angle);
+                    const grad = ctx.createRadialGradient(0,0,20,0,0,this.CONE_RANGE);
+                    const color = s.isPlayer ? [255,245,180] : [255,180,80];
+                    grad.addColorStop(0, `rgba(${color[0]},${color[1]},${color[2]},0.6)`);
+                    grad.addColorStop(0.7, `rgba(${color[0]},${color[1]},${color[2]},0.18)`);
+                    grad.addColorStop(1, `rgba(${color[0]},${color[1]},${color[2]},0)`);
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.moveTo(0,0);
+                    ctx.arc(0,0,this.CONE_RANGE,-this.CONE_HALF,this.CONE_HALF);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.strokeStyle = s.isPlayer ? 'rgba(255,255,255,0.75)' : 'rgba(255,190,90,0.55)';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    ctx.fillStyle = s.isPlayer ? '#fef3c7' : '#fbbf24';
+                    ctx.beginPath();
+                    ctx.moveTo(30,0); ctx.lineTo(-14,-14); ctx.lineTo(-14,14); ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+                ctx.save();
+                ctx.setTransform(1,0,0,1,0,0);
+                const secs = Math.max(0, Math.ceil(this.timer/60));
+                const mm = String(Math.floor(secs/60)).padStart(2,'0');
+                const ss = String(secs%60).padStart(2,'0');
+                const hidersAlive = snakes.filter(x=>!x.dead && x.hsRole==='hider').length;
+                const escaped = snakes.filter(x=>x.escaped && x.hsRole==='hider').length;
+                const isSeeker = player && player.hsRole==='seeker';
+                const role = isSeeker ? '🔦 SEEKER' : '👻 HIDER';
+                const roleCol = isSeeker ? '#fbbf24' : '#a5b4fc';
+                const pylonsDone = this.pylons.filter(p=>p.filled>=p.needed).length;
+                ctx.fillStyle = 'rgba(0,0,0,0.65)';
+                ctx.fillRect(width/2 - 160, 12, 320, 82);
+                ctx.strokeStyle = roleCol; ctx.lineWidth = 2;
+                ctx.strokeRect(width/2 - 160, 12, 320, 82);
+                ctx.fillStyle = roleCol;
+                ctx.font = '900 18px Inter'; ctx.textAlign='center';
+                ctx.fillText(role + '  ·  ' + mm + ':' + ss, width/2, 34);
+                ctx.fillStyle = '#e5e7eb'; ctx.font = 'bold 12px Inter';
+                ctx.fillText('Hider: ' + hidersAlive + '  ·  Selamat: ' + escaped, width/2, 54);
+                ctx.fillStyle = this.mazeActive ? '#4ade80' : '#22d3ee';
+                ctx.font = 'bold 13px Inter';
+                ctx.fillText(this.mazeActive ? '⚡ MAZE AKTIF — CARI PINTU 🚪' : ('Tiang: ' + pylonsDone + '/3  ·  Baterai: ' + this.batteries.filter(b=>!b.taken).length + '/9'), width/2, 78);
+                if (this.mazeMsgTimer > 0) {
+                    const a = Math.min(1, this.mazeMsgTimer/60);
+                    ctx.fillStyle = `rgba(34,211,238,${a})`;
+                    ctx.font = '900 36px Inter';
+                    ctx.fillText('⚡ POWER ON — MAZE MUNCUL!', width/2, height/2 - 100);
+                }
+                ctx.restore();
+            }
+        };
+        window.HideSeek = HideSeek;
+
         async function initGame(mode) {
             await AudioSys.init();
             AudioSys.startMusic();
@@ -2342,7 +3100,7 @@
                 pvpCurrentRound = 1;
                 initPvPRound();
             } else {
-                currentWorldSize = 12000 * (window.__optWorldScale || 1); targetWorldSize = currentWorldSize;
+                currentWorldSize = ((mode === 'hideseek') ? 14400 : 12000) * (window.__optWorldScale || 1); targetWorldSize = currentWorldSize;
                 arenaTimer = 20 * 60; playingFrames = 0; waveBossCount = 0;
                 UI.bossWave.innerText = "0"; UI.bossWaveCont.classList.remove('hidden');
                 UI.pvpCont.classList.add('hidden');
@@ -2375,13 +3133,45 @@
                     player2 = null;
                 }
 
-                let startBots = (mode === 'survival') ? Math.min(8, MAX_SNAKES-1)
-                              : (mode === 'duo') ? Math.max(6, Math.floor((MAX_SNAKES-2)*0.6))
-                              : (MAX_SNAKES-1);
-                for(let i=0; i<startBots; i++) spawnBot();
-                for(let i=0; i<MAX_FOOD; i++) foods.push(new Food());
+                if (mode === 'hideseek') {
+                    // 30% peluang jadi seeker
+                    const playerIsSeeker = Math.random() < 0.30;
+                    player.hsRole = playerIsSeeker ? 'seeker' : 'hider';
+                    player.name = playerIsSeeker ? 'KAMU 🔦' : 'KAMU 👻';
+                    // Hider dapet energy 2.2x lebih banyak biar lebih tahan lama kabur/dash dari seeker
+                    const HIDER_ENERGY_MULT = 2.2;
+                    if (!playerIsSeeker) { player.maxEnergy = 100 * HIDER_ENERGY_MULT; player.energy = player.maxEnergy; }
+                    const seekersBot = playerIsSeeker ? 2 : 3;
+                    const hidersBot = playerIsSeeker ? 13 : 12;
+                    const seekerSkin = {head:'#fbbf24', body1:'#d97706', body2:'#78350f'};
+                    for (let i=0;i<seekersBot;i++) {
+                        const b = new Snake(false, 'SEEKER ' + (i+1), seekerSkin);
+                        b.hsRole = 'seeker';
+                        snakes.push(b);
+                    }
+                    for (let i=0;i<hidersBot;i++) {
+                        const b = new Snake(false, 'HIDER ' + (i+1));
+                        b.hsRole = 'hider';
+                        b.maxEnergy = 100 * HIDER_ENERGY_MULT;
+                        b.energy = b.maxEnergy;
+                        snakes.push(b);
+                    }
+                    MAX_SNAKES = snakes.length; // cegah respawn
+                    HideSeek.init();
+                    for(let i=0; i<Math.floor(MAX_FOOD*0.4); i++) foods.push(new Food());
+                    UI.bossText.innerText = playerIsSeeker ? 'KAMU SEEKER! Buru semua hider 🔦 (2.4x cepat setelah maze aktif)' : 'KAMU HIDER 👻 Isi 3 tiang @3 baterai → maze muncul → lari ke pintu 🚪 (8 menit)';
+                    UI.bossAlert.classList.remove('hidden'); UI.bossAlert.classList.add('boss-alert-anim');
+                    setTimeout(() => { UI.bossAlert.classList.remove('boss-alert-anim'); UI.bossAlert.classList.add('hidden'); }, 3200);
+                    gameState = 'playing';
+                } else {
+                    let startBots = (mode === 'survival') ? Math.min(8, MAX_SNAKES-1)
+                                  : (mode === 'duo') ? Math.max(6, Math.floor((MAX_SNAKES-2)*0.6))
+                                  : (MAX_SNAKES-1);
+                    for(let i=0; i<startBots; i++) spawnBot();
+                    for(let i=0; i<MAX_FOOD; i++) foods.push(new Food());
 
-                gameState = 'playing';
+                    gameState = 'playing';
+                }
             }
         }
 
@@ -2627,17 +3417,18 @@
                     }
                 }
 
-                if (currentMode !== 'pvp') {
+                if (currentMode !== 'pvp' && currentMode !== 'hideseek') {
                     while (snakes.length < MAX_SNAKES) spawnBot();
                 }
                 
                 while (foods.length < (currentMode === 'pvp' ? PVP_MAX_FOOD : MAX_FOOD)) foods.push(new Food());
-                if (boosts.length < MAX_BOOSTS && Math.random() < (currentMode==='pvp'?0.1:0.05)) {
+                if (currentMode !== 'hideseek' && boosts.length < MAX_BOOSTS && Math.random() < (currentMode==='pvp'?0.1:0.05)) {
                     const boostPool = currentMode === 'pvp' ? ['speed', 'vision'] : ['speed', 'vision', 'invis'];
                     boosts.push(new Boost(0,0, boostPool[Math.floor(Math.random()*boostPool.length)]));
                 }
 
                 snakes.forEach(s => s.update());
+                HideSeek.update();
 
                 for (let i = 0; i < snakes.length; i++) {
                     const s1 = snakes[i];
@@ -2655,6 +3446,7 @@
                                 spawnFloatingText(f.x, f.y, `+${Math.floor(f.value)}`);
                                 spawnParticles(f.x, f.y, f.color, 5);
                                 s1.foodsEaten = (s1.foodsEaten || 0) + 1;
+                                s1.energy = Math.min(s1.maxEnergy || 100, s1.energy + ENERGY_FOOD_BONUS); // makan food ngisi energy dikit
                             }
                             foods.splice(j, 1);
                         }
@@ -2671,7 +3463,7 @@
                         }
                     }
 
-                    for (let j = 0; j < snakes.length; j++) {
+                    if (currentMode !== 'hideseek') for (let j = 0; j < snakes.length; j++) {
                         const s2 = snakes[j];
                         if (i === j || s2.dead || s1.activeBoosts.invis > 0 || s2.activeBoosts.invis > 0) continue; 
                         if (Math.abs(s1.head.x - s2.head.x) > 800 || Math.abs(s1.head.y - s2.head.y) > 800) continue;
@@ -2720,6 +3512,16 @@
                     const p1s = player && !player.dead ? Math.floor(player.score) : 0;
                     const p2s = player2 && !player2.dead ? Math.floor(player2.score) : 0;
                     UI.score.innerText = `P1:${p1s} · P2:${p2s}`;
+                    if (UI.energyBarFill) {
+                        const e1 = player && !player.dead ? Math.round((player.energy / (player.maxEnergy || 100)) * 100) : 0;
+                        const e2 = player2 && !player2.dead ? Math.round((player2.energy / (player2.maxEnergy || 100)) * 100) : 0;
+                        const avgE = Math.max(0, Math.min(100, Math.round((e1 + e2) / 2)));
+                        UI.energyBarFill.style.width = avgE + '%';
+                        UI.energyPct.textContent = `P1:${e1}% P2:${e2}%`;
+                        UI.energyBarFill.style.background = avgE <= 0
+                            ? 'linear-gradient(90deg,#ef4444,#f97316)'
+                            : (avgE < 30 ? 'linear-gradient(90deg,#f59e0b,#f97316)' : 'linear-gradient(90deg,#22d3ee,#60a5fa)');
+                    }
                 } else if (player && !player.dead) {
                     // Cek jika pemain di dalam kabut
                     let inFog = false;
@@ -2730,7 +3532,7 @@
                     }
 
                     let targetZoom = currentMode === 'pvp' ? 0.7 : 1.0; 
-                    if (inFog) targetZoom = 1.7; // Kamera mendekat (pandangan menyempit) saat di dalam kabut
+                    if (inFog && !(player.skin && player.skin.nightVision)) targetZoom = 1.7; // Kamera mendekat (pandangan menyempit) saat di dalam kabut — kecuali pakai skin anti-kabut
                     if (player.activeBoosts.vision > 0) targetZoom = 0.5; // Vision boost mengabaikan kabut
                     targetZoom *= mobileZoomBoost();
                     
@@ -2738,6 +3540,14 @@
                     camera.y += (player.head.y - camera.y) * 0.1;
                     camera.zoom += (targetZoom - camera.zoom) * 0.05;
                     UI.score.innerText = Math.floor(player.score);
+                    if (UI.energyBarFill) {
+                        const pct = Math.max(0, Math.min(100, Math.round((player.energy / (player.maxEnergy || 100)) * 100)));
+                        UI.energyBarFill.style.width = pct + '%';
+                        UI.energyPct.textContent = pct + '%';
+                        UI.energyBarFill.style.background = pct <= 0
+                            ? 'linear-gradient(90deg,#ef4444,#f97316)'
+                            : (pct < 30 ? 'linear-gradient(90deg,#f59e0b,#f97316)' : 'linear-gradient(90deg,#22d3ee,#60a5fa)');
+                    }
                 }
 
                 // Spectator camera follows target
@@ -2890,6 +3700,7 @@
 
             drawRivers(viewW, viewH);
             drawDecorations(viewW, viewH);
+            HideSeek.drawBoxes(ctx, viewW, viewH);
             
             WeatherSys.drawLower(ctx); // Gambar peringatan petir (di bawah ular)
 
@@ -2904,6 +3715,7 @@
             }
 
             WeatherSys.drawUpper(ctx, viewW, viewH); // Gambar efek kilat & kabut (di atas ular)
+            HideSeek.drawOverlay(ctx, viewW, viewH);
 
             if (currentMode === 'pvp') {
                 ctx.restore(); 
@@ -3025,6 +3837,7 @@
         }
 
         function loop() {
+            if (window.__qolPaused) { requestAnimationFrame(loop); return; }
             update();
             draw();
 
@@ -3344,20 +4157,18 @@
             }
           } catch(e){}
 
-          // Lightning survival
-          try {
-            if (typeof WeatherSys !== 'undefined' && WeatherSys.strikes) {
-              for (const s of WeatherSys.strikes) {
-                if (s.state === 'striking') {
-                  const dx = p.head.x - s.x, dy = p.head.y - s.y;
-                  if (dx*dx + dy*dy < 150*150) { game.lightningSurvivedThisGame = 1; }
-                }
-              }
+          // Lightning survival (pakai flag akurat dari momen sambaran asli — bukan tebak2an state yg keliru/kelewat)
+          if (window.__evLightningSurvived) {
+            window.__evLightningSurvived = false;
+            game.lightningSurvivedThisGame = 1;
+            if (!p.dead && !game._lightningCounted) {
+              game._lightningCounted = true;
+              life.lightningSurvived = (life.lightningSurvived|0) + 1;
             }
-          } catch(e){}
+          }
 
-          // Dash (player hold)
-          const dashHold = ((typeof keys !== 'undefined' && keys.space) || (typeof isMouseDown !== 'undefined' && isMouseDown));
+          // Dash (player hold) — termasuk tombol dash mobile (dashPressed), sebelumnya kelewat jadi gak ke-detect di HP
+          const dashHold = ((typeof keys !== 'undefined' && keys.space) || (typeof isMouseDown !== 'undefined' && isMouseDown) || (typeof dashPressed !== 'undefined' && dashPressed));
           if (dashHold && !game.prevDashHold && (p.score|0) > 35) { game.dashes++; life.dashes++; }
           game.prevDashHold = dashHold;
 
@@ -3402,11 +4213,7 @@
             if (!(life.wins.pvp|0)) life.wins.pvp = 1;
           }
 
-          // Lightning survived increment when game ends or after a few sec of survival
-          if (game.lightningSurvivedThisGame && pollTick % 60 === 0 && !p.dead) {
-            // record once per game
-            if (!game._lightningCounted) { game._lightningCounted = true; life.lightningSurvived = (life.lightningSurvived|0) + 1; }
-          }
+          // (Penghitungan lightningSurvived sudah instan di atas via flag __evLightningSurvived)
 
           // Casual no-death tracking: when player wins (or reaches end alive long enough) in 'lives'
           // Increment streak when this game ends without dying - handled separately; here ensure increment per game if survives 60s alive
@@ -3415,7 +4222,7 @@
             life.casualNoDeathStreak = (life.casualNoDeathStreak|0) + 1;
           }
 
-          if (pollTick % 30 === 0) { saveLife(life); checkAll(); }
+          if (pollTick % 10 === 0) { saveLife(life); checkAll(); }
         } catch(e){}
       }
       requestAnimationFrame(poll);
@@ -4602,9 +5409,9 @@
               if ((ab.invis|0)>0 && p.__prevInvis===0) p.__invisBoostCount++;
               if ((ab.river|0)>0 && p.__prevRiver===0) p.__riverHits++;
               p.__prevSpeed=ab.speed|0; p.__prevVision=ab.vision|0; p.__prevInvis=ab.invis|0; p.__prevRiver=ab.river|0;
-              // Dash for P1 (space/mouse); for P2 (space via Enter)
+              // Dash for P1 (space/mouse/tombol dash mobile); untuk P2 (space via Enter)
               const myKeys = (p.controlSlot === 2) ? keys2 : keys;
-              const dashHold = myKeys.space || (p.controlSlot !== 2 && isMouseDown);
+              const dashHold = myKeys.space || (p.controlSlot !== 2 && (isMouseDown || (typeof dashPressed !== 'undefined' && dashPressed)));
               if (dashHold && !p.__prevDashHold && (p.score|0)>35) p.__dashCount++;
               p.__prevDashHold = dashHold;
             });
@@ -4624,7 +5431,7 @@
       }
       requestAnimationFrame(tickTracking);
 
-      // Also treat "reaching a live-score goal" as instant complete — poll while playing
+      // Also treat "reaching a live-score goal" as instant complete — poll while playing (lebih sensitif: tiap 300ms, bukan 2 detik)
       setInterval(()=>{
         try {
           if (typeof gameState === 'undefined' || (gameState !== 'playing' && gameState !== 'winRound')) return;
@@ -4648,7 +5455,7 @@
           });
           if (changed) { saveState(st); updateBadge(); }
         } catch(e){}
-      }, 2000);
+      }, 300);
 
       // ===== MODAL RENDERING =====
       function renderDaily(){
@@ -4750,13 +5557,37 @@
   </div>
 </div>
 
+<!-- Leaderboard Global Modal -->
+<div id="lbModal" class="absolute inset-0 bg-black/90 backdrop-blur-md hidden pointer-events-auto z-[86] p-3 md:p-6 overflow-y-auto" style="display:none;">
+  <div class="max-w-3xl mx-auto bg-slate-900/95 border border-sky-500/60 rounded-2xl p-4 md:p-6 shadow-[0_0_60px_rgba(14,165,233,0.35)]">
+    <div class="flex items-center justify-between mb-3">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-black text-sky-300 tracking-tight">🏆 Leaderboard Global</h2>
+        <p class="text-xs text-gray-400 mt-1">Rekap lifetime semua pemain. Update tiap ±7 jam, data gak aktif 2 hari otomatis kehapus.</p>
+      </div>
+      <button onclick="closeLeaderboard()" class="text-gray-400 hover:text-white text-2xl leading-none">✕</button>
+    </div>
+
+    <div class="flex flex-wrap gap-2 mb-3">
+      <button id="lbTabKills" onclick="lbSwitchTab('kills')" class="px-3 py-2 bg-sky-800/70 hover:bg-sky-700 border border-sky-400/60 text-white font-bold text-xs rounded-lg">🗡️ Top Kill</button>
+      <button id="lbTabScore" onclick="lbSwitchTab('best_score')" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 border border-slate-500 text-white font-bold text-xs rounded-lg">⭐ Top Skor</button>
+      <button id="lbTabPlaytime" onclick="lbSwitchTab('playtime_seconds')" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 border border-slate-500 text-white font-bold text-xs rounded-lg">⏱️ Jam Terbang</button>
+      <button onclick="lbRefresh()" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 border border-slate-500 text-white font-bold text-xs rounded-lg ml-auto">🔄 Refresh</button>
+    </div>
+
+    <div id="lbList" class="space-y-1.5 max-h-[60vh] overflow-y-auto custom-scrollbar pr-1">
+      <div class="text-center text-gray-400 py-8">Loading…</div>
+    </div>
+  </div>
+</div>
+
 <script type="module">
   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
   // ⚠️ OPEN SOURCE SETUP: isi dengan project Supabase kamu sendiri.
   // Lihat file SETUP_SUPABASE.md untuk skema tabel & cara setup lengkapnya.
-  const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';       // contoh: https://xxxxxxxx.supabase.co
-  const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';  // anon/public key project kamu
+  const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL'; // contoh: https://xxxxx.supabase.co
+  const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY'; // anon/public key project kamu
   const sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
 
   // Stable per-browser user id
@@ -5046,6 +5877,192 @@
 </script>
 
 <!-- ============================================================
+     📅 SISTEM EVENT BULANAN — Jadwal Otomatis Sepanjang Tahun
+     (Jan Tahun Baru • Mar Ramadhan • Apr April Mop & Hari Kiamat •
+      Jun Idul Adha • Jul Hari Anak • Agu 17 Agustus • Okt Halloween •
+      Nov Ultah Developer • Des Musim Dingin)
+     ============================================================ -->
+<style>
+  #eventScheduleModal { display:none; }
+  #eventScheduleModal.flex { display:flex; }
+  .ev-month-card { border:1px solid rgba(255,255,255,0.1); transition:all .2s ease; }
+  .ev-month-card.active-month { border-color:#fbbf24; box-shadow:0 0 18px rgba(251,191,36,0.45); background:rgba(251,191,36,0.08); }
+  .ev-month-card.empty-month { opacity:0.55; }
+  #currentEventBanner { transition: all .3s ease; }
+  @keyframes evBannerGlow { 0%,100% { box-shadow:0 0 12px rgba(251,191,36,0.35); } 50% { box-shadow:0 0 26px rgba(251,191,36,0.7); } }
+  #currentEventBanner.has-event { animation: evBannerGlow 2.4s ease-in-out infinite; }
+</style>
+
+<!-- Event Schedule Modal -->
+<div id="eventScheduleModal" class="absolute inset-0 bg-black/90 backdrop-blur-md hidden flex-col items-center justify-center pointer-events-auto z-[92] p-4">
+  <div class="bg-slate-900/95 border border-amber-400/50 rounded-2xl p-5 md:p-6 w-full max-w-xl shadow-[0_0_60px_rgba(251,191,36,0.3)] max-h-[92vh] overflow-y-auto custom-scrollbar">
+    <div class="flex items-center justify-between mb-2">
+      <h2 class="text-2xl md:text-3xl font-black text-amber-300 tracking-tight">📅 Jadwal Event Tahunan</h2>
+      <button onclick="closeEventSchedule()" class="text-gray-400 hover:text-white text-2xl leading-none">✕</button>
+    </div>
+    <p class="text-xs text-gray-400 mb-4">Setiap bulan, Event Spin Wheel &amp; bencana spesial berubah otomatis sesuai tanggal perangkat kamu. Bulan yang aktif ditandai ✨.</p>
+    <div id="eventScheduleGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Bulan: 0=Januari ... 11=Desember
+  window.MONTHLY_EVENTS = {
+    0: {
+      id:'newyear', name:'Tahun Baru', icon:'🎉', color:'#fbbf24',
+      desc:'Rayakan pergantian tahun dengan kembang api & skin spesial!',
+      skins:[
+        { key:'ny_gold',      name:'🎆 Kembang Emas',    rarity:'rare',   head:'#fde047', body1:'#f59e0b', body2:'#78350f' },
+        { key:'ny_confetti',  name:'🎊 Confetti Pop',    rarity:'epic',   head:'#f472b6', body1:'#a855f7', body2:'#312e81', anim:'spinglow' },
+        { key:'ny_countdown', name:'🕛 Countdown King',  rarity:'legend', head:'#fef9c3', body1:'#facc15', body2:'#1e1b4b', anim:'spinglow' },
+      ],
+      disasters:[ { name:'Kembang Api Liar', icon:'🎆', color:'#fbbf24', effect:'fireworks' } ],
+      boss:{ name:'RAJA TAHUN BARU', head:'#fde047', body1:'#f59e0b', body2:'#78350f' },
+    },
+    1: null, // Februari — kosong dulu
+    2: {
+      id:'ramadhan', name:'Ramadhan', icon:'🌙', color:'#facc15',
+      desc:'Suasana bulan suci: lentera, bulan sabit, dan berkah malam.',
+      skins:[
+        { key:'rmd_crescent', name:'🌙 Bulan Sabit',    rarity:'rare',   head:'#a5f3fc', body1:'#0e7490', body2:'#164e63' },
+        { key:'rmd_lantern',  name:'🏮 Lentera Ramadhan', rarity:'epic', head:'#fbbf24', body1:'#b45309', body2:'#451a03', anim:'spinglow' },
+        { key:'rmd_date',     name:'🌴 Kurma Berkah',   rarity:'legend', head:'#fde68a', body1:'#92400e', body2:'#1c1917', anim:'spinglow' },
+      ],
+      disasters:[ { name:'Malam Berkah', icon:'🌙', color:'#facc15', effect:'blessing' } ],
+      boss:{ name:'PENJAGA RAMADHAN', head:'#a5f3fc', body1:'#0e7490', body2:'#164e63' },
+    },
+    3: {
+      id:'aprilfools', name:'April Mop & Hari Kiamat', icon:'🤡☄️', color:'#f97316',
+      desc:'Bulan jahil-jahilan sekaligus kiamat kecil-kecilan turun ke arena!',
+      skins:[
+        { key:'am_jester',   name:'🤡 Jester Prank',     rarity:'basic',  head:'#f87171', body1:'#7c3aed', body2:'#1e1b4b' },
+        { key:'am_whoopee',  name:'💨 Whoopee Cushion',  rarity:'rare',   head:'#fbbf24', body1:'#92400e', body2:'#451a03' },
+        { key:'am_mustache', name:'👨 Fake Mustache',    rarity:'rare',   head:'#e5e7eb', body1:'#374151', body2:'#111827' },
+        { key:'dd_apocrider',name:'🐴 Apocalypse Rider', rarity:'epic',   head:'#7f1d1d', body1:'#450a0a', body2:'#000000', anim:'spinglow' },
+        { key:'dd_meteor',   name:'☄️ Meteor Doom',      rarity:'epic',   head:'#f97316', body1:'#7c2d12', body2:'#1c1917', anim:'spinglow' },
+        { key:'dd_reaper',   name:'💀 Ashen Reaper',     rarity:'legend', head:'#e2e8f0', body1:'#475569', body2:'#0f172a', anim:'spinglow' },
+      ],
+      disasters:[
+        { name:'Jebakan Prank',        icon:'🤡', color:'#f87171', effect:'prank' },
+        { name:'Hujan Meteor Kiamat',  icon:'☄️', color:'#f97316', effect:'meteorapocalypse' },
+      ],
+      boss:{ name:'LORD KIAMAT', head:'#7f1d1d', body1:'#450a0a', body2:'#000000' },
+    },
+    4: null, // Mei — kosong dulu
+    5: {
+      id:'iduladha', name:'Idul Adha', icon:'🐐', color:'#eab308',
+      desc:'Peringatan Idul Adha dengan nuansa padang & berkah kurban.',
+      skins:[
+        { key:'ia_sheep',  name:'🐑 Domba Emas',   rarity:'rare',   head:'#fef9c3', body1:'#d4a373', body2:'#78350f' },
+        { key:'ia_sorban', name:'🧕 Sorban Suci',  rarity:'epic',   head:'#bae6fd', body1:'#0284c7', body2:'#0c4a6e', anim:'spinglow' },
+        { key:'ia_kurban', name:'🕋 Kurban Berkah',rarity:'legend', head:'#111827', body1:'#eab308', body2:'#000000', anim:'spinglow' },
+      ],
+      disasters:[ { name:'Badai Padang Pasir', icon:'🏜️', color:'#d4a373', effect:'sandstorm' } ],
+      boss:{ name:'PENGGEMBALA AGUNG', head:'#fef9c3', body1:'#d4a373', body2:'#78350f' },
+    },
+    6: {
+      id:'harianak', name:'Hari Anak', icon:'🎈', color:'#f472b6',
+      desc:'Warna-warni balon, boneka, dan permen buat rayain Hari Anak!',
+      skins:[
+        { key:'ha_balloon', name:'🎈 Balon Ceria',    rarity:'basic', head:'#fca5a5', body1:'#f472b6', body2:'#831843' },
+        { key:'ha_teddy',   name:'🧸 Boneka Beruang', rarity:'rare',  head:'#d6a15c', body1:'#92400e', body2:'#451a03' },
+        { key:'ha_candy',   name:'🍬 Permen Pelangi', rarity:'epic',  head:'#f0abfc', body1:'#818cf8', body2:'#312e81', anim:'spinglow' },
+      ],
+      disasters:[ { name:'Hujan Permen', icon:'🍬', color:'#f0abfc', effect:'candyrain' } ],
+      boss:{ name:'RATU MAINAN', head:'#f0abfc', body1:'#818cf8', body2:'#312e81' },
+    },
+    7: {
+      id:'agustusan', name:'17 Agustus', icon:'🇮🇩', color:'#dc2626',
+      desc:'Semarak kemerdekaan: merah putih, pejuang, dan Garuda!',
+      skins:[
+        { key:'ag_redwhite', name:'🇮🇩 Merah Putih',    rarity:'rare',   head:'#ffffff', body1:'#dc2626', body2:'#7f1d1d' },
+        { key:'ag_pejuang',  name:'🎖️ Pejuang 45',       rarity:'epic',   head:'#fbbf24', body1:'#166534', body2:'#052e16', anim:'spinglow' },
+        { key:'ag_garuda',   name:'🦅 Garuda Pancasila', rarity:'legend', head:'#fde047', body1:'#b91c1c', body2:'#1c1917', anim:'spinglow' },
+      ],
+      disasters:[ { name:'Petasan Merdeka', icon:'🧨', color:'#dc2626', effect:'firecracker' } ],
+      boss:{ name:'JENDERAL GARUDA', head:'#fde047', body1:'#b91c1c', body2:'#1c1917' },
+    },
+    8: null, // September — kosong dulu
+    9: {
+      id:'halloween', name:'Halloween', icon:'🎃', color:'#f97316',
+      desc:'Labu, vampir, dan zombie berkeliaran di arena malam Halloween.',
+      skins:[
+        { key:'hw_pumpkin', name:'🎃 Pumpkin King', rarity:'rare',   head:'#f97316', body1:'#7c2d12', body2:'#1c1917' },
+        { key:'hw_vampire', name:'🧛 Vampire Fang', rarity:'epic',   head:'#dc2626', body1:'#1e1b4b', body2:'#000000', anim:'spinglow' },
+        { key:'hw_zombie',  name:'🧟 Zombie Ooze',  rarity:'legend', head:'#84cc16', body1:'#365314', body2:'#0f172a', anim:'spinglow' },
+      ],
+      disasters:[ { name:'Serangan Hantu', icon:'👻', color:'#e2e8f0', effect:'ghostswarm' } ],
+      boss:{ name:'RAJA LABU', head:'#f97316', body1:'#7c2d12', body2:'#1c1917' },
+    },
+    10: {
+      id:'ultahdev', name:'Ultah Developer', icon:'🎂', color:'#a855f7',
+      desc:'Perayaan ulang tahun developer game ini — pesta hadiah!',
+      skins:[
+        { key:'dev_cake',     name:'🎂 Kue Ulang Tahun', rarity:'rare',   head:'#fecdd3', body1:'#fb7185', body2:'#881337' },
+        { key:'dev_balloon',  name:'🎈 Balon Ultah',     rarity:'epic',   head:'#93c5fd', body1:'#2563eb', body2:'#1e3a8a', anim:'spinglow' },
+        { key:'dev_confetti', name:'🎉 Confetti Dev',    rarity:'legend', head:'#fde047', body1:'#a855f7', body2:'#1e1b4b', anim:'spinglow' },
+      ],
+      disasters:[ { name:'Hujan Hadiah', icon:'🎁', color:'#fde047', effect:'giftrain' } ],
+      boss:{ name:'SANG KREATOR', head:'#fde047', body1:'#a855f7', body2:'#1e1b4b' },
+    },
+    11: {
+      id:'winter', name:'Musim Dingin', icon:'❄️', color:'#60a5fa',
+      desc:'Salju turun, dunia membeku — waktunya skin es & aurora!',
+      skins:[
+        { key:'wt_snowman', name:'⛄ Snowman',      rarity:'rare',   head:'#f8fafc', body1:'#cbd5e1', body2:'#334155' },
+        { key:'wt_crystal', name:'💠 Ice Crystal',  rarity:'epic',   head:'#a5f3fc', body1:'#0891b2', body2:'#164e63', anim:'spinglow' },
+        { key:'wt_aurora',  name:'🌌 Aurora Frost', rarity:'legend', head:'#e9d5ff', body1:'#67e8f9', body2:'#1e1b4b', anim:'spinglow' },
+      ],
+      disasters:[ { name:'Badai Salju Ekstrem', icon:'❄️', color:'#60a5fa', effect:'blizzard' } ],
+      boss:{ name:'RATU SALJU', head:'#e9d5ff', body1:'#67e8f9', body2:'#1e1b4b' },
+    },
+  };
+
+  const MONTH_NAMES = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+  window.getActiveMonthEvent = function(d){
+    const dt = d || new Date();
+    return window.MONTHLY_EVENTS[dt.getMonth()] || null;
+  };
+
+  function renderEventSchedule(){
+    const grid = document.getElementById('eventScheduleGrid');
+    if (!grid) return;
+    const curMonth = new Date().getMonth();
+    grid.innerHTML = MONTH_NAMES.map((mn, idx) => {
+      const ev = window.MONTHLY_EVENTS[idx];
+      const isActive = idx === curMonth;
+      const cls = 'ev-month-card rounded-xl p-3 ' + (isActive ? 'active-month' : (ev ? '' : 'empty-month'));
+      if (!ev) {
+        return `<div class="${cls}"><div class="text-xs font-bold text-gray-400">${mn}</div><div class="text-[11px] text-gray-500 mt-1">— Kosong dulu —</div></div>`;
+      }
+      return `<div class="${cls}">
+        <div class="flex items-center justify-between">
+          <div class="text-xs font-bold text-gray-200">${mn} ${isActive ? '✨' : ''}</div>
+          <div style="font-size:18px;">${ev.icon}</div>
+        </div>
+        <div class="text-sm font-black mt-0.5" style="color:${ev.color}">${ev.name}</div>
+        <div class="text-[10px] text-gray-400 mt-1">${ev.desc}</div>
+        <div class="text-[10px] text-amber-300/80 mt-1">🎨 ${ev.skins.length} skin eksklusif</div>
+      </div>`;
+    }).join('');
+  }
+
+  window.openEventSchedule = function(){
+    renderEventSchedule();
+    const m = document.getElementById('eventScheduleModal');
+    m.classList.remove('hidden'); m.classList.add('flex');
+  };
+  window.closeEventSchedule = function(){
+    const m = document.getElementById('eventScheduleModal');
+    m.classList.add('hidden'); m.classList.remove('flex');
+  };
+})();
+</script>
+
+
+<!-- ============================================================
      🎡 EVENT SPIN WHEEL — Sistem Tiket & Skin Eksklusif
      ============================================================ -->
 <style>
@@ -5073,7 +6090,15 @@
       <h2 class="text-2xl md:text-3xl font-black text-fuchsia-300 tracking-tight">🎡 Event Spin Wheel</h2>
       <button onclick="closeSpinWheel()" class="text-gray-400 hover:text-white text-2xl leading-none">✕</button>
     </div>
-    <p class="text-xs text-gray-400 mb-3">Kumpulin tiket dari kill, hadiah harian, login streak, & achievement — lalu spin buat dapetin skin eksklusif!</p>
+    <p class="text-xs text-gray-400 mb-3">Kumpulin tiket dari kill, hadiah harian, login streak, & achievement — lalu spin buat dapetin skin eksklusif! Roda spin berubah otomatis tiap bulan sesuai event yang lagi berlangsung.</p>
+
+    <div id="currentEventBanner" class="rounded-xl px-3 py-2 mb-3 border text-left flex items-center gap-2" style="border-color:#475569; background:rgba(0,0,0,0.35);">
+      <div id="currentEventIcon" style="font-size:26px;">🗓️</div>
+      <div class="flex-1">
+        <div id="currentEventTitle" class="text-sm font-black text-gray-200">Belum ada event bulan ini</div>
+        <div id="currentEventDesc" class="text-[10px] text-gray-400">Roda spin memakai skin evergreen biasa.</div>
+      </div>
+    </div>
 
     <div class="flex items-center justify-center gap-3 mb-4">
       <div class="bg-black/50 border border-fuchsia-500/40 rounded-xl px-4 py-2">
@@ -5097,9 +6122,11 @@
 
     <button id="spinBtn" onclick="doSpin()" class="w-full px-4 py-3 bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 border border-fuchsia-300 text-white font-black text-sm rounded-xl shadow-[0_0_20px_rgba(217,70,239,0.5)] transition-all">🎰 SPIN (1 Tiket)</button>
 
+    <button onclick="openEventSchedule()" class="mt-3 w-full px-4 py-2 bg-amber-900/50 hover:bg-amber-800/70 border border-amber-400/50 text-amber-100 font-bold text-xs rounded-xl transition-all">📅 Lihat Jadwal Event Tahunan</button>
+
     <div class="mt-4 text-left">
-      <div class="text-xs font-bold text-gray-300 mb-2">🏆 Koleksi Skin Event (<span id="spinOwnedCount">0</span>/8)</div>
-      <div id="spinSkinGrid" class="grid grid-cols-4 gap-2"></div>
+      <div class="text-xs font-bold text-gray-300 mb-2">🏆 Koleksi Skin Event (<span id="spinOwnedCount">0</span>/<span id="spinTotalCount">8</span>)</div>
+      <div id="spinSkinGrid" class="grid grid-cols-4 gap-2 max-h-56 overflow-y-auto custom-scrollbar pr-1"></div>
     </div>
 
     <div class="mt-4 text-left border-t border-slate-700 pt-3">
@@ -5112,7 +6139,7 @@
         <li>Login 7 hari berturut-turut → 5 tiket</li>
         <li>Buka achievement apapun → 2 tiket</li>
       </ul>
-      <div class="text-[10px] text-gray-500 mt-2">Peluang: Basic 20% · Rare 20% · Epic 20% · Legend 20% · Scam 19% · Jumpscare 1%</div>
+      <div class="text-[10px] text-gray-500 mt-2">Peluang total tiap spin: Scam 19% · Jumpscare 1% · sisanya (80%) dibagi rata ke semua skin yang lagi aktif di roda bulan ini.</div>
     </div>
   </div>
 </div>
@@ -5152,45 +6179,92 @@
   let spinning = false;
   let wheelRotation = 0;
 
-  // 8 skin event: 2 Basic, 2 Rare, 2 Epic, 2 Legend
-  const SPIN_SKINS = [
-    { name:'🌱 Sprout',    rarity:'basic',  head:'#86efac', body1:'#22c55e', body2:'#14532d' },
-    { name:'🪵 Woodland',  rarity:'basic',  head:'#d6a15c', body1:'#92400e', body2:'#451a03' },
-    { name:'🌊 Tidepool',  rarity:'rare',   head:'#67e8f9', body1:'#0891b2', body2:'#164e63' },
-    { name:'🍇 Grape Fizz',rarity:'rare',   head:'#d8b4fe', body1:'#9333ea', body2:'#4c1d95' },
-    { name:'🔱 Abyssal King', rarity:'epic', head:'#38bdf8', body1:'#1d4ed8', body2:'#0c1445', anim:'spinglow' },
-    { name:'🐲 Wyrmfire',     rarity:'epic', head:'#fb923c', body1:'#b91c1c', body2:'#450a0a', anim:'spinglow' },
-    { name:'👑 Sovereign',        rarity:'legend', head:'#fde047', body1:'#eab308', body2:'#422006', anim:'spinglow' },
-    { name:'🌌 Astral Sovereign', rarity:'legend', head:'#e9d5ff', body1:'#a855f7', body2:'#1e1b4b', anim:'spinglow' },
-  ];
-
-  // Wheel outcomes (10 slot, weight = probabilitas %)
-  const SPIN_OUTCOMES = [
-    { type:'skin', skinIdx:0, weight:10 },
-    { type:'skin', skinIdx:2, weight:10 },
-    { type:'skin', skinIdx:4, weight:10 },
-    { type:'skin', skinIdx:6, weight:10 },
-    { type:'scam', weight:19 },
-    { type:'skin', skinIdx:1, weight:10 },
-    { type:'skin', skinIdx:3, weight:10 },
-    { type:'skin', skinIdx:5, weight:10 },
-    { type:'skin', skinIdx:7, weight:10 },
-    { type:'jumpscare', weight:1 },
+  // 8 skin evergreen (dipakai kalau bulan ini gak ada event): 2 Basic, 2 Rare, 2 Epic, 2 Legend
+  const DEFAULT_SPIN_SKINS = [
+    { key:'def_sprout',  name:'🌱 Sprout',    rarity:'basic',  head:'#86efac', body1:'#22c55e', body2:'#14532d' },
+    { key:'def_wood',    name:'🪵 Woodland',  rarity:'basic',  head:'#d6a15c', body1:'#92400e', body2:'#451a03' },
+    { key:'def_tide',    name:'🌊 Tidepool',  rarity:'rare',   head:'#67e8f9', body1:'#0891b2', body2:'#164e63' },
+    { key:'def_grape',   name:'🍇 Grape Fizz',rarity:'rare',   head:'#d8b4fe', body1:'#9333ea', body2:'#4c1d95' },
+    { key:'def_abyssal', name:'🔱 Abyssal King', rarity:'epic', head:'#38bdf8', body1:'#1d4ed8', body2:'#0c1445', anim:'spinglow' },
+    { key:'def_wyrm',    name:'🐲 Wyrmfire',     rarity:'epic', head:'#fb923c', body1:'#b91c1c', body2:'#450a0a', anim:'spinglow' },
+    { key:'def_sov',     name:'👑 Sovereign',        rarity:'legend', head:'#fde047', body1:'#eab308', body2:'#422006', anim:'spinglow' },
+    { key:'def_astral',  name:'🌌 Astral Sovereign', rarity:'legend', head:'#e9d5ff', body1:'#a855f7', body2:'#1e1b4b', anim:'spinglow' },
   ];
 
   function rarityColor(r){
     return r==='basic' ? '#22c55e' : r==='rare' ? '#3b82f6' : r==='epic' ? '#a855f7' : r==='legend' ? '#eab308' : '#94a3b8';
   }
 
-  // Daftarkan skin event ke koleksi skin utama (locked kalau belum dimenangkan)
+  // Kumpulkan SEMUA skin (evergreen + semua skin event sepanjang tahun) buat koleksi permanen
+  const ALL_SPIN_SKINS = DEFAULT_SPIN_SKINS.slice();
+  if (typeof window.MONTHLY_EVENTS !== 'undefined') {
+    Object.keys(window.MONTHLY_EVENTS).forEach(mk => {
+      const ev = window.MONTHLY_EVENTS[mk];
+      if (ev && Array.isArray(ev.skins)) {
+        ev.skins.forEach(s => ALL_SPIN_SKINS.push(Object.assign({ eventId: ev.id, eventName: ev.name }, s)));
+      }
+    });
+  }
+
+  // Roda spin AKTIF bulan ini: pakai skin event kalau ada, kalau kosong pakai evergreen
+  let SPIN_SKINS = DEFAULT_SPIN_SKINS;
+  let SPIN_OUTCOMES = [];
+
+  function buildOutcomesFor(skins){
+    const n = skins.length;
+    const scamW = 19, jumpW = 1;
+    const remaining = 100 - scamW - jumpW;
+    const each = remaining / n;
+    const outs = [];
+    for (let i = 0; i < n; i++) outs.push({ type:'skin', skinIdx:i, weight:each });
+    // Selipkan scam & jumpscare di tengah urutan biar roda gak monoton
+    const mid = Math.floor(outs.length/2);
+    outs.splice(mid, 0, { type:'scam', weight:scamW });
+    outs.push({ type:'jumpscare', weight:jumpW });
+    return outs;
+  }
+
+  function refreshActiveSpinPool(){
+    const ev = (typeof window.getActiveMonthEvent === 'function') ? window.getActiveMonthEvent() : null;
+    SPIN_SKINS = (ev && Array.isArray(ev.skins) && ev.skins.length) ? ev.skins : DEFAULT_SPIN_SKINS;
+    SPIN_OUTCOMES = buildOutcomesFor(SPIN_SKINS);
+    return ev;
+  }
+  refreshActiveSpinPool();
+
+  function updateEventBanner(){
+    const ev = (typeof window.getActiveMonthEvent === 'function') ? window.getActiveMonthEvent() : null;
+    const banner = document.getElementById('currentEventBanner');
+    const iconEl = document.getElementById('currentEventIcon');
+    const titleEl = document.getElementById('currentEventTitle');
+    const descEl = document.getElementById('currentEventDesc');
+    if (!banner) return;
+    if (ev) {
+      banner.classList.add('has-event');
+      banner.style.borderColor = ev.color || '#fbbf24';
+      iconEl.textContent = ev.icon;
+      titleEl.textContent = `Event Aktif: ${ev.name}`;
+      titleEl.style.color = ev.color || '#fde047';
+      descEl.textContent = ev.desc + ' Roda spin sekarang berisi skin event ini.';
+    } else {
+      banner.classList.remove('has-event');
+      banner.style.borderColor = '#475569';
+      iconEl.textContent = '🗓️';
+      titleEl.textContent = 'Belum ada event bulan ini';
+      titleEl.style.color = '#e2e8f0';
+      descEl.textContent = 'Roda spin memakai skin evergreen biasa.';
+    }
+  }
+
+  // Daftarkan SEMUA skin event ke koleksi skin utama (locked kalau belum dimenangkan), dikunci pakai key permanen
   const spinBase = (typeof gameSkins !== 'undefined') ? gameSkins.length : 0;
   if (typeof gameSkins !== 'undefined') {
-    SPIN_SKINS.forEach((s, i) => {
+    ALL_SPIN_SKINS.forEach((s, i) => {
       gameSkins.push({
         id: spinBase + i, head: s.head, body1: s.body1, body2: s.body2,
         anim: s.anim, name: s.name, rarity: s.rarity,
-        locked: !spinData.ownedSpinSkins.includes(i),
-        spinSkinIdx: i,
+        locked: !spinData.ownedSpinSkins.includes(s.key),
+        spinKey: s.key,
       });
     });
   }
@@ -5202,11 +6276,11 @@
     if (!sc) return;
     Array.from(sc.children).forEach((btn, idx) => {
       const skin = (typeof gameSkins !== 'undefined') ? gameSkins[idx] : null;
-      if (!skin || skin.spinSkinIdx === undefined) return;
+      if (!skin || skin.spinKey === undefined) return;
       btn.title = skin.name + ' (' + skin.rarity + ')';
       if (skin.locked) {
         btn.classList.add('locked');
-        btn.onclick = () => { alert('🔒 Skin ini cuma bisa didapat dari Event Spin Wheel!\n\nKumpulin tiket (kill ular, hadiah harian, login streak, achievement) terus spin buat coba dapetin.'); };
+        btn.onclick = () => { alert('🔒 Skin ini cuma bisa didapat dari Event Spin Wheel!\n\nKumpulin tiket (kill ular, hadiah harian, login streak, achievement) terus spin buat coba dapetin. Skin event cuma muncul di roda pas bulan event-nya aktif.'); };
       }
     });
   };
@@ -5272,17 +6346,21 @@
     const grid = document.getElementById('spinSkinGrid');
     if (!grid) return;
     let ownedN = 0;
-    grid.innerHTML = SPIN_SKINS.map((s,i) => {
-      const owned = spinData.ownedSpinSkins.includes(i);
+    grid.innerHTML = ALL_SPIN_SKINS.map((s) => {
+      const owned = spinData.ownedSpinSkins.includes(s.key);
       if (owned) ownedN++;
-      return `<div class="spin-skin-card rounded-lg border p-2 text-center ${owned ? 'border-fuchsia-400/70 bg-fuchsia-900/20' : 'border-slate-700 bg-black/40 opacity-50'}">
+      const tag = s.eventName ? s.eventName : 'Evergreen';
+      return `<div class="spin-skin-card rounded-lg border p-2 text-center ${owned ? 'border-fuchsia-400/70 bg-fuchsia-900/20' : 'border-slate-700 bg-black/40 opacity-50'}" title="${tag}">
         <div style="font-size:20px;">${owned ? s.name.split(' ')[0] : '🔒'}</div>
         <div class="text-[9px] mt-1 text-gray-300 truncate">${owned ? s.name.split(' ').slice(1).join(' ') : '???'}</div>
         <div class="text-[8px] uppercase font-bold mt-0.5" style="color:${rarityColor(s.rarity)}">${s.rarity}</div>
+        <div class="text-[7px] mt-0.5 text-gray-500 truncate">${tag}</div>
       </div>`;
     }).join('');
     const cEl = document.getElementById('spinOwnedCount');
     if (cEl) cEl.textContent = ownedN;
+    const tEl2 = document.getElementById('spinTotalCount');
+    if (tEl2) tEl2.textContent = ALL_SPIN_SKINS.length;
   }
 
   function updateSpinUI(){
@@ -5369,10 +6447,10 @@
       triggerJumpscare();
     } else {
       const skinDef = SPIN_SKINS[outcome.skinIdx];
-      if (!spinData.ownedSpinSkins.includes(outcome.skinIdx)){
-        spinData.ownedSpinSkins.push(outcome.skinIdx);
+      if (!spinData.ownedSpinSkins.includes(skinDef.key)){
+        spinData.ownedSpinSkins.push(skinDef.key);
         saveSpinData(spinData);
-        const gs = gameSkins.find(g => g.spinSkinIdx === outcome.skinIdx);
+        const gs = gameSkins.find(g => g.spinKey === skinDef.key);
         if (gs) gs.locked = false;
         if (typeof window.renderMenu === 'function') window.renderMenu();
         showSpinResultModal({ title:`🎉 DAPET SKIN ${skinDef.rarity.toUpperCase()}!`, desc:skinDef.name, color: rarityColor(skinDef.rarity), icon:'🎨' });
@@ -5421,6 +6499,8 @@
   window.openSpinWheel = function(){
     const m = document.getElementById('spinWheelModal');
     m.classList.remove('hidden'); m.classList.add('flex');
+    refreshActiveSpinPool();
+    updateEventBanner();
     buildWheelVisual();
     updateSpinUI();
   };
@@ -5451,8 +6531,288 @@
 
   checkLoginStreakAndDaily();
   updateSpinMenuBadge();
+  refreshActiveSpinPool();
+  updateEventBanner();
+  window.__refreshEventSpinPool = refreshActiveSpinPool;
 })();
 </script>
+
+<!-- ============================================================
+     ☄️🐍 BENCANA EVENT & BOSS ULAR OTOMATIS
+     Muncul sendiri di gameplay normal (bukan cuma custom map),
+     mengikuti event bulan yang sedang aktif.
+     ============================================================ -->
+<script>
+(function(){
+  const eventFx = []; // {timer, update(), draw(c)}
+  let evDisasterCooldown = 600;     // ~10 detik sebelum bencana event pertama muncul
+  let evBossCooldown = 900;         // ~15 detik sebelum boss event pertama muncul
+  let evLastGameState = null;
+
+  function activeEvent(){
+    return (typeof window.getActiveMonthEvent === 'function') ? window.getActiveMonthEvent() : null;
+  }
+
+  function fullscreenOverlay(c, color, alpha){
+    c.save(); c.setTransform(1,0,0,1,0,0);
+    c.fillStyle = color; c.globalAlpha = alpha; c.fillRect(0,0,window.innerWidth, window.innerHeight);
+    c.restore();
+  }
+
+  // ===== Generic effect factories =====
+  function fxFoodRain(opts){
+    // opts: {dur, everyN, count, colors, valueMin, valueMax, label, color}
+    eventFx.push({
+      timer: opts.dur, tick:0,
+      update(){
+        this.tick++;
+        if (this.tick % opts.everyN === 0 && typeof foods !== 'undefined' && typeof Food !== 'undefined' && player && !player.dead){
+          for (let i=0;i<opts.count;i++){
+            const col = opts.colors[Math.floor(Math.random()*opts.colors.length)];
+            const val = opts.valueMin + Math.random()*(opts.valueMax-opts.valueMin);
+            try { foods.push(new Food(player.head.x + randomRange(-500,500), player.head.y + randomRange(-500,500), val, col)); } catch(e){}
+          }
+        }
+      },
+      draw(c){ if (opts.color) fullscreenOverlay(c, opts.color, 0.05); }
+    });
+  }
+
+  function fxOverlaySlow(opts){
+    // opts: {dur, color, alpha, factor}
+    eventFx.push({
+      timer: opts.dur,
+      update(){
+        if (typeof snakes === 'undefined') return;
+        snakes.forEach(s=>{
+          if (s.dead) return;
+          if (!s._evBaseSpeed) s._evBaseSpeed = s.speed;
+          s.speed = s._evBaseSpeed * opts.factor;
+        });
+      },
+      draw(c){ fullscreenOverlay(c, opts.color, opts.alpha); },
+    });
+    // Kembalikan speed normal setelah efek habis
+    setTimeout(()=>{ try { snakes.forEach(s=>{ if (s._evBaseSpeed) { s.speed = s._evBaseSpeed; s._evBaseSpeed = null; } }); } catch(e){} }, (opts.dur/60)*1000 + 200);
+  }
+
+  function fxZoneDamage(opts){
+    // opts: {x,y,radius,dmg,color}
+    eventFx.push({
+      x:opts.x, y:opts.y, radius:opts.radius, dmg:opts.dmg, color:opts.color,
+      timer: 260, warn: 70,
+      update(){
+        if (this.warn>0){ this.warn--; return; }
+        if (typeof snakes === 'undefined') return;
+        snakes.forEach(s=>{
+          if (s.dead) return;
+          const dx=s.head.x-this.x, dy=s.head.y-this.y;
+          if (dx*dx+dy*dy < this.radius*this.radius){
+            const dmg = s.score*this.dmg; s.score -= dmg;
+            if (s.isPlayer && typeof spawnFloatingText==='function') spawnFloatingText(s.head.x,s.head.y,'-'+Math.round(this.dmg*100)+'%',this.color,true);
+            if (s.score<30 && typeof s.die==='function') s.die(null);
+          }
+        });
+        this.timer = Math.min(this.timer, 2);
+      },
+      draw(c){
+        c.save(); c.beginPath(); c.arc(this.x,this.y,this.radius,0,Math.PI*2);
+        c.fillStyle = this.warn>0 ? this.color+'33' : this.color+'77';
+        c.fill(); c.strokeStyle=this.color; c.lineWidth=4; c.setLineDash([12,8]); c.stroke(); c.setLineDash([]);
+        c.restore();
+      }
+    });
+  }
+
+  function fxSparks(opts){
+    // opts: {n, dmg, color}
+    if (!player || player.dead) return;
+    for (let i=0;i<opts.n;i++){
+      const ang = Math.random()*Math.PI*2;
+      const cx = player.head.x + randomRange(-600,600), cy = player.head.y + randomRange(-600,600);
+      eventFx.push({
+        x:cx, y:cy, vx:Math.cos(ang)*5, vy:Math.sin(ang)*5, radius:70, dmg:opts.dmg, color:opts.color, timer:150,
+        update(){
+          this.x+=this.vx; this.y+=this.vy;
+          if (typeof snakes==='undefined') return;
+          snakes.forEach(s=>{ if (s.dead) return;
+            const dx=s.head.x-this.x, dy=s.head.y-this.y;
+            if (dx*dx+dy*dy < this.radius*this.radius){ s.score -= s.score*this.dmg; if (s.score<30 && s.die) s.die(null); }
+          });
+        },
+        draw(c){ c.save(); c.beginPath(); c.arc(this.x,this.y,this.radius,0,Math.PI*2); c.fillStyle=this.color+'66'; c.fill(); c.strokeStyle=this.color; c.lineWidth=3; c.stroke(); c.restore(); }
+      });
+    }
+  }
+
+  function fxGhostSwarm(){
+    if (!player || player.dead) return;
+    eventFx.push({
+      x: player.head.x + randomRange(-400,400), y: player.head.y + randomRange(-400,400),
+      radius: 220, dmg: 0.05, timer: 480,
+      update(){
+        if (player && !player.dead){
+          const dx=player.head.x-this.x, dy=player.head.y-this.y, dd=Math.hypot(dx,dy)+1;
+          this.x += dx/dd*1.5; this.y += dy/dd*1.5;
+          if (dd < this.radius){
+            player.score -= player.score*this.dmg*0.02;
+            if (player.score<30 && player.die) player.die(null);
+          }
+        }
+      },
+      draw(c){
+        c.save(); c.font = '38px serif'; c.textAlign='center';
+        for (let i=0;i<3;i++){
+          const ox = Math.sin(Date.now()*0.003 + i*2)*40, oy = Math.cos(Date.now()*0.004 + i*2)*40;
+          c.globalAlpha = 0.85;
+          c.fillText('👻', this.x+ox, this.y+oy);
+        }
+        c.restore();
+      }
+    });
+  }
+
+  function fxPrank(){
+    if (typeof spawnFloatingText==='function' && player) spawnFloatingText(player.head.x, player.head.y-120, '🤡 PRANK! Cuma bercanda~', '#f87171', true);
+    if (typeof screenShake !== 'undefined') screenShake = Math.max(screenShake||0, 10);
+    eventFx.push({
+      timer: 90, emoji: ['🤡','🎉','😂'][Math.floor(Math.random()*3)],
+      x: player ? player.head.x : 0, y: player ? player.head.y - 150 : 0,
+      update(){ this.y -= 1.5; },
+      draw(c){ c.save(); c.font='46px serif'; c.textAlign='center'; c.fillText(this.emoji, this.x, this.y); c.restore(); }
+    });
+  }
+
+  // ===== Dispatcher: satu def disaster event -> efek nyata =====
+  function triggerEventDisaster(def){
+    if (!def) return;
+    if (typeof spawnFloatingText === 'function' && player && !player.dead){
+      spawnFloatingText(player.head.x, player.head.y-100, def.icon+' '+def.name+'!', def.color, true);
+    }
+    const cx = player ? player.head.x + randomRange(-300,300) : randomRange(500,3000);
+    const cy = player ? player.head.y + randomRange(-300,300) : randomRange(500,3000);
+    switch(def.effect){
+      case 'fireworks':
+        fxFoodRain({ dur:200, everyN:40, count:3, colors:['#fde047','#f472b6','#38bdf8','#fb923c'], valueMin:2, valueMax:4, color:'#fbbf24' });
+        break;
+      case 'blessing':
+        fxFoodRain({ dur:220, everyN:35, count:2, colors:['#fde68a','#fbbf24'], valueMin:3, valueMax:6, color:'#facc15' });
+        break;
+      case 'meteorapocalypse':
+        fxZoneDamage({ x:cx, y:cy, radius:420, dmg:0.40, color:def.color });
+        break;
+      case 'prank':
+        fxPrank();
+        break;
+      case 'sandstorm':
+        fxOverlaySlow({ dur:280, color:'#d4a373', alpha:0.22, factor:0.72 });
+        break;
+      case 'candyrain':
+        fxFoodRain({ dur:260, everyN:30, count:3, colors:['#f0abfc','#f472b6','#a78bfa','#f87171'], valueMin:1.5, valueMax:3.5, color:'#f0abfc' });
+        break;
+      case 'firecracker':
+        fxSparks({ n:3, dmg:0.08, color:def.color });
+        if (typeof screenShake !== 'undefined') screenShake = Math.max(screenShake||0, 14);
+        break;
+      case 'ghostswarm':
+        fxGhostSwarm();
+        break;
+      case 'giftrain':
+        fxFoodRain({ dur:240, everyN:35, count:3, colors:['#fde047','#93c5fd','#fca5a5'], valueMin:2, valueMax:5, color:'#fde047' });
+        break;
+      case 'blizzard':
+        fxOverlaySlow({ dur:320, color:'#bfdbfe', alpha:0.20, factor:0.6 });
+        break;
+      default: break;
+    }
+  }
+
+  // ===== Boss event =====
+  function trySpawnEventBoss(ev){
+    if (!ev || !ev.boss) return;
+    if (typeof snakes === 'undefined' || typeof Snake === 'undefined' || !player || player.dead) return;
+    const alreadyAlive = snakes.some(s => s._isEventBoss && !s.dead);
+    if (alreadyAlive) return;
+    try {
+      const boss = new Snake(false, ev.icon + ' ' + ev.boss.name, { head: ev.boss.head, body1: ev.boss.body1, body2: ev.boss.body2 });
+      boss.isBoss = true; boss._isEventBoss = true;
+      boss.score = 1200;
+      for (let i=0;i<boss.targetLength;i++) boss.segments.push({x:boss.head.x, y:boss.head.y});
+      snakes.push(boss);
+      if (typeof AudioSys !== 'undefined' && AudioSys.playBoss) AudioSys.playBoss();
+      if (typeof screenShake !== 'undefined') screenShake = Math.max(screenShake||0, 25);
+      if (typeof UI !== 'undefined' && UI.bossAlert){
+        UI.bossText.innerText = `${ev.icon} ${ev.boss.name} MUNCUL!`;
+        UI.bossAlert.classList.remove('hidden'); UI.bossAlert.classList.add('boss-alert-anim');
+        setTimeout(()=>{ UI.bossAlert.classList.remove('boss-alert-anim'); UI.bossAlert.classList.add('hidden'); }, 3000);
+      }
+      if (typeof showEventToast === 'function') showEventToast(`Boss Event: ${ev.boss.name}`, `${ev.name} — boss spesial muncul di arena!`);
+    } catch(e){}
+  }
+
+  function showEventToast(title, desc){
+    const wrap = document.getElementById('achToastWrap');
+    if (!wrap) return;
+    const el = document.createElement('div');
+    el.className = 'ach-toast';
+    el.style.borderColor = '#fbbf24';
+    el.style.boxShadow = '0 0 30px rgba(251,191,36,0.7)';
+    el.innerHTML = `<div class="icn">🗓️</div><div><div class="ttl">Event Bulanan</div><div class="name">${title}</div><div class="desc">${desc||''}</div></div>`;
+    wrap.appendChild(el);
+    setTimeout(()=>el.remove(), 5200);
+  }
+
+  // ===== Hook ke WeatherSys (jalan tiap frame, TANPA syarat custom map) =====
+  const _evWUpdate = WeatherSys.update.bind(WeatherSys);
+  WeatherSys.update = function(){
+    _evWUpdate();
+    try {
+      if (gameState !== evLastGameState){
+        if (gameState === 'playing'){ evDisasterCooldown = 600; evBossCooldown = 900; }
+        evLastGameState = gameState;
+      }
+      if (gameState !== 'playing') return;
+      const ev = activeEvent();
+
+      // Update & bersihkan efek aktif
+      for (let i=eventFx.length-1;i>=0;i--){
+        const fx = eventFx[i];
+        if (fx.update) fx.update();
+        fx.timer--;
+        if (fx.timer<=0) eventFx.splice(i,1);
+      }
+
+      if (!ev) return;
+
+      // Bencana event
+      if (Array.isArray(ev.disasters) && ev.disasters.length){
+        evDisasterCooldown--;
+        if (evDisasterCooldown <= 0){
+          const def = ev.disasters[Math.floor(Math.random()*ev.disasters.length)];
+          triggerEventDisaster(def);
+          evDisasterCooldown = 1800 + Math.floor(Math.random()*900); // ~30-45 detik
+        }
+      }
+
+      // Boss event
+      if (ev.boss){
+        evBossCooldown--;
+        if (evBossCooldown <= 0){
+          trySpawnEventBoss(ev);
+          evBossCooldown = 5400; // ~90 detik sebelum boss berikutnya bisa muncul lagi
+        }
+      }
+    } catch(e){ /* jangan sampai bikin game crash */ }
+  };
+
+  const _evWUpper = WeatherSys.drawUpper.bind(WeatherSys);
+  WeatherSys.drawUpper = function(c, vw, vh){
+    _evWUpper(c, vw, vh);
+    try { eventFx.forEach(fx => { if (fx.draw) fx.draw(c); }); } catch(e){}
+  };
+})();
+</script>
+
 
 <!-- ============================================================
      💬 CHAT KOMUNITAS + LOGIN (Supabase Auth, project terpisah
@@ -5464,8 +6824,8 @@
   // ⚠️ OPEN SOURCE SETUP: isi dengan project Supabase kamu sendiri (boleh project
   // yang sama dengan Marketplace di atas, atau project terpisah). Lihat
   // SETUP_SUPABASE.md untuk skema tabel, RLS, trigger, dan cron job-nya.
-  const CHAT_URL = 'YOUR_SUPABASE_URL_HERE';       // contoh: https://xxxxxxxx.supabase.co
-  const CHAT_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';  // anon/public key project kamu
+  const CHAT_URL = 'YOUR_SUPABASE_PROJECT_URL'; // contoh: https://xxxxx.supabase.co
+  const CHAT_KEY = 'YOUR_SUPABASE_ANON_KEY'; // anon/public key project kamu
   const chatSb = createClient(CHAT_URL, CHAT_KEY);
 
   const CHAT_MAX = 6;
@@ -5679,6 +7039,180 @@
 
   refreshSession();
 </script>
+
+<!-- ============================================================
+     🏆 LEADERBOARD GLOBAL — kill, waktu main, skor terbaik (lifetime)
+     Anonim (gak wajib login), sync tiap ±7 jam biar hemat request.
+     Data pemain gak aktif >2 hari otomatis kehapus di server.
+     ============================================================ -->
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+  const LB_URL = 'YOUR_SUPABASE_PROJECT_URL'; // contoh: https://xxxxx.supabase.co
+  const LB_KEY = 'YOUR_SUPABASE_ANON_KEY'; // anon/public key project kamu
+  const lbSb = createClient(LB_URL, LB_KEY, { auth: { persistSession: false } });
+
+  const LB_SYNC_INTERVAL_MS = 7 * 60 * 60 * 1000; // 7 jam
+  const LB_LAST_SYNC_KEY = 'lb_last_sync_at';
+  const ACH_STATS_KEY = 'snakeKingAchStats_v1'; // key yang sama dipakai sistem achievement (life stats)
+
+  // Identitas anonim per-browser — dipakai bareng sama Marketplace biar konsisten
+  function getUserId(){
+    let id = localStorage.getItem('mk_user_id');
+    if (!id){ id = 'u_' + Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('mk_user_id', id); }
+    return id;
+  }
+  function getUserName(){
+    return localStorage.getItem('mk_user_name') || 'Anon';
+  }
+
+  function readLifeStats(){
+    try {
+      const l = JSON.parse(localStorage.getItem(ACH_STATS_KEY) || '{}');
+      return {
+        kills: l.kills | 0,
+        deaths: l.deaths | 0,
+        games_played: l.games | 0,
+        playtime_seconds: Math.floor((l.totalFrames | 0) / 60),
+        best_score: l.bestScore | 0,
+      };
+    } catch(e){
+      return { kills: 0, deaths: 0, games_played: 0, playtime_seconds: 0, best_score: 0 };
+    }
+  }
+
+  async function syncLeaderboardIfDue(force){
+    const last = parseInt(localStorage.getItem(LB_LAST_SYNC_KEY) || '0', 10);
+    if (!force && Date.now() - last < LB_SYNC_INTERVAL_MS) return; // belum waktunya, hemat request
+    const stats = readLifeStats();
+    const username = getUserName();
+    try {
+      const { error } = await lbSb.from('leaderboard_stats').upsert({
+        user_id: getUserId(),
+        username,
+        ...stats,
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'user_id' });
+      if (!error) localStorage.setItem(LB_LAST_SYNC_KEY, String(Date.now()));
+    } catch(e){ /* diem-diem aja, coba lagi nanti */ }
+  }
+
+  // Cek pas load, lalu cek ulang tiap 10 menit (biar kalau app dibiarin kebuka lama, begitu lewat 7 jam langsung sync)
+  syncLeaderboardIfDue(false);
+  setInterval(() => syncLeaderboardIfDue(false), 10 * 60 * 1000);
+  // Juga coba sync tiap kali game berakhir (recordPlayerDeathStats), tapi tetap dijaga interval 7 jam di atas
+  const _lbHookDeath = window.recordPlayerDeathStats;
+  window.recordPlayerDeathStats = function(){
+    const r = _lbHookDeath ? _lbHookDeath.apply(this, arguments) : undefined;
+    setTimeout(() => syncLeaderboardIfDue(false), 300);
+    return r;
+  };
+
+  let lbCurrentSort = 'kills';
+  function fmtPlaytime(sec){
+    sec = sec|0;
+    const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60);
+    if (h > 0) return `${h}j ${m}m`;
+    return `${m}m`;
+  }
+
+  window.lbSwitchTab = function(sortKey){
+    lbCurrentSort = sortKey;
+    ['lbTabKills','lbTabScore','lbTabPlaytime'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.className = 'px-3 py-2 bg-slate-700 hover:bg-slate-600 border border-slate-500 text-white font-bold text-xs rounded-lg';
+    });
+    const activeId = sortKey === 'kills' ? 'lbTabKills' : (sortKey === 'best_score' ? 'lbTabScore' : 'lbTabPlaytime');
+    const activeEl = document.getElementById(activeId);
+    if (activeEl) activeEl.className = 'px-3 py-2 bg-sky-800/70 hover:bg-sky-700 border border-sky-400/60 text-white font-bold text-xs rounded-lg';
+    lbRenderList();
+  };
+
+  window.lbRefresh = function(){ lbRenderList(); };
+
+  async function lbRenderList(){
+    const list = document.getElementById('lbList');
+    if (!list) return;
+    list.innerHTML = '<div class="text-center text-gray-400 py-8">Loading…</div>';
+    const { data, error } = await lbSb
+      .from('leaderboard_stats')
+      .select('*')
+      .order(lbCurrentSort, { ascending: false })
+      .limit(50);
+    if (error){
+      list.innerHTML = '<div class="text-center text-red-400 py-8">Gagal memuat leaderboard.</div>';
+      return;
+    }
+    if (!data || !data.length){
+      list.innerHTML = '<div class="text-center text-gray-400 py-8">Belum ada data. Main dulu, nanti otomatis kesinkron!</div>';
+      return;
+    }
+    const myId = getUserId();
+    list.innerHTML = data.map((row, i) => {
+      const mine = row.user_id === myId;
+      const rankIcon = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i+1}`;
+      const statVal = lbCurrentSort === 'playtime_seconds' ? fmtPlaytime(row.playtime_seconds)
+                    : lbCurrentSort === 'best_score' ? row.best_score
+                    : row.kills;
+      const statLabel = lbCurrentSort === 'playtime_seconds' ? '' : (lbCurrentSort === 'best_score' ? 'skor' : 'kill');
+      return `<div class="flex items-center justify-between px-3 py-2 rounded-lg border ${mine ? 'bg-sky-900/50 border-sky-400/70' : 'bg-black/30 border-slate-700'}">
+        <div class="flex items-center gap-2 min-w-0">
+          <span class="w-8 shrink-0 text-center font-bold ${i < 3 ? 'text-xl' : 'text-gray-400 text-xs'}">${rankIcon}</span>
+          <span class="truncate text-sm font-bold ${mine ? 'text-sky-300' : 'text-white'}">${escapeHtmlLB(row.username)}${mine ? ' (kamu)' : ''}</span>
+        </div>
+        <span class="shrink-0 text-sm font-black text-yellow-300">${statVal}${statLabel ? ' ' + statLabel : ''}</span>
+      </div>`;
+    }).join('');
+  }
+
+  function escapeHtmlLB(s){
+    return String(s || '').replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  window.openLeaderboard = function(){
+    syncLeaderboardIfDue(true); // paksa update data kamu sendiri pas buka leaderboard
+    document.getElementById('lbModal').style.display = 'block';
+    document.getElementById('lbModal').classList.remove('hidden');
+    lbRenderList();
+  };
+  window.closeLeaderboard = function(){
+    document.getElementById('lbModal').style.display = 'none';
+    document.getElementById('lbModal').classList.add('hidden');
+  };
+</script>
+
+<!-- Tombol Leaderboard hidup di script terpisah (bukan module) supaya tetap
+     muncul walau import Supabase di atas gagal load (offline/CDN diblokir). -->
+<script>
+  function injectLeaderboardButton(){
+    const btns = document.querySelectorAll('button');
+    let mkBtn = document.getElementById('mkOpenBtn');
+    if (mkBtn && !document.getElementById('lbOpenBtn')){
+      const lb = document.createElement('button');
+      lb.id = 'lbOpenBtn';
+      lb.setAttribute('onclick', "if(window.openLeaderboard){ openLeaderboard(); } else { alert('Leaderboard belum siap (cek koneksi internet), coba lagi sebentar.'); }");
+      lb.className = 'ml-2 px-5 py-2 bg-slate-800 hover:bg-slate-700 border border-sky-500/50 hover:border-sky-400 text-sky-200 font-bold text-sm rounded-xl shadow transition-all';
+      lb.innerHTML = '🏆 Leaderboard';
+      mkBtn.parentNode.insertBefore(lb, mkBtn.nextSibling);
+    }
+    const lbBtn = document.getElementById('lbOpenBtn');
+    if (lbBtn && !document.getElementById('redeemOpenBtn')){
+      const rb = document.createElement('button');
+      rb.id = 'redeemOpenBtn';
+      rb.setAttribute('onclick', "if(window.openRedeemModal){ openRedeemModal(); } else { alert('Menu tukar kode belum siap, coba lagi sebentar.'); }");
+      rb.className = 'ml-2 px-5 py-2 bg-cyan-700 hover:bg-cyan-600 border border-cyan-400/60 hover:border-cyan-300 text-cyan-50 font-bold text-sm rounded-xl shadow transition-all';
+      rb.innerHTML = '🎁 Tukar Kode';
+      lbBtn.parentNode.insertBefore(rb, lbBtn.nextSibling);
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', injectLeaderboardButton);
+  else injectLeaderboardButton();
+  setTimeout(injectLeaderboardButton, 500);
+  setTimeout(injectLeaderboardButton, 1500);
+  setTimeout(injectLeaderboardButton, 3000);
+</script>
+
 
 <script>
 /* ============================================================
@@ -6081,5 +7615,1296 @@
 })();
 </script>
 
+<!-- ============================================================
+     🎡 EVENT SPIN WHEEL — SKIN SPESIAL (BUKAN SEKEDAR HUE-SHIFT)
+     Dibuat sekarang, cara dapetinnya (lucky spin) nyusul dibangun
+     ~1 bulan lagi. Untuk sekarang skin ini muncul di grid skin
+     dalam keadaan terkunci dengan keterangan event.
+     ============================================================ -->
+<script>
+(function(){
+  const STORAGE_KEY = 'snakeKingEventSkins_v1';
+  function loadU(){ try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e){ return []; } }
+  function saveU(a){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(a)); } catch(e){} }
+  const unlocked = new Set(loadU());
+
+  // 2 skin event dengan KEMAMPUAN GAMEPLAY nyata (bukan cuma tampilan):
+  //  - nightVision : gak kena efek kabut/gelap (kamera & visual tetap normal)
+  //  - lightningImmune : kena sambaran petir TIDAK memotong skor sama sekali
+  const EVENT_SKINS = [
+    { name: '🌫️ Mata Kabut', head: '#a5f3fc', body1: '#22d3ee', body2: '#0e2a30', nightVision: true,
+      desc: 'Bisa lihat jelas walau lagi kabut/gelap. Kamera & pandangan gak kepengaruh sama sekali.' },
+    { name: '⚡ Penakluk Petir', head: '#fde68a', body1: '#facc15', body2: '#3f2d00', lightningImmune: true,
+      desc: 'Kebal sambaran petir. Kena petir? Santai, skor gak kepotong sama sekali.' },
+  ];
+
+  const base = gameSkins.length;
+  EVENT_SKINS.forEach((s, i) => {
+    gameSkins.push({
+      id: base + i,
+      head: s.head, body1: s.body1, body2: s.body2,
+      name: s.name,
+      nightVision: s.nightVision || false,
+      lightningImmune: s.lightningImmune || false,
+      locked: !unlocked.has(i),
+      eventSkinIdx: i,
+      eventDesc: s.desc,
+    });
+  });
+
+  // Dev helper: buka manual dari console kalau perlu testing sebelum lucky spin jadi
+  // contoh: unlockEventSkin(0)  → buka skin Mata Kabut
+  window.unlockEventSkin = function(idx){
+    unlocked.add(idx);
+    saveU(Array.from(unlocked));
+    gameSkins.forEach(gs => { if (gs.eventSkinIdx === idx) gs.locked = false; });
+    if (typeof window.renderMenu === 'function') window.renderMenu();
+  };
+
+  const _renderMenu = window.renderMenu || renderMenu;
+  window.renderMenu = function(){
+    _renderMenu();
+    const sc = document.getElementById('skinContainer');
+    if (!sc) return;
+    Array.from(sc.children).forEach((btn, idx) => {
+      const skin = gameSkins[idx];
+      if (!skin || skin.eventSkinIdx === undefined) return;
+      btn.style.color = skin.head;
+      btn.title = skin.name + ' — ' + skin.eventDesc;
+      if (skin.locked) {
+        btn.classList.add('locked');
+        btn.onclick = () => {
+          alert('🔒 ' + skin.name + ' — Skin Event!\n\n' + skin.eventDesc + '\n\nBakal bisa didapat lewat Lucky Spin Wheel khusus event (segera hadir).');
+        };
+      }
+    });
+  };
+  renderMenu();
+})();
+</script>
+
+
+<!-- =================== SOCIAL / FRIEND / GIFT / CHAT OVERLAY =================== -->
+<div id="socialOverlay" class="hidden fixed inset-0 z-[100] bg-black/80 backdrop-blur-md items-center justify-center p-3" style="display:none">
+    <div class="w-full max-w-md max-h-[90vh] bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-indigo-500/60 rounded-3xl shadow-[0_0_50px_rgba(99,102,241,0.4)] flex flex-col overflow-hidden">
+        <!-- Header -->
+        <div class="flex items-center justify-between p-4 border-b border-slate-700">
+            <div>
+                <h2 class="text-xl font-black text-white flex items-center gap-2">👥 Sosial</h2>
+                <p id="socialWho" class="text-[11px] text-gray-400">Belum login</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="socialOpenGlobalChatBtn" title="Buka Chat Global" class="px-3 py-2 rounded-full bg-slate-800 hover:bg-indigo-600 text-white text-xs font-bold transition flex items-center gap-1">🌐 Chat Global</button>
+                <button onclick="window.SocialUI.close()" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-red-600 text-white font-black text-lg transition">✕</button>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div id="socialTabs" class="hidden grid grid-cols-4 gap-1 p-2 bg-slate-950/60 border-b border-slate-700">
+            <button data-tab="friends" class="social-tab px-2 py-2 text-xs font-bold rounded-lg bg-indigo-600 text-white">👥 Teman</button>
+            <button data-tab="find" class="social-tab px-2 py-2 text-xs font-bold rounded-lg bg-slate-800 text-gray-300 hover:bg-slate-700">🔍 Cari</button>
+            <button data-tab="inbox" class="social-tab px-2 py-2 text-xs font-bold rounded-lg bg-slate-800 text-gray-300 hover:bg-slate-700 relative">📩 Inbox<span id="inboxDot" class="hidden absolute top-0.5 right-1 w-2 h-2 bg-red-500 rounded-full"></span></button>
+            <button data-tab="chat" class="social-tab px-2 py-2 text-xs font-bold rounded-lg bg-slate-800 text-gray-300 hover:bg-slate-700 relative">💬 Chat<span id="chatDot" class="hidden absolute top-0.5 right-1 w-2 h-2 bg-red-500 rounded-full"></span></button>
+        </div>
+
+        <!-- Body -->
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-3" id="socialBody">
+            <!-- AUTH PANEL -->
+            <div id="authPanel" class="space-y-3">
+                <div class="bg-indigo-900/30 border border-indigo-500/40 rounded-xl p-3 text-xs text-indigo-200">
+                    Login dulu buat main bareng teman, kirim gift skin, dan chat singkat.
+                </div>
+                <div class="flex gap-2">
+                    <button id="authTabLogin" class="flex-1 py-2 rounded-lg bg-indigo-600 text-white text-sm font-bold">Login</button>
+                    <button id="authTabSignup" class="flex-1 py-2 rounded-lg bg-slate-800 text-gray-300 text-sm font-bold">Daftar</button>
+                </div>
+                <input id="authEmail" type="email" placeholder="Email" class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-indigo-400 outline-none">
+                <input id="authPass" type="password" placeholder="Password (min 6)" class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-indigo-400 outline-none">
+                <input id="authUsername" type="text" placeholder="Username (huruf/angka, 3-20)" class="hidden w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:border-indigo-400 outline-none">
+                <button id="authSubmit" class="w-full py-2.5 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-sm hover:brightness-110">Masuk</button>
+                <div class="flex items-center gap-2 text-gray-500 text-xs"><div class="flex-1 h-px bg-slate-700"></div>atau<div class="flex-1 h-px bg-slate-700"></div></div>
+                <button id="authGoogle" class="w-full py-2.5 rounded-lg bg-white text-slate-900 font-bold text-sm flex items-center justify-center gap-2 hover:bg-gray-100">
+                    <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3l5.7-5.7C33.9 6.1 29.2 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.5-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7L13 19.6c1.8-4.5 6.2-7.6 11-7.6 3.1 0 5.9 1.2 8 3l5.7-5.7C33.9 6.1 29.2 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.5-5.2l-6.2-5.2c-2 1.5-4.6 2.4-7.3 2.4-5.2 0-9.7-3.3-11.3-8L6 32.7C9.4 39.6 16.1 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.2 5.6l6.2 5.2C41 34.3 44 29.6 44 24c0-1.3-.1-2.5-.4-3.5z"/></svg>
+                    Lanjut dengan Google
+                </button>
+                <p id="authMsg" class="text-xs text-red-400 min-h-[16px]"></p>
+            </div>
+
+            <!-- FRIENDS TAB -->
+            <div id="tab-friends" class="hidden space-y-2">
+                <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-3 flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] text-gray-400">Friend Code kamu</p>
+                        <p id="myFriendCode" class="text-lg font-black text-indigo-300 tracking-wider">#______</p>
+                    </div>
+                    <button id="copyCodeBtn" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg">Copy</button>
+                </div>
+                <div class="flex items-center justify-between text-xs text-gray-400">
+                    <span>Teman kamu</span>
+                    <span id="friendCount">0</span>
+                </div>
+                <div id="friendList" class="space-y-2"></div>
+                <button id="signOutBtn" class="w-full mt-4 py-2 bg-slate-800 hover:bg-red-800 text-gray-300 text-xs font-bold rounded-lg">Sign Out</button>
+            </div>
+
+            <!-- FIND TAB -->
+            <div id="tab-find" class="hidden space-y-2">
+                <p class="text-xs text-gray-400">Cari via username atau friend code (contoh: <span class="text-indigo-300">#A3B7K9</span>)</p>
+                <div class="flex gap-2">
+                    <input id="findInput" type="text" placeholder="username atau #KODE" class="flex-1 px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm outline-none focus:border-indigo-400">
+                    <button id="findBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold rounded-lg">Cari</button>
+                </div>
+                <div id="findResults" class="space-y-2"></div>
+            </div>
+
+            <!-- INBOX TAB -->
+            <div id="tab-inbox" class="hidden space-y-4">
+                <div>
+                    <h3 class="text-xs font-bold text-gray-300 mb-2">🤝 Permintaan Teman</h3>
+                    <div id="reqList" class="space-y-2 text-xs text-gray-500">Kosong</div>
+                </div>
+                <div>
+                    <h3 class="text-xs font-bold text-gray-300 mb-2">🎁 Gift Masuk</h3>
+                    <div id="giftList" class="space-y-2 text-xs text-gray-500">Kosong</div>
+                </div>
+            </div>
+
+            <!-- CHAT TAB -->
+            <div id="tab-chat" class="hidden space-y-3">
+                <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-2 flex items-center justify-between text-xs">
+                    <span class="text-gray-400">Quota chat hari ini</span>
+                    <span><span id="chatQuotaUsed" class="text-indigo-300 font-black">0</span><span class="text-gray-500">/7</span></span>
+                </div>
+                <div id="chatThreads" class="space-y-2"></div>
+                <p class="text-[10px] text-gray-500 text-center">Semua chat hilang otomatis setelah 5 jam.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gift compose modal -->
+<div id="giftModal" class="hidden fixed inset-0 z-[110] bg-black/85 backdrop-blur-sm items-center justify-center p-4" style="display:none">
+    <div class="w-full max-w-sm bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-pink-500/60 rounded-2xl p-4 shadow-[0_0_40px_rgba(236,72,153,0.35)]">
+        <h3 class="text-lg font-black text-white mb-1">🎁 Kirim Gift ke <span id="giftToName" class="text-pink-300"></span></h3>
+        <p class="text-[11px] text-gray-400 mb-3">Cuma skin duplikat / event yang bisa di-gift. Cooldown 7 hari/teman · Lifetime: <span id="giftLifetime" class="text-pink-300 font-bold">0/6</span></p>
+        <div id="giftableSkins" class="grid grid-cols-4 gap-2 max-h-40 overflow-y-auto custom-scrollbar mb-3"></div>
+        <textarea id="giftMsg" maxlength="100" placeholder="Pesan opsional (potong 1 quota chat, max 100 char)" class="w-full h-16 px-2 py-1 rounded-lg bg-slate-800 border border-slate-700 text-white text-xs outline-none focus:border-pink-400 resize-none"></textarea>
+        <div class="flex justify-between items-center text-[10px] text-gray-500 mt-1"><span id="giftMsgLen">0</span>/100</div>
+        <div class="flex gap-2 mt-3">
+            <button onclick="window.SocialUI._closeGift()" class="flex-1 py-2 bg-slate-800 text-gray-300 font-bold text-sm rounded-lg">Batal</button>
+            <button id="giftSendBtn" class="flex-1 py-2 bg-gradient-to-r from-pink-500 to-rose-600 text-white font-bold text-sm rounded-lg disabled:opacity-50">Kirim</button>
+        </div>
+        <p id="giftMsgErr" class="text-xs text-red-400 mt-2 min-h-[16px]"></p>
+    </div>
+</div>
+
+<!-- Chat thread modal -->
+<div id="chatModal" class="hidden fixed inset-0 z-[110] bg-black/85 backdrop-blur-sm items-center justify-center p-4" style="display:none">
+    <div class="w-full max-w-sm h-[70vh] bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-indigo-500/60 rounded-2xl flex flex-col overflow-hidden">
+        <div class="flex items-center justify-between p-3 border-b border-slate-700">
+            <h3 class="font-bold text-white">💬 <span id="dmChatWithName"></span></h3>
+            <button onclick="window.SocialUI._closeChat()" class="text-gray-400 hover:text-white text-lg">✕</button>
+        </div>
+        <div id="dmChatMessages" class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-2 text-sm"></div>
+        <div class="p-2 border-t border-slate-700 flex gap-2">
+            <input id="dmChatInput" type="text" maxlength="100" placeholder="Max 100 char..." class="flex-1 px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm outline-none focus:border-indigo-400">
+            <button id="dmChatSendBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm rounded-lg">Kirim</button>
+        </div>
+        <p id="dmChatErr" class="text-xs text-red-400 px-3 pb-2 min-h-[16px]"></p>
+    </div>
+</div>
+
+<!-- Toast -->
+<div id="socialToast" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-[200] px-4 py-2 rounded-full bg-indigo-600 text-white text-sm font-bold shadow-lg" style="display:none"></div>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
+
+const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL'; // contoh: https://xxxxx.supabase.co
+const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY'; // publishable/anon key project kamu
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, storageKey: 'snake-social-auth' }
+});
+
+const $ = (id) => document.getElementById(id);
+const show = (el, disp = 'flex') => { el.classList.remove('hidden'); el.style.display = disp; };
+const hide = (el) => { el.classList.add('hidden'); el.style.display = 'none'; };
+const toast = (msg, ok = true) => {
+    const t = $('socialToast');
+    t.textContent = msg;
+    t.style.background = ok ? 'linear-gradient(90deg,#4f46e5,#7c3aed)' : '#dc2626';
+    show(t, 'block');
+    clearTimeout(t._to);
+    t._to = setTimeout(() => hide(t), 2600);
+};
+
+const state = {
+    session: null, profile: null,
+    friends: [], requests: [], gifts: [], chats: [],
+    activeTab: 'friends', activeChat: null,
+    channel: null, quotaUsed: 0
+};
+
+// ============ AUTH ============
+let authMode = 'login';
+$('authTabLogin').onclick = () => { authMode = 'login'; renderAuthTabs(); };
+$('authTabSignup').onclick = () => { authMode = 'signup'; renderAuthTabs(); };
+function renderAuthTabs() {
+    const login = authMode === 'login';
+    $('authTabLogin').className = 'flex-1 py-2 rounded-lg text-sm font-bold ' + (login ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-gray-300');
+    $('authTabSignup').className = 'flex-1 py-2 rounded-lg text-sm font-bold ' + (!login ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-gray-300');
+    $('authUsername').classList.toggle('hidden', login);
+    $('authSubmit').textContent = login ? 'Masuk' : 'Daftar';
+}
+
+$('authSubmit').onclick = async () => {
+    const email = $('authEmail').value.trim();
+    const password = $('authPass').value;
+    const err = $('authMsg'); err.textContent = '';
+    if (!email || password.length < 6) { err.textContent = 'Email & password (min 6) wajib.'; return; }
+    try {
+        if (authMode === 'signup') {
+            const username = $('authUsername').value.trim();
+            if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) { err.textContent = 'Username 3-20 karakter (a-z, 0-9, _).'; return; }
+            const { data, error } = await supabase.auth.signUp({
+                email, password,
+                options: { data: { username }, emailRedirectTo: window.location.href }
+            });
+            if (error) throw error;
+            if (!data.session) { toast('Cek email untuk verifikasi'); return; }
+        } else {
+            const { error } = await supabase.auth.signInWithPassword({ email, password });
+            if (error) throw error;
+        }
+    } catch (e) { err.textContent = e.message || 'Gagal.'; }
+};
+
+$('authGoogle').onclick = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: window.location.href }
+    });
+    if (error) $('authMsg').textContent = error.message;
+};
+
+$('signOutBtn').onclick = async () => {
+    await supabase.auth.signOut();
+};
+
+// ============ SESSION ============
+supabase.auth.onAuthStateChange(async (event, session) => {
+    state.session = session;
+    if (session) {
+        await loadProfile();
+        setupRealtime();
+        await refreshAll();
+    } else {
+        state.profile = null;
+        state.friends = state.requests = state.gifts = state.chats = [];
+        if (state.channel) { supabase.removeChannel(state.channel); state.channel = null; }
+    }
+    renderUI();
+});
+// Initial session probe
+supabase.auth.getSession().then(({ data }) => {
+    if (data.session) { state.session = data.session; loadProfile().then(() => { setupRealtime(); refreshAll(); renderUI(); }); }
+});
+
+async function loadProfile() {
+    const { data } = await supabase.from('profiles').select('*').eq('id', state.session.user.id).maybeSingle();
+    state.profile = data;
+    // set timezone if missing
+    if (data && !data.timezone) {
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        await supabase.from('profiles').update({ timezone: tz }).eq('id', data.id);
+        state.profile.timezone = tz;
+    }
+}
+
+// ============ REALTIME ============
+function setupRealtime() {
+    if (state.channel) supabase.removeChannel(state.channel);
+    const uid = state.session.user.id;
+    state.channel = supabase.channel('social-' + uid)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'friend_requests', filter: `to_user=eq.${uid}` }, () => { loadRequests().then(renderUI); toast('🤝 Ada request baru!'); })
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'gifts', filter: `to_user=eq.${uid}` }, () => { loadGifts().then(renderUI); toast('🎁 Gift masuk!'); })
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chats', filter: `to_user=eq.${uid}` }, (p) => { loadChats().then(renderUI); toast('💬 Chat baru'); })
+        .subscribe();
+}
+
+// ============ DATA LOADERS ============
+async function refreshAll() {
+    await Promise.all([loadFriends(), loadRequests(), loadGifts(), loadChats(), loadQuota()]);
+}
+async function loadFriends() {
+    const uid = state.session.user.id;
+    const { data: fs } = await supabase.from('friendships').select('*');
+    if (!fs) { state.friends = []; return; }
+    const otherIds = fs.map(f => f.user_a === uid ? f.user_b : f.user_a);
+    if (!otherIds.length) { state.friends = []; return; }
+    const { data: profs } = await supabase.from('profiles').select('id,username,friend_code').in('id', otherIds);
+    state.friends = profs || [];
+}
+async function loadRequests() {
+    const uid = state.session.user.id;
+    const { data } = await supabase.from('friend_requests').select('*').eq('to_user', uid).eq('status', 'pending').order('created_at', { ascending: false });
+    if (!data || !data.length) { state.requests = []; return; }
+    const fromIds = data.map(r => r.from_user);
+    const { data: profs } = await supabase.from('profiles').select('id,username,friend_code').in('id', fromIds);
+    const pmap = new Map((profs || []).map(p => [p.id, p]));
+    state.requests = data.map(r => ({ ...r, from_profile: pmap.get(r.from_user) }));
+}
+async function loadGifts() {
+    const uid = state.session.user.id;
+    const { data } = await supabase.from('gifts').select('*').eq('to_user', uid).eq('claimed', false).order('created_at', { ascending: false });
+    if (!data || !data.length) { state.gifts = []; return; }
+    const ids = [...new Set(data.map(g => g.from_user))];
+    const { data: profs } = await supabase.from('profiles').select('id,username').in('id', ids);
+    const pmap = new Map((profs || []).map(p => [p.id, p]));
+    state.gifts = data.map(g => ({ ...g, from_profile: pmap.get(g.from_user) }));
+}
+async function loadChats() {
+    const { data } = await supabase.from('chats').select('*').order('created_at', { ascending: true });
+    state.chats = data || [];
+}
+async function loadQuota() {
+    const uid = state.session.user.id;
+    const tz = state.profile?.timezone || 'UTC';
+    const today = new Date().toLocaleDateString('en-CA', { timeZone: tz }); // YYYY-MM-DD
+    const { data } = await supabase.from('chat_quotas').select('count').eq('user_id', uid).eq('quota_date', today).maybeSingle();
+    state.quotaUsed = data?.count || 0;
+}
+
+// ============ RENDER ============
+function renderUI() {
+    const overlay = $('socialOverlay');
+    if (!state.session) {
+        $('socialWho').textContent = 'Belum login';
+        show($('authPanel'), 'block');
+        ['tab-friends','tab-find','tab-inbox','tab-chat'].forEach(id => hide($(id)));
+        hide($('socialTabs'));
+        return;
+    }
+    hide($('authPanel'));
+    show($('socialTabs'), 'grid');
+    $('socialWho').textContent = state.profile ? `Login sebagai @${state.profile.username}` : '...';
+    $('myFriendCode').textContent = state.profile?.friend_code || '#______';
+    $('friendCount').textContent = state.friends.length;
+    renderFriends();
+    renderRequests();
+    renderGifts();
+    renderChatThreads();
+    updateBadges();
+    renderTabs();
+}
+
+function renderTabs() {
+    ['friends','find','inbox','chat'].forEach(t => {
+        const btn = document.querySelector(`.social-tab[data-tab="${t}"]`);
+        btn.className = 'social-tab px-2 py-2 text-xs font-bold rounded-lg relative ' + (state.activeTab === t ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-gray-300 hover:bg-slate-700');
+        const panel = $('tab-' + t);
+        if (state.activeTab === t) show(panel, 'block'); else hide(panel);
+    });
+}
+document.querySelectorAll('.social-tab').forEach(b => b.onclick = () => { state.activeTab = b.dataset.tab; renderTabs(); });
+
+function updateBadges() {
+    const inboxCount = state.requests.length + state.gifts.length;
+    $('inboxDot').classList.toggle('hidden', inboxCount === 0);
+    const unread = state.chats.filter(c => c.to_user === state.session.user.id).length;
+    $('chatDot').classList.toggle('hidden', unread === 0);
+    const badge = $('socialBadge');
+    const total = inboxCount + unread;
+    if (total > 0) { badge.textContent = total; badge.classList.remove('hidden'); } else badge.classList.add('hidden');
+}
+
+function renderFriends() {
+    const c = $('friendList');
+    if (!state.friends.length) { c.innerHTML = '<p class="text-xs text-gray-500 text-center py-4">Belum ada teman. Cari via tab "Cari".</p>'; return; }
+    c.innerHTML = state.friends.map(f => `
+        <div class="flex items-center justify-between bg-slate-800/60 border border-slate-700 rounded-xl p-2.5">
+            <div>
+                <p class="text-sm font-bold text-white">@${escapeHtml(f.username)}</p>
+                <p class="text-[10px] text-gray-500">${f.friend_code}</p>
+            </div>
+            <div class="flex gap-1">
+                <button data-gift="${f.id}" data-name="${escapeHtml(f.username)}" class="px-2.5 py-1 bg-pink-600 hover:bg-pink-500 text-white text-xs font-bold rounded-lg">🎁</button>
+                <button data-chat="${f.id}" data-name="${escapeHtml(f.username)}" class="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg">💬</button>
+            </div>
+        </div>`).join('');
+    c.querySelectorAll('[data-gift]').forEach(b => b.onclick = () => openGift(b.dataset.gift, b.dataset.name));
+    c.querySelectorAll('[data-chat]').forEach(b => b.onclick = () => openChat(b.dataset.chat, b.dataset.name));
+}
+function renderRequests() {
+    const c = $('reqList');
+    if (!state.requests.length) { c.innerHTML = '<p class="text-xs text-gray-500">Kosong</p>'; return; }
+    c.innerHTML = state.requests.map(r => `
+        <div class="flex items-center justify-between bg-slate-800/60 border border-slate-700 rounded-xl p-2.5">
+            <div><p class="text-sm font-bold text-white">@${escapeHtml(r.from_profile?.username || '?')}</p><p class="text-[10px] text-gray-500">${r.from_profile?.friend_code || ''}</p></div>
+            <div class="flex gap-1">
+                <button data-acc="${r.id}" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg">✓</button>
+                <button data-dec="${r.id}" class="px-2.5 py-1 bg-slate-700 hover:bg-red-600 text-white text-xs font-bold rounded-lg">✕</button>
+            </div>
+        </div>`).join('');
+    c.querySelectorAll('[data-acc]').forEach(b => b.onclick = async () => {
+        if (b.disabled) return; // cegah dobel klik saat masih proses
+        const originalLabel = b.textContent;
+        b.disabled = true; b.style.opacity = '0.5'; b.textContent = '…';
+        try {
+            const { error } = await supabase.rpc('accept_friend_request', { _request_id: b.dataset.acc });
+            if (error) {
+                console.error('[Sosial] Gagal accept friend request:', error);
+                toast('Gagal accept: ' + error.message, false);
+                b.disabled = false; b.style.opacity = '1'; b.textContent = originalLabel;
+            } else {
+                toast('Sekarang temenan!');
+                await refreshAll(); renderUI();
+            }
+        } catch (err) {
+            console.error('[Sosial] Error tak terduga saat accept:', err);
+            toast('Gagal accept: cek koneksi / console (F12).', false);
+            b.disabled = false; b.style.opacity = '1'; b.textContent = originalLabel;
+        }
+    });
+    c.querySelectorAll('[data-dec]').forEach(b => b.onclick = async () => {
+        if (b.disabled) return;
+        b.disabled = true; b.style.opacity = '0.5';
+        try {
+            const { error } = await supabase.from('friend_requests').update({ status: 'declined', responded_at: new Date().toISOString() }).eq('id', b.dataset.dec);
+            if (error) { console.error('[Sosial] Gagal tolak request:', error); toast('Gagal tolak: ' + error.message, false); }
+            await loadRequests(); renderUI();
+        } catch (err) {
+            console.error('[Sosial] Error tak terduga saat tolak:', err);
+            toast('Gagal tolak: cek koneksi / console (F12).', false);
+            b.disabled = false; b.style.opacity = '1';
+        }
+    });
+}
+function renderGifts() {
+    const c = $('giftList');
+    if (!state.gifts.length) { c.innerHTML = '<p class="text-xs text-gray-500">Kosong</p>'; return; }
+    c.innerHTML = state.gifts.map(g => `
+        <div class="bg-gradient-to-r from-pink-900/40 to-slate-800 border border-pink-500/40 rounded-xl p-2.5">
+            <p class="text-xs text-pink-200">🎁 Skin <span class="font-bold">${escapeHtml(g.skin_id)}</span> dari <span class="font-bold">@${escapeHtml(g.from_profile?.username || '?')}</span></p>
+            ${g.message ? `<p class="text-[11px] text-gray-300 mt-1 italic">"${escapeHtml(g.message)}"</p>` : ''}
+            <button data-claim="${g.id}" class="mt-2 w-full py-1.5 bg-pink-600 hover:bg-pink-500 text-white text-xs font-bold rounded-lg">Terima Gift</button>
+        </div>`).join('');
+    c.querySelectorAll('[data-claim]').forEach(b => b.onclick = async () => {
+        const { error } = await supabase.rpc('claim_gift', { _gift_id: b.dataset.claim });
+        if (error) toast(error.message, false); else { toast('Skin masuk koleksi!'); await loadGifts(); renderUI(); }
+    });
+}
+function renderChatThreads() {
+    $('chatQuotaUsed').textContent = state.quotaUsed;
+    const c = $('chatThreads');
+    const uid = state.session.user.id;
+    const threads = new Map();
+    for (const m of state.chats) {
+        const other = m.from_user === uid ? m.to_user : m.from_user;
+        if (!threads.has(other)) threads.set(other, []);
+        threads.get(other).push(m);
+    }
+    if (!threads.size) { c.innerHTML = '<p class="text-xs text-gray-500 text-center py-4">Belum ada chat. Buka teman → 💬</p>'; return; }
+    const friendMap = new Map(state.friends.map(f => [f.id, f]));
+    c.innerHTML = [...threads.entries()].map(([oid, msgs]) => {
+        const f = friendMap.get(oid);
+        const last = msgs[msgs.length - 1];
+        return `<div class="bg-slate-800/60 border border-slate-700 rounded-xl p-2.5 cursor-pointer hover:border-indigo-400" data-open="${oid}" data-name="${escapeHtml(f?.username || '?')}">
+            <div class="flex justify-between"><span class="text-sm font-bold text-white">@${escapeHtml(f?.username || '?')}</span><span class="text-[10px] text-gray-500">${msgs.length} pesan</span></div>
+            <p class="text-[11px] text-gray-400 truncate">${escapeHtml(last.message)}</p>
+        </div>`;
+    }).join('');
+    c.querySelectorAll('[data-open]').forEach(el => el.onclick = () => openChat(el.dataset.open, el.dataset.name));
+}
+
+// ============ FIND ============
+$('findBtn').onclick = doFind;
+$('findInput').addEventListener('keydown', e => { if (e.key === 'Enter') doFind(); });
+async function doFind() {
+    const q = $('findInput').value.trim();
+    if (!q) return;
+    const { data, error } = await supabase.rpc('find_user', { _query: q });
+    const c = $('findResults');
+    if (error || !data || !data.length) { c.innerHTML = '<p class="text-xs text-gray-500">Gak ketemu.</p>'; return; }
+    const uid = state.session.user.id;
+    c.innerHTML = data.filter(u => u.id !== uid).map(u => `
+        <div class="flex items-center justify-between bg-slate-800/60 border border-slate-700 rounded-xl p-2.5">
+            <div><p class="text-sm font-bold text-white">@${escapeHtml(u.username)}</p><p class="text-[10px] text-gray-500">${u.friend_code}</p></div>
+            <button data-add="${u.id}" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg">+ Add</button>
+        </div>`).join('') || '<p class="text-xs text-gray-500">Itu kamu sendiri 🙃</p>';
+    c.querySelectorAll('[data-add]').forEach(b => b.onclick = async () => {
+        const { error } = await supabase.from('friend_requests').insert({ from_user: uid, to_user: b.dataset.add });
+        if (error) toast(error.message.includes('duplicate') ? 'Sudah pernah kirim' : error.message, false);
+        else { toast('Request dikirim!'); b.textContent = '✓ Terkirim'; b.disabled = true; b.classList.add('opacity-50'); }
+    });
+}
+
+// ============ GIFT ============
+async function openGift(toId, toName) {
+    $('giftToName').textContent = '@' + toName;
+    $('giftLifetime').textContent = (state.profile?.gift_lifetime_used || 0) + '/6';
+    $('giftMsg').value = ''; $('giftMsgLen').textContent = '0'; $('giftMsgErr').textContent = '';
+    // Load giftable skins (quantity > 1 OR event_ AND not received_as_gift)
+    const { data: skins } = await supabase.from('user_skins').select('*').eq('user_id', state.session.user.id);
+    const eligible = (skins || []).filter(s => !s.received_as_gift && (s.quantity > 1 || s.skin_id.startsWith('event_')));
+    const grid = $('giftableSkins');
+    if (!eligible.length) {
+        grid.innerHTML = '<p class="col-span-4 text-xs text-gray-500 text-center py-3">Belum ada skin yang bisa di-gift.<br/>Butuh skin duplikat atau event.</p>';
+    } else {
+        grid.innerHTML = eligible.map(s => `<button data-sk="${escapeHtml(s.skin_id)}" class="giftable-pick p-2 bg-slate-800 border-2 border-slate-700 hover:border-pink-400 rounded-lg text-xs text-white">
+            ${escapeHtml(s.skin_id)}${s.quantity > 1 ? `<span class="block text-[9px] text-pink-300">x${s.quantity}</span>` : '<span class="block text-[9px] text-amber-300">event</span>'}
+        </button>`).join('');
+    }
+    let picked = null;
+    grid.querySelectorAll('.giftable-pick').forEach(b => b.onclick = () => {
+        grid.querySelectorAll('.giftable-pick').forEach(x => x.classList.remove('border-pink-400','bg-pink-900/40'));
+        b.classList.add('border-pink-400','bg-pink-900/40');
+        picked = b.dataset.sk;
+    });
+    $('giftSendBtn').onclick = async () => {
+        if (!picked) { $('giftMsgErr').textContent = 'Pilih skin dulu'; return; }
+        const msg = $('giftMsg').value.trim() || null;
+        const { error } = await supabase.rpc('send_gift', { _to: toId, _skin_id: picked, _message: msg });
+        if (error) { $('giftMsgErr').textContent = error.message; return; }
+        toast('Gift terkirim 🎁');
+        window.SocialUI._closeGift();
+        await Promise.all([loadProfile(), loadQuota()]);
+        renderUI();
+    };
+    show($('giftModal'), 'flex');
+}
+$('giftMsg').addEventListener('input', e => $('giftMsgLen').textContent = e.target.value.length);
+
+// ============ CHAT ============
+async function openChat(otherId, otherName) {
+    state.activeChat = { id: otherId, name: otherName };
+    $('dmChatWithName').textContent = '@' + otherName;
+    $('dmChatErr').textContent = '';
+    $('dmChatInput').value = '';
+    renderChatMessages();
+    show($('chatModal'), 'flex');
+    $('dmChatInput').focus();
+}
+function renderChatMessages() {
+    if (!state.activeChat) return;
+    const uid = state.session.user.id;
+    const msgs = state.chats.filter(c => (c.from_user === state.activeChat.id && c.to_user === uid) || (c.to_user === state.activeChat.id && c.from_user === uid));
+    const c = $('dmChatMessages');
+    if (!msgs.length) { c.innerHTML = '<p class="text-xs text-gray-500 text-center">Belum ada pesan.</p>'; return; }
+    c.innerHTML = msgs.map(m => {
+        const mine = m.from_user === uid;
+        const remaining = Math.max(0, Math.round((new Date(m.expires_at) - Date.now()) / 60000));
+        return `<div class="flex ${mine ? 'justify-end' : 'justify-start'}">
+            <div class="max-w-[75%] px-3 py-2 rounded-2xl ${mine ? 'bg-indigo-600 text-white' : 'bg-slate-700 text-gray-100'}">
+                <p>${escapeHtml(m.message)}</p>
+                <p class="text-[9px] opacity-60 mt-1">${remaining}m tersisa</p>
+            </div></div>`;
+    }).join('');
+    c.scrollTop = c.scrollHeight;
+}
+$('dmChatSendBtn').onclick = doSendChat;
+$('dmChatInput').addEventListener('keydown', e => { if (e.key === 'Enter') doSendChat(); });
+async function doSendChat() {
+    if (!state.activeChat) return;
+    const msg = $('dmChatInput').value.trim();
+    if (!msg) return;
+    if (msg.length > 100) { $('dmChatErr').textContent = 'Max 100 karakter'; return; }
+    $('dmChatSendBtn').disabled = true;
+    const { error } = await supabase.rpc('send_chat', { _to: state.activeChat.id, _message: msg, _gift_id: null });
+    $('dmChatSendBtn').disabled = false;
+    if (error) { $('dmChatErr').textContent = error.message; return; }
+    $('dmChatInput').value = '';
+    await Promise.all([loadChats(), loadQuota()]);
+    renderChatMessages();
+    renderUI();
+}
+
+// ============ UTIL ============
+function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+$('copyCodeBtn').onclick = () => { navigator.clipboard.writeText(state.profile?.friend_code || ''); toast('Code di-copy'); };
+
+// ============ PUBLIC API ============
+window.SocialUI = {
+    open() { show($('socialOverlay'), 'flex'); renderUI(); if (state.session) refreshAll().then(renderUI); },
+    close() { hide($('socialOverlay')); },
+    _closeGift() { hide($('giftModal')); },
+    _closeChat() { state.activeChat = null; hide($('chatModal')); },
+    getSession: () => state.session,
+    // Called by game code when player unlocks a skin — increments quantity or inserts
+    async addSkin(skinId) {
+        if (!state.session) return;
+        const uid = state.session.user.id;
+        const { data: existing } = await supabase.from('user_skins').select('*').eq('user_id', uid).eq('skin_id', skinId).maybeSingle();
+        if (existing) {
+            await supabase.from('user_skins').update({ quantity: existing.quantity + 1 }).eq('id', existing.id);
+        } else {
+            await supabase.from('user_skins').insert({ user_id: uid, skin_id: skinId, quantity: 1 });
+        }
+    }
+};
+
+// Auto-refresh chat expiry every minute while chat modal is open
+setInterval(() => { if ($('chatModal').style.display === 'flex') renderChatMessages(); }, 60000);
+// Cleanup expired chats locally
+setInterval(() => { const now = Date.now(); state.chats = state.chats.filter(c => new Date(c.expires_at).getTime() > now); }, 30000);
+</script>
+
+
+<!-- =================== REDEEM CODE + BACKUP/RESTORE =================== -->
+<style>
+  #redeemPanel .rp-btn { transition: transform .15s ease, box-shadow .15s ease; }
+  #redeemPanel .rp-btn:hover { transform: translateY(-1px); }
+  #redeemPanel .rp-skin { width: 34px; height: 34px; border-radius: 999px; border: 2px solid rgba(255,255,255,0.25); }
+  #redeemPanel .rp-skin.locked { filter: grayscale(1) brightness(0.55); }
+  #redeemPanel .rp-code { font-family: 'Space Grotesk', monospace; letter-spacing: 3px; }
+  @keyframes rpFlash { 0%{background:#facc15} 100%{background:transparent} }
+  .rp-flash { animation: rpFlash 1s ease; }
+</style>
+<script>
+(function(){
+  const UNLOCK_KEY = 'snakeKingRedeemUnlocks_v1';
+  const USED_KEY   = 'snakeKingRedeemUsed_v1';  // Set kode yg sudah ditukar
+
+  // Kode rahasia asli (acak, tidak bisa diturunkan dari angkanya sendiri).
+  // Simpan daftar ini dengan aman — hanya kamu yang tahu, bagikan satu-satu ke pemain.
+  const SECRET_CODES = {
+    '6680247873': 0,
+    '0621051430': 1,
+    '2550097758': 2,
+    '5841436109': 3,
+    '1163218531': 4,
+    '9846046554': 5,
+    '5541370136': 6,
+    '4180838614': 7,
+    '1037181618': 8,
+    '6484238127': 9,
+    '6641111870': 10,
+  };
+
+  // 11 skin: 1 Penakluk Petir + 2 Mata Kabut + 8 lain
+  const REDEEM_SKINS = [
+    { name:'⚡ Penakluk Petir',   head:'#fde68a', body1:'#facc15', body2:'#3f2d00', lightningImmune:true,
+      desc:'Kebal sambaran petir. Skor tidak terpotong sama sekali.' },
+    { name:'🌫️ Mata Kabut Aqua', head:'#a5f3fc', body1:'#22d3ee', body2:'#0e2a30', nightVision:true,
+      desc:'Bisa melihat jelas di kabut/gelap.' },
+    { name:'🌫️ Mata Kabut Ungu', head:'#e9d5ff', body1:'#a855f7', body2:'#3b0764', nightVision:true,
+      desc:'Varian ungu — Bisa melihat jelas di kabut/gelap.' },
+    { name:'🔥 Naga Api',         head:'#fecaca', body1:'#ef4444', body2:'#7f1d1d', desc:'Skin cosmetic api merah menyala.' },
+    { name:'❄️ Kristal Es',       head:'#e0f2fe', body1:'#38bdf8', body2:'#0c4a6e', desc:'Skin cosmetic es kristal biru.' },
+    { name:'🌊 Ombak Laut',       head:'#a7f3d0', body1:'#14b8a6', body2:'#134e4a', desc:'Skin cosmetic laut dalam.' },
+    { name:'🌸 Sakura',           head:'#fce7f3', body1:'#f472b6', body2:'#831843', desc:'Skin cosmetic bunga sakura.' },
+    { name:'🌌 Galaksi',          head:'#c4b5fd', body1:'#6366f1', body2:'#1e1b4b', desc:'Skin cosmetic galaksi ungu.' },
+    { name:'🌿 Zamrud',           head:'#bbf7d0', body1:'#22c55e', body2:'#14532d', desc:'Skin cosmetic zamrud.' },
+    { name:'☀️ Matahari',         head:'#fef08a', body1:'#eab308', body2:'#713f12', desc:'Skin cosmetic matahari.' },
+    { name:'🌑 Bayangan',         head:'#4b5563', body1:'#1f2937', body2:'#000000', desc:'Skin cosmetic bayangan gelap.' },
+  ];
+
+  function loadJSON(k, fb){ try { return JSON.parse(localStorage.getItem(k) || JSON.stringify(fb)); } catch(e){ return fb; } }
+  function saveJSON(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+
+  let unlocked = new Set(loadJSON(UNLOCK_KEY, []));
+  let usedSet  = new Set(loadJSON(USED_KEY, []));
+
+  // Registrasi ke gameSkins
+  const base = gameSkins.length;
+  REDEEM_SKINS.forEach((s, i) => {
+    gameSkins.push({
+      id: base + i,
+      head: s.head, body1: s.body1, body2: s.body2,
+      name: s.name,
+      nightVision: !!s.nightVision,
+      lightningImmune: !!s.lightningImmune,
+      locked: !unlocked.has(i),
+      redeemSkinIdx: i,
+      redeemDesc: s.desc,
+    });
+  });
+
+  // Wrap renderMenu supaya locked skin punya tampilan gelap & alert
+  const _origRender = window.renderMenu || renderMenu;
+  window.renderMenu = function(){
+    _origRender();
+    const sc = document.getElementById('skinContainer');
+    if (!sc) return;
+    Array.from(sc.children).forEach((btn, idx) => {
+      const skin = gameSkins[idx];
+      if (!skin || skin.redeemSkinIdx === undefined) return;
+      btn.title = skin.name + ' — ' + skin.redeemDesc;
+      if (skin.locked) {
+        btn.style.filter = 'grayscale(1) brightness(0.55)';
+        btn.onclick = () => alert('🔒 ' + skin.name + '\n\n' + skin.redeemDesc + '\n\nBuka lewat menu Tukar Kode di Statistik → Achievement (scroll ke bawah).');
+      }
+    });
+  };
+  renderMenu();
+
+  // Kode hanya valid kalau cocok persis dengan salah satu SECRET_CODES.
+  // Tidak ada rumus yang bisa dibalik dari kode ke skin — harus tahu kodenya.
+  function skinFromCode(code){
+    return Object.prototype.hasOwnProperty.call(SECRET_CODES, code) ? SECRET_CODES[code] : -1;
+  }
+
+  function unlockSkin(idx, silent){
+    unlocked.add(idx);
+    saveJSON(UNLOCK_KEY, Array.from(unlocked));
+    gameSkins.forEach(gs => { if (gs.redeemSkinIdx === idx) gs.locked = false; });
+    if (typeof window.renderMenu === 'function') window.renderMenu();
+    if (!silent) toast('✅ Skin Terbuka: ' + REDEEM_SKINS[idx].name);
+  }
+
+  function toast(msg){
+    const wrap = document.getElementById('achToastWrap');
+    if (!wrap){ alert(msg); return; }
+    const el = document.createElement('div');
+    el.className = 'ach-toast';
+    el.style.cssText = 'background:rgba(15,23,42,0.95);border:2px solid #facc15;color:#fef3c7;padding:10px 14px;border-radius:12px;font-weight:700;box-shadow:0 0 30px rgba(250,204,21,0.6);pointer-events:auto;font-size:13px;max-width:320px;';
+    el.textContent = msg;
+    wrap.appendChild(el);
+    setTimeout(()=>el.remove(), 4500);
+  }
+
+  // ===== Inject panel ke Achievements modal =====
+  function buildPanel(){
+    const modal = document.getElementById('achievementsModal');
+    if (!modal || modal.querySelector('#redeemPanel')) return;
+    const inner = modal.querySelector('div'); // wrapper flex-col
+    if (!inner) return;
+
+    const panel = document.createElement('div');
+    panel.id = 'redeemPanel';
+    panel.style.cssText = 'margin-top:12px;flex-shrink:0;max-height:45vh;overflow-y:auto;';
+    panel.className = 'custom-scrollbar';
+    panel.innerHTML = `
+      <div class="rounded-xl border border-cyan-500/50 bg-slate-950/70 p-3">
+        <h3 class="text-lg font-black text-cyan-300 mb-1">🎁 Tukar Kode Skin</h3>
+        <p class="text-[11px] text-cyan-100/70 mb-2">Masukkan kode rahasia 10 digit untuk membuka 1 dari 11 skin (1 Penakluk Petir, 2 Mata Kabut, 8 lainnya). Kode hanya didapat dari pembuat game.</p>
+        <div class="flex flex-wrap gap-1.5 mb-2" id="rpSkinRow"></div>
+        <div class="flex flex-wrap gap-2 items-center mb-1">
+          <input id="rpRedeemInput" maxlength="10" placeholder="Masukkan 10 digit kode" inputmode="numeric"
+            class="rp-code bg-black/60 border border-slate-600 text-white px-2 py-2 rounded-lg text-sm w-[180px] text-center" />
+          <button id="rpRedeemBtn" class="rp-btn px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-lg">✅ Tukar</button>
+          <div id="rpMsg" class="text-xs text-yellow-200"></div>
+        </div>
+      </div>
+
+      <div class="rounded-xl border border-indigo-500/50 bg-slate-950/70 p-3 mt-3">
+        <h3 class="text-lg font-black text-indigo-300 mb-1">💾 Backup Data Game</h3>
+        <p class="text-[11px] text-indigo-100/70 mb-2">Export semua data (statistik, achievement, skin, kode) jadi 1 file JSON. Bisa di-import lagi kapan aja / di device lain.</p>
+        <div class="flex flex-wrap gap-2">
+          <button id="rpExportBtn" class="rp-btn px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-lg">⬇️ Export ke JSON</button>
+          <label class="rp-btn px-3 py-2 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs rounded-lg cursor-pointer">
+            ⬆️ Import dari JSON
+            <input id="rpImportInput" type="file" accept="application/json,.json" class="hidden" />
+          </label>
+          <button id="rpResetBtn" class="rp-btn px-3 py-2 bg-red-700 hover:bg-red-600 text-white font-bold text-xs rounded-lg">🗑️ Reset Semua Data</button>
+        </div>
+        <div id="rpBackupMsg" class="text-[11px] text-emerald-300 mt-2"></div>
+      </div>
+    `;
+    inner.appendChild(panel);
+
+    // render pool
+    const row = panel.querySelector('#rpSkinRow');
+    REDEEM_SKINS.forEach((s, i) => {
+      const d = document.createElement('div');
+      d.className = 'rp-skin' + (unlocked.has(i) ? '' : ' locked');
+      d.style.background = `radial-gradient(circle at 30% 30%, ${s.head} 0%, ${s.body1} 50%, ${s.body2} 100%)`;
+      d.title = s.name + (unlocked.has(i) ? ' (Terbuka)' : ' (Terkunci)') + ' — ' + s.desc;
+      row.appendChild(d);
+    });
+
+    const $msg = panel.querySelector('#rpMsg');
+    const $bmsg= panel.querySelector('#rpBackupMsg');
+
+    panel.querySelector('#rpRedeemBtn').onclick = () => {
+      const v = (panel.querySelector('#rpRedeemInput').value || '').trim();
+      if (!/^\d{10}$/.test(v)){ $msg.textContent = '❌ Kode harus 10 digit angka.'; return; }
+      if (usedSet.has(v)){ $msg.textContent = '⚠️ Kode ini sudah pernah dipakai.'; return; }
+      const idx = skinFromCode(v);
+      if (idx === -1){ $msg.textContent = '❌ Kode tidak valid.'; return; }
+      if (unlocked.has(idx)){
+        usedSet.add(v); saveJSON(USED_KEY, Array.from(usedSet));
+        $msg.innerHTML = `ℹ️ Skin <b>${REDEEM_SKINS[idx].name}</b> sudah kamu punya sebelumnya.`;
+        return;
+      }
+      unlockSkin(idx);
+      usedSet.add(v); saveJSON(USED_KEY, Array.from(usedSet));
+      // refresh pool visual
+      row.children[idx]?.classList.remove('locked');
+      $msg.innerHTML = `🎉 Sukses! Skin <b>${REDEEM_SKINS[idx].name}</b> terbuka.`;
+      panel.querySelector('#rpRedeemInput').value = '';
+    };
+
+    // Backup / Restore
+    panel.querySelector('#rpExportBtn').onclick = () => {
+      const dump = {};
+      for (let i=0; i<localStorage.length; i++){
+        const k = localStorage.key(i);
+        if (!k) continue;
+        if (k.startsWith('snakeKing') || k.startsWith('mk_') || k === 'mk_user_id'){
+          dump[k] = localStorage.getItem(k);
+        }
+      }
+      const blob = new Blob([JSON.stringify({
+        app: 'SnakeKing', version: 1, exportedAt: new Date().toISOString(), data: dump
+      }, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `snake-king-backup-${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url), 1000);
+      $bmsg.textContent = `✅ Exported ${Object.keys(dump).length} entri.`;
+    };
+    panel.querySelector('#rpImportInput').onchange = (e) => {
+      const f = e.target.files?.[0]; if (!f) return;
+      const rd = new FileReader();
+      rd.onload = () => {
+        try {
+          const parsed = JSON.parse(rd.result);
+          const data = parsed?.data;
+          if (!data || typeof data !== 'object') throw new Error('Format tidak valid');
+          if (!confirm(`Import ${Object.keys(data).length} entri? Data lama akan ditimpa.`)) return;
+          Object.entries(data).forEach(([k,v]) => localStorage.setItem(k, v));
+          $bmsg.textContent = '✅ Import sukses. Reload...';
+          setTimeout(()=>location.reload(), 800);
+        } catch(err){
+          $bmsg.textContent = '❌ Gagal import: ' + err.message;
+        }
+      };
+      rd.readAsText(f);
+    };
+    panel.querySelector('#rpResetBtn').onclick = () => {
+      if (!confirm('Hapus SEMUA data game (statistik, skin, kode, achievement)?\nBackup dulu kalau perlu.')) return;
+      const rm = [];
+      for (let i=0;i<localStorage.length;i++){
+        const k = localStorage.key(i);
+        if (k && (k.startsWith('snakeKing') || k.startsWith('mk_'))) rm.push(k);
+      }
+      rm.forEach(k=>localStorage.removeItem(k));
+      alert('Data direset. Reload halaman.');
+      location.reload();
+    };
+  }
+
+  // Build panel saat achievements modal dibuka pertama kali
+  const _origOpen = window.openAchievements;
+  window.openAchievements = function(){
+    if (typeof _origOpen === 'function') _origOpen();
+    else document.getElementById('achievementsModal')?.classList.remove('hidden');
+    buildPanel();
+  };
+
+  // Dev helper
+  window.redeemUnlockAll = function(){ REDEEM_SKINS.forEach((_,i)=>unlockSkin(i, true)); };
+
+  // ===== Standalone Redeem Modal (dari tombol di sebelah Leaderboard) =====
+  function buildStandaloneModal(){
+    if (document.getElementById('redeemModal')) return;
+    const m = document.createElement('div');
+    m.id = 'redeemModal';
+    m.className = 'hidden';
+    m.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(2,6,23,0.85);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:16px;';
+    m.innerHTML = `
+      <div style="background:linear-gradient(180deg,#0b1220,#0f172a);border:2px solid rgba(34,211,238,0.5);border-radius:20px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 0 60px rgba(34,211,238,0.35);" class="custom-scrollbar">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid rgba(34,211,238,0.25);position:sticky;top:0;background:rgba(11,18,32,0.95);backdrop-filter:blur(6px);z-index:2;">
+          <h2 style="font-size:22px;font-weight:900;color:#67e8f9;letter-spacing:-0.02em;">🎁 Tukar Kode Skin</h2>
+          <button id="rmClose" style="color:#94a3b8;font-size:26px;line-height:1;background:none;border:none;cursor:pointer;">✕</button>
+        </div>
+        <div style="padding:16px 20px 20px;">
+          <p style="font-size:12px;color:rgba(207,250,254,0.75);margin-bottom:12px;">11 skin bisa dibuka pakai <b>kode rahasia 10 digit</b>. Kode tidak bisa ditebak/dihitung — hanya didapat langsung dari pembuat game.</p>
+
+          <div id="rmSkinGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:8px;margin-bottom:16px;"></div>
+
+          <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(34,211,238,0.35);border-radius:12px;padding:12px;margin-bottom:12px;">
+            <h3 style="font-weight:900;color:#67e8f9;font-size:14px;margin-bottom:6px;">✅ Tukar Kode</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+              <input id="rmInput" maxlength="10" placeholder="10 digit kode" inputmode="numeric"
+                style="font-family:'Space Grotesk',monospace;letter-spacing:3px;background:rgba(0,0,0,0.6);border:1px solid #475569;color:#fff;padding:8px 10px;border-radius:8px;font-size:14px;width:180px;text-align:center;" />
+              <button id="rmRedeem" style="background:#059669;color:#fff;font-weight:800;font-size:12px;padding:8px 14px;border-radius:8px;border:none;cursor:pointer;">Tukar</button>
+              <div id="rmMsg" style="font-size:12px;color:#fde68a;flex:1;min-width:120px;"></div>
+            </div>
+          </div>
+
+          <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(99,102,241,0.4);border-radius:12px;padding:12px;">
+            <h3 style="font-weight:900;color:#a5b4fc;font-size:14px;margin-bottom:6px;">💾 Backup / Restore</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <button id="rmExport" style="background:#4f46e5;color:#fff;font-weight:800;font-size:12px;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;">⬇️ Export JSON</button>
+              <label style="background:#d97706;color:#fff;font-weight:800;font-size:12px;padding:8px 12px;border-radius:8px;cursor:pointer;">
+                ⬆️ Import JSON
+                <input id="rmImport" type="file" accept="application/json,.json" style="display:none;" />
+              </label>
+              <button id="rmReset" style="background:#b91c1c;color:#fff;font-weight:800;font-size:12px;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;">🗑️ Reset Semua</button>
+            </div>
+            <div id="rmBackupMsg" style="font-size:11px;color:#6ee7b7;margin-top:6px;"></div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(m);
+
+    m.querySelector('#rmClose').onclick = () => m.classList.add('hidden');
+    m.addEventListener('click', (e) => { if (e.target === m) m.classList.add('hidden'); });
+
+    // Skin grid
+    const grid = m.querySelector('#rmSkinGrid');
+    REDEEM_SKINS.forEach((s, i) => {
+      const d = document.createElement('div');
+      const isUnlocked = unlocked.has(i);
+      d.title = s.name + (isUnlocked ? ' (Terbuka)' : ' (Terkunci)') + ' — ' + s.desc;
+      d.style.cssText = `position:relative;aspect-ratio:1;border-radius:12px;border:2px solid ${isUnlocked ? '#22d3ee' : 'rgba(148,163,184,0.4)'};background:radial-gradient(circle at 30% 30%, ${s.head} 0%, ${s.body1} 55%, ${s.body2} 100%);${isUnlocked ? '' : 'filter:grayscale(1) brightness(0.55);'};cursor:help;`;
+      const badge = document.createElement('span');
+      badge.textContent = isUnlocked ? '✓' : '🔒';
+      badge.style.cssText = 'position:absolute;bottom:2px;right:4px;font-size:11px;text-shadow:0 1px 2px #000;';
+      d.appendChild(badge);
+      grid.appendChild(d);
+    });
+
+    // Redeem
+    const $msg = m.querySelector('#rmMsg');
+    m.querySelector('#rmRedeem').onclick = () => {
+      const v = (m.querySelector('#rmInput').value || '').trim();
+      if (!/^\d{10}$/.test(v)){ $msg.textContent = '❌ Kode harus 10 digit angka.'; return; }
+      if (usedSet.has(v)){ $msg.textContent = '⚠️ Kode sudah pernah dipakai.'; return; }
+      const idx = skinFromCode(v);
+      if (idx === -1){ $msg.textContent = '❌ Kode tidak valid.'; return; }
+      if (unlocked.has(idx)){
+        usedSet.add(v); saveJSON(USED_KEY, Array.from(usedSet));
+        $msg.innerHTML = `ℹ️ Skin <b>${REDEEM_SKINS[idx].name}</b> sudah kamu punya.`;
+        return;
+      }
+      unlockSkin(idx);
+      usedSet.add(v); saveJSON(USED_KEY, Array.from(usedSet));
+      // refresh grid tile
+      const tile = grid.children[idx];
+      if (tile){
+        tile.style.filter = '';
+        tile.style.borderColor = '#22d3ee';
+        tile.querySelector('span').textContent = '✓';
+      }
+      $msg.innerHTML = `🎉 Sukses! Skin <b>${REDEEM_SKINS[idx].name}</b> terbuka.`;
+      m.querySelector('#rmInput').value = '';
+    };
+
+    // Backup / Restore / Reset (sama seperti panel achievement)
+    const $bmsg = m.querySelector('#rmBackupMsg');
+    m.querySelector('#rmExport').onclick = () => {
+      const dump = {};
+      for (let i=0; i<localStorage.length; i++){
+        const k = localStorage.key(i); if (!k) continue;
+        if (k.startsWith('snakeKing') || k.startsWith('mk_')) dump[k] = localStorage.getItem(k);
+      }
+      const blob = new Blob([JSON.stringify({ app:'SnakeKing', version:1, exportedAt:new Date().toISOString(), data:dump }, null, 2)], { type:'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url;
+      a.download = `snake-king-backup-${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url), 1000);
+      $bmsg.textContent = `✅ Export ${Object.keys(dump).length} entri.`;
+    };
+    m.querySelector('#rmImport').onchange = (e) => {
+      const f = e.target.files?.[0]; if (!f) return;
+      const rd = new FileReader();
+      rd.onload = () => {
+        try {
+          const parsed = JSON.parse(rd.result);
+          const data = parsed?.data;
+          if (!data || typeof data !== 'object') throw new Error('Format tidak valid');
+          if (!confirm(`Import ${Object.keys(data).length} entri? Data lama ditimpa.`)) return;
+          Object.entries(data).forEach(([k,v]) => localStorage.setItem(k, v));
+          $bmsg.textContent = '✅ Import sukses. Reload...';
+          setTimeout(()=>location.reload(), 800);
+        } catch(err){ $bmsg.textContent = '❌ Gagal: ' + err.message; }
+      };
+      rd.readAsText(f);
+    };
+    m.querySelector('#rmReset').onclick = () => {
+      if (!confirm('Hapus SEMUA data game?\nBackup dulu kalau perlu.')) return;
+      const rm = [];
+      for (let i=0;i<localStorage.length;i++){
+        const k = localStorage.key(i);
+        if (k && (k.startsWith('snakeKing') || k.startsWith('mk_'))) rm.push(k);
+      }
+      rm.forEach(k=>localStorage.removeItem(k));
+      alert('Data direset. Reload halaman.');
+      location.reload();
+    };
+  }
+
+  window.openRedeemModal = function(){
+    buildStandaloneModal();
+    document.getElementById('redeemModal')?.classList.remove('hidden');
+  };
+  window.closeRedeemModal = function(){
+    document.getElementById('redeemModal')?.classList.add('hidden');
+  };
+})();
+
+</script>
+
+<!-- ============================================================
+     QOL PACK — Auto-Pause, Screenshot, FPS meter, Shortcut Help,
+     Toast, Ripple, Haptic feedback. Semua defensif (cek elemen ada
+     dulu) supaya tidak pernah bentrok dengan sistem yang sudah ada.
+     ============================================================ -->
+<div id="qolToastHost"></div>
+<div id="qolFlash"></div>
+<div id="qolPauseOverlay">
+    <h2>⏸️ Dijeda</h2>
+    <p>Game otomatis jeda karena kamu pindah tab.</p>
+    <div class="qol-count" id="qolCountNum"></div>
+</div>
+<div id="qolFpsBadge">FPS --</div>
+<button id="qolHelpBtn" class="qol-icon-btn" title="Bantuan kontrol">❔</button>
+<div id="qolHelpPanel" class="panel">
+    <h4>⌨️ KONTROL</h4>
+    <div class="qol-row"><span>Gerak</span><kbd>WASD</kbd> / <kbd>↑↓←→</kbd></div>
+    <div class="qol-row"><span>Dash</span><kbd>Space</kbd></div>
+    <div class="qol-row"><span>Jeda</span><kbd>Esc</kbd></div>
+    <div class="qol-row"><span>Screenshot</span><kbd>S</kbd></div>
+    <div class="qol-row"><span>Mode Duo P2</span><kbd>Enter</kbd></div>
+</div>
+
+<script>
+(function(){
+    // ---------- Toast kecil (tidak konflik dgn toast() lain yg ter-scope lokal) ----------
+    const toastHost = document.getElementById('qolToastHost');
+    window.qolToast = function(msg, opts){
+        if (!toastHost) return;
+        opts = opts || {};
+        const el = document.createElement('div');
+        el.className = 'qol-toast';
+        el.innerHTML = (opts.icon || 'ℹ️') + ' <span></span>';
+        el.querySelector('span').textContent = msg;
+        toastHost.appendChild(el);
+        const life = opts.duration || 2200;
+        setTimeout(() => {
+            el.classList.add('qol-toast-out');
+            setTimeout(() => el.remove(), 320);
+        }, life);
+    };
+
+    // ---------- Toggle Suara (mute) di panel Pengaturan Suara — forward ke tombol asli yg disembunyikan ----------
+    const realMuteBtn = document.getElementById('muteBtn');
+    const muteToggleBtn = document.getElementById('audioMuteToggleBtn');
+    const muteToggleState = document.getElementById('audioMuteToggleState');
+    function syncMuteLabel(){
+        if (!realMuteBtn || !muteToggleState) return;
+        const muted = realMuteBtn.innerText.includes('🔇');
+        muteToggleState.textContent = muted ? 'Nonaktif' : 'Aktif';
+        muteToggleState.style.color = muted ? '#ef4444' : '#34d399';
+    }
+    if (realMuteBtn){
+        new MutationObserver(syncMuteLabel).observe(realMuteBtn, { childList: true, characterData: true, subtree: true });
+        syncMuteLabel();
+    }
+    if (muteToggleBtn && realMuteBtn) muteToggleBtn.addEventListener('click', () => realMuteBtn.click());
+
+    // ---------- Tombol "Chat Global" di panel Sosial — buka widget chat komunitas yg sudah ada ----------
+    const openGlobalChatBtn = document.getElementById('socialOpenGlobalChatBtn');
+    const realChatToggleBtn = document.getElementById('chatToggleBtn');
+    if (openGlobalChatBtn && realChatToggleBtn){
+        openGlobalChatBtn.addEventListener('click', () => {
+            if (window.SocialUI && typeof window.SocialUI.close === 'function') window.SocialUI.close();
+            setTimeout(() => realChatToggleBtn.click(), 150);
+        });
+    }
+
+    // ---------- Ripple effect universal di tombol & kartu ----------
+    document.addEventListener('click', function(e){
+        const target = e.target.closest('button, .skin-btn, .map-card');
+        if (!target || target.disabled) return;
+        target.classList.add('qol-ripple-host');
+        const rect = target.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const ripple = document.createElement('span');
+        ripple.className = 'qol-ripple';
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+        target.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+    }, true);
+
+    // ---------- Haptic helper ----------
+    function haptic(pattern){
+        try { if (navigator.vibrate) navigator.vibrate(pattern); } catch(e){}
+    }
+
+    // ---------- Auto-pause saat pindah tab / minimize ----------
+    const pauseOverlay = document.getElementById('qolPauseOverlay');
+    const countNum = document.getElementById('qolCountNum');
+    let resumeTimer = null;
+    function isActivelyPlaying(){
+        try { return (typeof gameState !== 'undefined') && (gameState === 'playing' || gameState === 'winRound'); }
+        catch(e){ return false; }
+    }
+    function doPause(){
+        if (!isActivelyPlaying() || window.__qolPaused) return;
+        window.__qolPaused = true;
+        if (pauseOverlay){ countNum.textContent = ''; pauseOverlay.classList.add('show'); }
+    }
+    function doResumeWithCountdown(){
+        if (!window.__qolPaused) return;
+        clearInterval(resumeTimer);
+        let n = 3;
+        if (countNum) countNum.textContent = n;
+        resumeTimer = setInterval(() => {
+            n--;
+            if (n <= 0){
+                clearInterval(resumeTimer);
+                window.__qolPaused = false;
+                if (pauseOverlay) pauseOverlay.classList.remove('show');
+                return;
+            }
+            if (countNum) countNum.textContent = n;
+        }, 700);
+    }
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) doPause();
+        else doResumeWithCountdown();
+    });
+    // Jeda manual pakai Esc (tidak dipakai fitur lain di game ini)
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isActivelyPlaying()){
+            if (window.__qolPaused){
+                doResumeWithCountdown();
+            } else {
+                window.__qolPaused = true;
+                if (pauseOverlay){ countNum.textContent = '⏸'; pauseOverlay.classList.add('show'); }
+            }
+        }
+        if ((e.key === 's' || e.key === 'S') && !e.ctrlKey && !e.metaKey && isActivelyPlaying()){
+            takeScreenshot();
+        }
+    });
+
+    // ---------- Screenshot ----------
+    const flashEl = document.getElementById('qolFlash');
+    function takeScreenshot(){
+        const canvas = document.getElementById('gameCanvas');
+        if (!canvas) return;
+        try {
+            const url = canvas.toDataURL('image/png');
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `snake-king-${Date.now()}.png`;
+            document.body.appendChild(a); a.click(); a.remove();
+            if (flashEl){ flashEl.classList.remove('flash'); void flashEl.offsetWidth; flashEl.classList.add('flash'); }
+            haptic(30);
+            window.qolToast('Screenshot tersimpan!', { icon: '📸' });
+        } catch(err){
+            window.qolToast('Gagal screenshot (canvas ter-taint).', { icon: '⚠️' });
+        }
+    }
+    const shotBtn = document.getElementById('audioScreenshotBtn');
+    if (shotBtn) shotBtn.addEventListener('click', takeScreenshot);
+
+    // ---------- FPS meter (independen, tidak sentuh loop utama) ----------
+    const fpsBtn = document.getElementById('audioFpsToggleBtn');
+    const fpsToggleLabel = document.getElementById('audioFpsToggleState');
+    const fpsBadge = document.getElementById('qolFpsBadge');
+    let fpsOn = false;
+    try { fpsOn = localStorage.getItem('qolFpsOn') === '1'; } catch(e){}
+    let frames = 0, lastT = performance.now();
+    function fpsTick(t){
+        frames++;
+        if (t - lastT >= 500){
+            const fps = Math.round((frames * 1000) / (t - lastT));
+            frames = 0; lastT = t;
+            if (fpsOn && fpsBadge){
+                fpsBadge.textContent = 'FPS ' + fps;
+                fpsBadge.classList.remove('warn','bad');
+                if (fps < 30) fpsBadge.classList.add('bad');
+                else if (fps < 50) fpsBadge.classList.add('warn');
+            }
+        }
+        requestAnimationFrame(fpsTick);
+    }
+    requestAnimationFrame(fpsTick);
+    function applyFpsVisibility(){
+        if (fpsBadge) fpsBadge.classList.toggle('show', fpsOn);
+        if (fpsToggleLabel){ fpsToggleLabel.textContent = fpsOn ? 'On' : 'Off'; fpsToggleLabel.style.color = fpsOn ? '#34d399' : '#94a3b8'; }
+    }
+    applyFpsVisibility();
+    if (fpsBtn) fpsBtn.addEventListener('click', () => {
+        fpsOn = !fpsOn;
+        try { localStorage.setItem('qolFpsOn', fpsOn ? '1' : '0'); } catch(e){}
+        applyFpsVisibility();
+        window.qolToast(fpsOn ? 'FPS meter aktif' : 'FPS meter nonaktif', { icon: '⚡' });
+    });
+
+    // ---------- Panel bantuan shortcut ----------
+    const helpBtn = document.getElementById('qolHelpBtn');
+    const helpPanel = document.getElementById('qolHelpPanel');
+    if (helpBtn && helpPanel){
+        helpBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            helpPanel.classList.toggle('show');
+        });
+        document.addEventListener('click', (e) => {
+            if (helpPanel.classList.contains('show') && !helpPanel.contains(e.target) && e.target !== helpBtn){
+                helpPanel.classList.remove('show');
+            }
+        });
+    }
+
+    // ---------- Copy feedback generik (tambahan, tidak menggantikan handler asli) ----------
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const label = (btn.id || '').toLowerCase();
+        const text = (btn.textContent || '').toLowerCase();
+        if (label.includes('copy') || text.includes('copy')){
+            haptic(15);
+            window.qolToast('Disalin ke clipboard!', { icon: '📋', duration: 1500 });
+        }
+    });
+
+    // ---------- Skor "pop" tiap nambah (observer, tidak ubah kode inti) ----------
+    const scoreEl = document.getElementById('playerScore');
+    if (scoreEl){
+        let lastScoreText = scoreEl.textContent;
+        const scoreObs = new MutationObserver(() => {
+            if (scoreEl.textContent !== lastScoreText){
+                const prevNum = parseFloat(lastScoreText) || 0;
+                const nowNum = parseFloat(scoreEl.textContent) || 0;
+                lastScoreText = scoreEl.textContent;
+                if (nowNum > prevNum){
+                    scoreEl.classList.remove('qol-pop');
+                    void scoreEl.offsetWidth;
+                    scoreEl.classList.add('qol-pop');
+                }
+            }
+        });
+        scoreObs.observe(scoreEl, { childList: true, characterData: true, subtree: true });
+    }
+
+    // ---------- Haptic + micro-shake saat death screen muncul ----------
+    const deathScreen = document.getElementById('deathScreen');
+    if (deathScreen){
+        let wasHidden = deathScreen.classList.contains('hidden');
+        const deathObs = new MutationObserver(() => {
+            const nowHidden = deathScreen.classList.contains('hidden');
+            if (wasHidden && !nowHidden){
+                haptic([40, 30, 60]);
+                deathScreen.classList.remove('qol-death-kick');
+                void deathScreen.offsetWidth;
+                deathScreen.classList.add('qol-death-kick');
+                window.__qolPaused = false; // pastikan tidak nyangkut paused saat mati sambil pindah tab
+            }
+            wasHidden = nowHidden;
+        });
+        deathObs.observe(deathScreen, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    // ---------- Haptic ringan saat dash mobile ditekan ----------
+    const dashBtn = document.getElementById('dashBtnMobile');
+    if (dashBtn) dashBtn.addEventListener('touchstart', () => haptic(12), { passive: true });
+})();
+</script>
+
 </body>
 </html>
+
+
