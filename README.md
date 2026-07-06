@@ -1,6 +1,6 @@
 # 🐍 Snake King.IO
 
-> **The most feature-packed snake game in history. 281 KB. 1 HTML file.**
+> **The most feature-packed snake game in history. 488 KB. 1 HTML file.**
 
 <p align="center">
   <img src="screenshot.gif" alt="Gameplay" width="600"/>
@@ -12,7 +12,7 @@
 
 | Stat | Value |
 |------|-------|
-| **Size** | 281 KB |
+| **Size** | 488 KB |
 | **Files** | 1 HTML |
 | **Features** | 100+ |
 | **Game Modes** | 7 |
